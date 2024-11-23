@@ -6,61 +6,6 @@
     <title>JMP Medical Centre</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <style>
-/* Initial Styles for Header */
-header {
-    background-color: #0056b3;
-    color: #ffffff;
-    text-align: center;
-    padding: 20px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    transition: all 0.3s ease; /* Smooth transition */
-}
-
-header img {
-    max-height: 80px;
-    margin-bottom: 10px;
-    transition: all 0.3s ease; /* Smooth transition */
-}
-
-header h1 {
-    margin: 0;
-    font-family: 'Playfair Display', serif;
-    font-size: 2.5em;
-    transition: all 0.3s ease; /* Smooth transition */
-}
-
-header p {
-    margin: 5px 0;
-    font-size: 1em;
-}
-
-/* Shrunk logo and header style on scroll */
-header.shrink img {
-    max-height: 40px; /* Shrink the logo */
-}
-
-header.shrink h1 {
-    font-size: 2em; /* Shrink the title */
-}
-
-header.shrink {
-    padding: 10px 20px; /* Smaller padding */
-    background-color: #003d80; /* Darker background when scrolled */
-}
-
-/* Smooth transition for when the heading comes down after pulling */
-header.scrolled h1 {
-    transform: translateY(30px); /* Move heading down */
-}
-
-/* Optional: Add some space at the top when header shrinks */
-body {
-    padding-top: 100px; /* Adjust as per the header height when expanded */
-}
         /* General Styles */
         body {
             font-family: 'Roboto', Arial, sans-serif;
@@ -661,25 +606,6 @@ document.getElementById('menu-toggle').addEventListener('click', function () {
 });
 </script>
 
-<script>
-    // JavaScript for Scroll Effects
-    window.onscroll = function() {scrollFunction()};
-    
-    function scrollFunction() {
-        const header = document.querySelector('header');
-        const heading = header.querySelector('h1');
-    
-        // Add "shrink" class to header when scrolled
-        if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
-            header.classList.add("shrink");
-            heading.classList.add("scrolled");
-        } else {
-            header.classList.remove("shrink");
-            heading.classList.remove("scrolled");
-        }
-    }
-    </script>
-
 
 </body>
-</html>          
+</html>             
