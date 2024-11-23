@@ -465,73 +465,90 @@
         transform: scale(1.1);
     }
     
-    /* Dropdown Styles */
-    .floating-buttons .dropdown {
-        position: absolute;
-        bottom: -40px;
-        left: 0;
-        background-color: #ffffff;
-        color: #333;
-        padding: 8px 15px;
-        border-radius: 5px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        font-size: 0.9em;
-        font-weight: normal;
-        display: none;
-        z-index: 1001;
-        border: 1px solid #ddd;
-    }
-    
-    .floating-buttons .dropdown.active {
-        display: block;
-    }
-    
-    /* Dropdown Text */
-    .floating-buttons .dropdown span {
-        color: #0056b3;
-        font-weight: bold;
-    }
+  
+    /* Floating Buttons Dropdowns */
+.dropdown {
+    display: none;
+    position: absolute;
+    bottom: 50px; /* Adjusted to appear above the button */
+    left: 0;
+    background-color: #ffffff;
+    color: #333;
+    padding: 8px 15px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Slightly stronger shadow */
+    font-size: 0.9em;
+    font-weight: normal;
+    border: 1px solid #ddd;
+    z-index: 2000; /* Ensure it appears above other elements */
+    white-space: nowrap; /* Prevent text wrapping */
+}
+
+.dropdown.active {
+    display: block;
+}
+
+/* Adjust floating buttons container to prevent clipping */
+.floating-buttons {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 1000; /* Dropdown's z-index is higher */
+}
     </style>
     
     <div class="floating-buttons">
-        <!-- Book Appointment Button -->
-        <div class="button-container">
-            <a href="tel:+914852241274" class="book-appointment" onclick="toggleDropdown(event, 'dropdown-book')">
-                <span class="icon">📞</span>Book Appointment
-            </a>
-            <div class="dropdown" id="dropdown-book">
-                Call - <span>+91 485 224 1274</span>
-            </div>
-        </div>
-        <!-- Emergency Button -->
-        <div class="button-container">
-            <a href="tel:9947621789" class="emergency" onclick="toggleDropdown(event, 'dropdown-emergency')">
-                <span class="icon">🚑</span>Emergency
-            </a>
-            <div class="dropdown" id="dropdown-emergency">
-                Call - <span>9947621789</span>
-            </div>
+    <!-- Book Appointment Button -->
+    <div class="button-container">
+        <a href="#" 
+           class="book-appointment" 
+           onclick="handleButtonClick(event, '+914852241274', 'dropdown-book')">
+            <span class="icon">📞</span>Book Appointment
+        </a>
+        <div class="dropdown" id="dropdown-book">
+            Call - <span>+91 485 224 1274</span>
         </div>
     </div>
+    <!-- Emergency Button -->
+    <div class="button-container">
+        <a href="#" 
+           class="emergency" 
+           onclick="handleButtonClick(event, '9947621789', 'dropdown-emergency')">
+            <span class="icon">🚑</span>Emergency
+        </a>
+        <div class="dropdown" id="dropdown-emergency">
+            Call - <span>9947621789</span>
+        </div>
+    </div>
+</div>
     
     <script>
-    /* Toggle Dropdown Visibility */
-    function toggleDropdown(event, dropdownId) {
-        event.preventDefault(); // Prevent immediate dial on desktop
-        const dropdown = document.getElementById(dropdownId);
+    function handleButtonClick(event, phoneNumber, dropdownId) {
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    const dropdown = document.getElementById(dropdownId);
+
+    if (isMobile) {
+        // Open dialer on mobile
+        window.location.href = `tel:${phoneNumber}`;
+    } else {
+        // Show dropdown on desktop
+        event.preventDefault();
         const isActive = dropdown.classList.contains('active');
-        document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('active')); // Hide all
+
+        // Close all dropdowns
+        document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('active'));
+
         if (!isActive) {
-            dropdown.classList.add('active'); // Show clicked one
+            // Set dropdown position dynamically
+            const buttonRect = event.target.getBoundingClientRect();
+            dropdown.style.bottom = `${window.innerHeight - buttonRect.top + 10}px`; // Position above the button
+            dropdown.classList.add('active');
         }
     }
-    
-    /* Close dropdown if clicked outside */
-    document.addEventListener('click', function (event) {
-        if (!event.target.closest('.button-container')) {
-            document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('active'));
-        }
-    });
+}
     </script>
 
 <style>
