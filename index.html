@@ -503,24 +503,37 @@
         transform: scale(1.1);
     }
     
-    /* Floating Button Dropdowns */
+    /* Floating Buttons Dropdowns */
 .dropdown {
     display: none;
     position: absolute;
-    bottom: -40px;
+    bottom: 50px; /* Adjusted to appear above the button */
     left: 0;
     background-color: #ffffff;
     color: #333;
     padding: 8px 15px;
     border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Slightly stronger shadow */
     font-size: 0.9em;
     font-weight: normal;
     border: 1px solid #ddd;
+    z-index: 2000; /* Ensure it appears above other elements */
+    white-space: nowrap; /* Prevent text wrapping */
 }
 
 .dropdown.active {
     display: block;
+}
+
+/* Adjust floating buttons container to prevent clipping */
+.floating-buttons {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 1000; /* Dropdown's z-index is higher */
 }
     </style>
     
@@ -550,36 +563,29 @@
 </div>
     
     <script>
-    // Handle button clicks for mobile and desktop
-function handleButtonClick(event, phoneNumber, dropdownId) {
-    // Detect if the user is on a mobile device
+    function handleButtonClick(event, phoneNumber, dropdownId) {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    
+    const dropdown = document.getElementById(dropdownId);
+
     if (isMobile) {
-        // Redirect to the dialer for mobile
+        // Open dialer on mobile
         window.location.href = `tel:${phoneNumber}`;
     } else {
-        // Show the phone number dropdown on desktop
+        // Show dropdown on desktop
         event.preventDefault();
-        const dropdown = document.getElementById(dropdownId);
         const isActive = dropdown.classList.contains('active');
-        
-        // Close any open dropdowns
+
+        // Close all dropdowns
         document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('active'));
-        
-        // Toggle the clicked dropdown
+
         if (!isActive) {
+            // Set dropdown position dynamically
+            const buttonRect = event.target.getBoundingClientRect();
+            dropdown.style.bottom = `${window.innerHeight - buttonRect.top + 10}px`; // Position above the button
             dropdown.classList.add('active');
         }
     }
 }
-
-// Close dropdowns when clicking outside
-document.addEventListener('click', function (event) {
-    if (!event.target.closest('.button-container')) {
-        document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('active'));
-    }
-});
     </script>
 
 <style>
