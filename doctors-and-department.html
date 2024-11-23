@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JMP Medical Centre</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #343a40;
+        }
+
+        /* Header */
+        header {
+            background-color: #0056b3; 
+            color: #ffffff;
+            text-align: center;
+            padding: 20px;
+        }
+        /* Increase logo size */
+    header img {
+        max-height: 120px;  /* Increase the size of the logo */
+        width: auto;        /* Maintain the aspect ratio */
+        margin-bottom: 10px;
+        }
+        header h1 {
+            margin: 0;
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5em;
+        }
+        header p {
+            margin: 5px 0;
+            font-size: 1em;
+        }
+
+        /* Navigation Bar */
+        nav {
+            background-color: #007bff;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 10px;
+        }
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        nav a:hover {
+            background-color: #ffc107;
+            color: #0056b3;
+        }
+
+        /* Banner */
+        .banner {
+            background-color: #e9ecef;
+            text-align: center;
+            padding: 50px 20px;
+        }
+        .banner h2 {
+            font-size: 2.5em;
+            margin: 0;
+            color: #0056b3;
+        }
+
+        /* Scrolling Text */
+        .scroll-text {
+            font-size: 1.5em;
+            color: #0056b3;
+            white-space: nowrap;
+            overflow: hidden;
+            position: relative;
+        }
+        .scroll-content {
+            display: inline-block;
+            animation: scroll 20s linear infinite;
+        }
+        @keyframes scroll {
+            0% {
+                transform: translateX(100%);
+            }
+            50% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+        .scroll-content:hover {
+            animation-play-state: paused;
+        }
+        
+
+        /* Content Section */
+        .content {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .content h3 {
+            color: #0056b3;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Cards for Departments */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+        }
+        .card h4 {
+            margin: 0 0 10px;
+            color: #0056b3;
+            cursor: pointer;
+        }
+        .card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: none;
+        }
+        .card ul li {
+            padding: 5px 0;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #0056b3;
+            color: #ffffff;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+        }
+        footer p {
+            margin: 10px 0;
+        }
+        footer .icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        footer .icons a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 1.5em;
+            transition: color 0.3s ease;
+        }
+        footer .icons a:hover {
+            color: #ffc107;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+            .banner h2 {
+                font-size: 2em;
+            }
+            .scroll-text {
+                font-size: 1.2em;
+            }
+        }
+    </style>
+</head>
+<style>
+    /* Accordion Styles */
+    .accordion {
+        max-width: 800px;
+        margin: 20px auto;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        overflow: hidden;
+        background-color: #f8f9fa;
+    }
+    
+    .accordion-item {
+        border-top: 1px solid #ddd;
+    }
+    
+    .accordion-item:first-child {
+        border-top: none;
+    }
+    
+    .accordion-header {
+        background-color: #0056b3;
+        color: white;
+        padding: 15px;
+        font-size: 1.2em;
+        text-align: left;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        width: 100%;
+        text-align: left;
+    }
+    
+    .accordion-header:hover {
+        background-color: #ffc107;
+        color: #0056b3;
+    }
+    
+    .accordion-content {
+        background-color: #ffffff;
+        color: #343a40;
+        padding: 10px 20px;
+        display: none;
+        font-size: 1em;
+        line-height: 1.5;
+    }
+    
+    .accordion-content p {
+        margin: 0;
+    }
+    
+    .accordion-header.active + .accordion-content {
+        display: block;
+    }
+    </style>
+ <style>
+/* General Menu Styles */
+.menu-container {
+    background-color: #007bff; /* Keep the primary blue color */
+    color: white;
+    font-family: Arial, sans-serif;
+    width: 100%;
+    position: relative;
+}
+
+.menu-bar {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px 15px;
+    cursor: pointer; /* Makes the entire bar clickable */
+    background-color: #0056b3; /* Slightly darker blue for the bar */
+}
+
+.menu-icon {
+    font-size: 24px;
+    margin-right: 10px;
+}
+
+.menu-label {
+    font-size: 18px;
+}
+
+/* Dropdown Menu Styling */
+#menu {
+    display: none;
+    flex-direction: column;
+    background: linear-gradient(to bottom, #f8f9fa, #e9ecef); /* Light gradient for dropdown */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for a modern look */
+    transition: all 0.3s ease-in-out; /* Animation for dropdown appearance */
+    overflow: hidden; /* Ensures smooth dropdown effect */
+    max-height: 0; /* Initially hidden */
+}
+
+#menu.show {
+    display: flex;
+    max-height: 500px; /* Maximum dropdown height (adjustable) */
+}
+
+#menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#menu ul li {
+    text-align: center;
+    border-bottom: 1px solid #dcdcdc;
+}
+
+#menu ul li a {
+    text-decoration: none;
+    color: #0056b3; /* Blue text for contrast */
+    padding: 10px 15px;
+    display: block;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth hover effect */
+}
+
+#menu ul li a:hover {
+    background-color: #007bff; /* Matches main theme */
+    color: white; /* White text on hover */
+ </style>
+<body>
+    <header>
+        <img src="images/jmplogo.png" alt="JMP Logo or Photo">
+        <h1>JMP Medical Centre</h1>
+        <p>Managed by Peace Foundation</p>
+        <p>Piravom, Ernakulam, 686664, Kerala</p>
+    </header>
+    <div class="menu-container">
+    <div id="menu-toggle" class="menu-bar">
+        <span class="menu-icon">&#9776;</span>
+        <span class="menu-label">Menu</span>
+    </div>
+    <nav id="menu" class="hidden">
+    <ul>
+        <li><a href="#about-us">About Us</a></li>
+        <li><a href="doctors-and-department.html">Departments & Doctors</a></li>
+        <li><a href="surgeries.html">Surgeries</a></li>
+        <li><a href="services.html">Our Services</a></li>
+        <li><a href="services.html#24-Hour Services">24-Hour Services</a></li>
+        <li><a href="insurance.html">Insurance</a></li>
+        <li><a href="careers.html">Careers</a></li>
+    </ul>
+</nav>
+    </ul>
+</nav>
+    </nav>
+</div>
+    <div class="banner">
+        <h2>One of the Main Hospitals in Piravom</h2>
+    </div>
+  <div style="text-align: center; margin: 10px;">
+    <div class="scroll-text">
+        <div class="scroll-content">
+            For Bookings Call - 0485 2243443, 2242727, 2241274
+        </div>
+    </div>
+</div>
+<style>
+/* Floating Buttons */
+.floating-buttons {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 1000;
+}
+
+.floating-buttons a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 12px 25px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 1em;
+    font-weight: bold;
+    color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    gap: 10px;
+}
+
+.floating-buttons a.book-appointment {
+    background-color: #0056b3; /* Matches header color */
+    border: 2px solid #003d80;
+}
+
+.floating-buttons a.book-appointment:hover {
+    background-color: #003d80;
+    transform: scale(1.1);
+}
+
+.floating-buttons a.emergency {
+    background-color: #ff0000; /* Red color */
+    border: 2px solid #cc0000;
+}
+
+.floating-buttons a.emergency:hover {
+    background-color: #cc0000;
+    transform: scale(1.1);
+}
+
+.floating-buttons a .icon {
+    font-size: 1.2em;
+    margin-right: 8px;
+}
+</style>
+
+<div class="floating-buttons">
+    <a href="tel:+914852241274" class="book-appointment">
+        <span class="icon">📞</span>Book Appointment
+    </a>
+    <a href="tel:9947621789" class="emergency">
+        <span class="icon">🚑</span>Emergency
+    </a>
+</div>
+<style>
+    /* Floating Buttons */
+    .floating-buttons {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        z-index: 1000;
+    }
+    
+    .floating-buttons .button-container {
+        position: relative;
+    }
+    
+    .floating-buttons a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 12px 25px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-family: 'Roboto', Arial, sans-serif;
+        font-size: 1em;
+        font-weight: bold;
+        color: #ffffff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease, background-color 0.3s ease;
+        gap: 10px;
+    }
+    
+    .floating-buttons a .icon {
+        font-size: 1.2em;
+        margin-right: 8px;
+    }
+    
+    /* Button Styles */
+    .floating-buttons a.book-appointment {
+        background-color: #0056b3; /* Matches header color */
+        border: 2px solid #003d80;
+    }
+    
+    .floating-buttons a.book-appointment:hover {
+        background-color: #003d80;
+        transform: scale(1.1);
+    }
+    
+    .floating-buttons a.emergency {
+        background-color: #ff0000; /* Red color */
+        border: 2px solid #cc0000;
+    }
+    
+    .floating-buttons a.emergency:hover {
+        background-color: #cc0000;
+        transform: scale(1.1);
+    }
+    
+    /* Dropdown Styles */
+    .floating-buttons .dropdown {
+        position: absolute;
+        bottom: -40px;
+        left: 0;
+        background-color: #ffffff;
+        color: #333;
+        padding: 8px 15px;
+        border-radius: 5px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        font-size: 0.9em;
+        font-weight: normal;
+        display: none;
+        z-index: 1001;
+        border: 1px solid #ddd;
+    }
+    
+    .floating-buttons .dropdown.active {
+        display: block;
+    }
+    
+    /* Dropdown Text */
+    .floating-buttons .dropdown span {
+        color: #0056b3;
+        font-weight: bold;
+    }
+    </style>
+    
+    <div class="floating-buttons">
+        <!-- Book Appointment Button -->
+        <div class="button-container">
+            <a href="tel:+914852241274" class="book-appointment" onclick="toggleDropdown(event, 'dropdown-book')">
+                <span class="icon">📞</span>Book Appointment
+            </a>
+            <div class="dropdown" id="dropdown-book">
+                Call - <span>+91 485 224 1274</span>
+            </div>
+        </div>
+        <!-- Emergency Button -->
+        <div class="button-container">
+            <a href="tel:9947621789" class="emergency" onclick="toggleDropdown(event, 'dropdown-emergency')">
+                <span class="icon">🚑</span>Emergency
+            </a>
+            <div class="dropdown" id="dropdown-emergency">
+                Call - <span>9947621789</span>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+    /* Toggle Dropdown Visibility */
+    function toggleDropdown(event, dropdownId) {
+        event.preventDefault(); // Prevent immediate dial on desktop
+        const dropdown = document.getElementById(dropdownId);
+        const isActive = dropdown.classList.contains('active');
+        document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('active')); // Hide all
+        if (!isActive) {
+            dropdown.classList.add('active'); // Show clicked one
+        }
+    }
+    
+    /* Close dropdown if clicked outside */
+    document.addEventListener('click', function (event) {
+        if (!event.target.closest('.button-container')) {
+            document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('active'));
+        }
+    });
+    </script>
+
+<style>
+/* Subtle Scrolling Text */
+.scroll-text {
+    font-size: 1.2em;
+    color: #0056b3;
+    white-space: nowrap;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid #ddd;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+}
+
+.scroll-content {
+    display: inline-block;
+    animation: smoothScroll 15s linear infinite;
+    padding-right: 100%;
+}
+
+/* Smooth scrolling effect */
+@keyframes smoothScroll {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+.scroll-content:hover {
+    animation-play-state: paused; /* Pause animation on hover */
+}
+</style>                
+    <footer>
+        <p>&copy; 2024 JMP Medical Centre. All rights reserved.</p>
+        <div class="icons">
+            <a href="#">&#128222;</a>
+            <a href="#">&#128231;</a>
+            <a href="#">&#127968;</a>
+        </div>
+    </footer>
+    <script>
+        function toggleSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            section.style.display = section.style.display === 'block' ? 'none' : 'block';
+        }
+    </script>
+    <script>
+        document.querySelectorAll('.accordion-header').forEach(button => {
+            button.addEventListener('click', () => {
+                const activeButton = document.querySelector('.accordion-header.active');
+                if (activeButton && activeButton !== button) {
+                    activeButton.classList.remove('active');
+                    activeButton.nextElementSibling.style.display = 'none';
+
+                }
+
+                button.classList.toggle('active');
+                const content = button.nextElementSibling;
+                content.style.display = content.style.display === 'block' ? 'none' : 'block';
+            });
+        });
+    </script>
+
+<script>
+document.getElementById('menu-toggle').addEventListener('click', function () {
+    const menu = document.getElementById('menu');
+    menu.classList.toggle('show');
+});
+</script>
+
+
+</body>
+</html>             
