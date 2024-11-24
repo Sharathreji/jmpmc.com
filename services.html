@@ -70,36 +70,7 @@
             margin: 0;
             color: #0056b3;
         }
-
-        /* Scrolling Text */
-        .scroll-text {
-            font-size: 1.5em;
-            color: #0056b3;
-            white-space: nowrap;
-            overflow: hidden;
-            position: relative;
-        }
-        .scroll-content {
-            display: inline-block;
-            animation: scroll 20s linear infinite;
-        }
-        @keyframes scroll {
-            0% {
-                transform: translateX(100%);
-            }
-            50% {
-                transform: translateX(0);
-            }
-            100% {
-                transform: translateX(-100%);
-            }
-        }
-        .scroll-content:hover {
-            animation-play-state: paused;
-        }
-        
-
-        /* Content Section */
+         /* Content Section */
         .content {
             padding: 20px;
             max-width: 1200px;
@@ -333,17 +304,243 @@
 </nav>
     </nav>
 </div>
-    <div class="banner">
-        <h2>One of the Main Hospitals in Piravom</h2>
+<!-- Our Services Section -->
+<div class="content" style="padding: 40px; font-family: 'Roboto', sans-serif; text-align: center;">
+    <h2 style="color: #0056b3; margin-bottom: 20px;">Our Services</h2>
+    <div id="services-container" style="max-width: 800px; margin: 0 auto;">
+        <!-- Services will be dynamically added here -->
     </div>
-  <div style="text-align: center; margin: 10px;">
-    <div class="scroll-text">
-        <div class="scroll-content">
-            For Bookings Call - 0485 2243443, 2242727, 2241274
+</div>
+
+<script>
+    // Services data
+    const services = [
+        { name: "CT Scan", details: "Our advanced CT scan facilities provide detailed imaging to aid accurate diagnosis." },
+        { name: "Endoscopy", details: "Endoscopy services to diagnose and treat conditions related to the digestive tract." },
+        { name: "Colonoscopy", details: "Comprehensive colonoscopy services for early detection and treatment of colon conditions." },
+        { name: "Arthroscopy", details: "Minimally invasive arthroscopy procedures for joint issues and injuries." },
+        { name: "Dialysis", details: "State-of-the-art dialysis center offering exceptional care for kidney patients." },
+        { name: "Laboratory", details: "Fully equipped laboratory for accurate and timely diagnostics." },
+        { name: "Microbiology", details: "Specialized microbiology testing for infectious diseases and more." },
+        { name: "Pharmacy", details: "Well-stocked pharmacy with quality medicines and patient counseling services." },
+        { name: "Digital X-ray", details: "High-resolution digital X-ray imaging for quick and reliable diagnosis." },
+        { name: "Ultrasound & Colour Doppler", details: "Advanced ultrasound and Doppler imaging for accurate medical assessments." },
+        { name: "Ventilator", details: "Cutting-edge ventilator support for critical care patients." },
+        { name: "Echo", details: "Detailed echocardiography services for heart condition evaluations." },
+        { name: "TMT", details: "Treadmill Test (TMT) to assess cardiac health under stress conditions." },
+        { name: "PFT", details: "Pulmonary Function Test (PFT) to evaluate lung capacity and function." },
+        { name: "Physiotherapy", details: "Comprehensive physiotherapy and palliative care services for better quality of life." },
+        { name: "Mortuary Service", details: "Professional mortuary services with utmost dignity and care." }
+    ];
+
+    // Function to render services
+    function renderServices() {
+        const servicesContainer = document.getElementById('services-container');
+        services.forEach((service, index) => {
+            // Create service panel
+            const servicePanel = document.createElement('div');
+            servicePanel.className = 'service-panel';
+            servicePanel.style.cssText = `
+                border: 1px solid #ddd; 
+                border-radius: 8px; 
+                margin-bottom: 10px; 
+                background-color: #ffffff; 
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+                transition: all 0.3s ease;
+                overflow: hidden;
+            `;
+
+            // Add clickable heading
+            servicePanel.innerHTML = `
+                <div class="service-header" style="
+                    padding: 15px; 
+                    background-color: #007bff; 
+                    color: white; 
+                    font-size: 1.2em; 
+                    cursor: pointer; 
+                    display: flex; 
+                    justify-content: space-between; 
+                    align-items: center;
+                " onclick="toggleServiceDetails(${index})">
+                    <span>${service.name}</span>
+                    <span style="font-size: 1.5em;">&#9662;</span>
+                </div>
+                <div class="service-details" id="details-${index}" style="
+                    display: none; 
+                    padding: 15px; 
+                    color: #333; 
+                    font-size: 1em; 
+                    line-height: 1.6; 
+                    background-color: #f8f9fa;
+                ">
+                    ${service.details}
+                </div>
+            `;
+
+            // Hover effects
+            servicePanel.addEventListener('mouseover', () => {
+                servicePanel.style.boxShadow = '0 6px 10px rgba(0, 0, 0, 0.15)';
+            });
+            servicePanel.addEventListener('mouseout', () => {
+                servicePanel.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+            });
+
+            servicesContainer.appendChild(servicePanel);
+        });
+    }
+
+    // Function to toggle service details
+    function toggleServiceDetails(index) {
+        const details = document.getElementById(`details-${index}`);
+        const isVisible = details.style.display === 'block';
+        details.style.display = isVisible ? 'none' : 'block';
+
+        // Change arrow direction
+        const header = details.previousElementSibling;
+        const arrow = header.querySelector('span:last-child');
+        arrow.innerHTML = isVisible ? '&#9662;' : '&#9652;';
+    }
+
+    // Render services on page load
+    renderServices();
+</script>
+<div id="24-hour-services" style="padding: 40px; background-color: #f8f9fa;">
+    <h2 style="text-align: center; color: #0056b3; font-family: 'Playfair Display', serif; margin-bottom: 30px;">
+        24-Hour Services 
+        <span style="background-color: #ff0000; color: #fff; font-size: 14px; padding: 5px 10px; border-radius: 20px; margin-left: 10px;">24/7</span>
+    </h2>
+    <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
+        <!-- Casualty -->
+        <div class="service-card" onclick="showDescription('casualty')" style="cursor: pointer;">
+            <div class="service-card-icon">
+                <img src="images/casualty-icon.png" alt="Casualty" style="width: 50px; height: 50px;">
+            </div>
+            <div class="service-card-content">
+                <h3>Casualty</h3>
+                <p>Emergency care around the clock.</p>
+            </div>
+        </div>
+
+        <!-- CT Scan -->
+        <div class="service-card" onclick="showDescription('ct-scan')" style="cursor: pointer;">
+            <div class="service-card-icon">
+                <img src="images/ctscan-icon.png" alt="CT Scan" style="width: 50px; height: 50px;">
+            </div>
+            <div class="service-card-content">
+                <h3>CT Scan</h3>
+                <p>Precise diagnostics anytime.</p>
+            </div>
+        </div>
+
+        <!-- Digital X-Ray -->
+        <div class="service-card" onclick="showDescription('digital-xray')" style="cursor: pointer;">
+            <div class="service-card-icon">
+                <img src="images/xray-icon.png" alt="Digital X-Ray" style="width: 50px; height: 50px;">
+            </div>
+            <div class="service-card-content">
+                <h3>Digital X-Ray</h3>
+                <p>Advanced imaging 24/7.</p>
+            </div>
+        </div>
+
+        <!-- Laboratory -->
+        <div class="service-card" onclick="showDescription('laboratory')" style="cursor: pointer;">
+            <div class="service-card-icon">
+                <img src="images/laboratory-icon.png" alt="Laboratory" style="width: 50px; height: 50px;">
+            </div>
+            <div class="service-card-content">
+                <h3>Laboratory</h3>
+                <p>Comprehensive testing, always open.</p>
+            </div>
+        </div>
+
+        <!-- Pharmacy -->
+        <div class="service-card" onclick="showDescription('pharmacy')" style="cursor: pointer;">
+            <div class="service-card-icon">
+                <img src="images/pharmacy-icon.png" alt="Pharmacy" style="width: 50px; height: 50px;">
+            </div>
+            <div class="service-card-content">
+                <h3>Pharmacy</h3>
+                <p>Essential medicines anytime.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Descriptions -->
+    <div id="service-descriptions" style="margin-top: 30px; text-align: center;">
+        <div id="casualty" class="service-description" style="display: none;">
+            <p style="font-size: 1.2em; color: #343a40;">Our casualty department operates round the clock, equipped to handle medical emergencies promptly and efficiently.</p>
+        </div>
+        <div id="ct-scan" class="service-description" style="display: none;">
+            <p style="font-size: 1.2em; color: #343a40;">State-of-the-art CT Scan facilities available 24/7 for accurate and quick diagnostics.</p>
+        </div>
+        <div id="digital-xray" class="service-description" style="display: none;">
+            <p style="font-size: 1.2em; color: #343a40;">Advanced digital X-Ray services, operational 24/7, ensuring clarity and precision.</p>
+        </div>
+        <div id="laboratory" class="service-description" style="display: none;">
+            <p style="font-size: 1.2em; color: #343a40;">Comprehensive laboratory services with 24-hour operations for all your diagnostic needs.</p>
+        </div>
+        <div id="pharmacy" class="service-description" style="display: none;">
+            <p style="font-size: 1.2em; color: #343a40;">Fully stocked pharmacy open 24/7 to ensure uninterrupted access to essential medicines.</p>
         </div>
     </div>
 </div>
+
 <style>
+    .service-card {
+        background: linear-gradient(135deg, #007bff, #0056b3);
+        color: white;
+        border-radius: 10px;
+        padding: 20px;
+        width: 200px;
+        text-align: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .service-card:hover {
+        transform: scale(1.1);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    }
+
+    .service-card-icon img {
+        margin-bottom: 15px;
+    }
+
+    .service-card-content h3 {
+        margin: 10px 0;
+        font-size: 1.2em;
+    }
+
+    .service-card-content p {
+        font-size: 0.9em;
+    }
+
+    .service-description {
+        padding: 20px;
+        background-color: #e9ecef;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin: 20px auto;
+        width: 60%;
+    }
+</style>
+
+<script>
+    function showDescription(serviceId) {
+        // Hide all descriptions
+        document.querySelectorAll('.service-description').forEach(desc => {
+            desc.style.display = 'none';
+        });
+        // Show selected description
+        const selectedDesc = document.getElementById(serviceId);
+        if (selectedDesc) {
+            selectedDesc.style.display = 'block';
+        }
+    }
+</script>
+
+<style> 
 /* Floating Buttons */
 .floating-buttons {
     position: fixed;
