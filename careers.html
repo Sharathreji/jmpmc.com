@@ -333,14 +333,11 @@
 </nav>
     </nav>
 </div>
-    <div class="banner">
-        <h2>One of the Main Hospitals in Piravom</h2>
-    </div>
-  <div style="text-align: center; margin: 10px;">
-    <div class="scroll-text">
-        <div class="scroll-content">
-            For Bookings Call - 0485 2243443, 2242727, 2241274
-        </div>
+<!-- Careers Section -->
+<div class="content" style="padding: 40px; text-align: center; font-family: 'Roboto', sans-serif;">
+    <h2 style="color: #0056b3; margin-bottom: 20px;">Careers</h2>
+    <div id="career-list" style="display: grid; gap: 20px; justify-content: center;">
+        <!-- Career Cards will be dynamically added here -->
     </div>
 </div>
 <style>
@@ -550,7 +547,79 @@
     }
 }
     </script>
+  <script>
+    // Array of career opportunities
+    const careers = [
+        {
+            jobName: "Software Engineer",
+            qualification: "Bachelor’s Degree in Computer Science",
+            experience: "2+ years",
+        },
+        {
+            jobName: "Nurse",
+            qualification: "BSc Nursing",
+            experience: "Fresher",
+        },
+        {
+            jobName: "Accountant",
+            qualification: "BCom/MBA",
+            experience: "1-2 years",
+        }
+    ];
 
+    // Function to render career cards
+    function renderCareers() {
+        const careerList = document.getElementById('career-list');
+        careerList.innerHTML = ''; // Clear existing content
+        careers.forEach(career => {
+            const card = document.createElement('div');
+            card.className = 'career-card';
+            card.style.cssText = `
+                max-width: 600px; 
+                padding: 20px; 
+                background: #ffffff; 
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+                border-radius: 10px; 
+                transition: transform 0.3s ease;
+            `;
+            card.innerHTML = `
+                <h3 style="color: #007bff; margin-bottom: 10px;">${career.jobName}</h3>
+                <p><strong>Qualification:</strong> ${career.qualification}</p>
+                <p><strong>Experience:</strong> ${career.experience}</p>
+                <button 
+                    style="margin-top: 20px; padding: 10px 25px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 1em; transition: background-color 0.3s, transform 0.2s;"
+                    onclick="applyForJob('${career.jobName}')" 
+                    onmouseover="this.style.backgroundColor='#0056b3'; this.style.transform='scale(1.1)';" 
+                    onmouseout="this.style.backgroundColor='#007bff'; this.style.transform='scale(1)';">
+                    Apply Now
+                </button>
+            `;
+            card.addEventListener('mouseover', () => card.style.transform = 'translateY(-5px)');
+            card.addEventListener('mouseout', () => card.style.transform = 'translateY(0)');
+            careerList.appendChild(card);
+        });
+    }
+
+    // Function to apply for a specific job
+    function applyForJob(jobName) {
+        const email = "jmpmc2003@gmail.com";
+        const subject = encodeURIComponent(jobName);
+
+        // Check if the user is on a desktop
+        const isDesktop = window.innerWidth > 768;
+        if (isDesktop) {
+            // Navigate to Gmail web with pre-filled recipient and subject
+            const gmailURL = `https://mail.google.com/mail/?view=cm&to=${email}&su=${subject}`;
+            window.open(gmailURL, '_blank');
+        } else {
+            // Open mail client for mobile devices
+            window.open(`mailto:${email}?subject=${subject}`, '_blank');
+        }
+    }
+
+    // Render the careers on page load
+    renderCareers();
+</script>
 <style>
 /* Subtle Scrolling Text */
 .scroll-text {
