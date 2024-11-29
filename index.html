@@ -378,17 +378,17 @@
 </style>
 <body>
 <div class="floating-buttons">
-    <a href="tel:+914852241274" class="floating-button call-button">
-        📞 Book Appointments
-    </a>
-    <a href="tel:+919947621789" class="floating-button ambulance-button">
-        📞 Ambulance Service 🚑
+    <button class="floating-button call-button" onclick="showContactNumber('📞 Book Appointments: +91 485 224 1274', '+914852241274')">
+        <span class="icon">📞</span> Book Appointments
+    </button>
+    <button class="floating-button ambulance-button" onclick="showContactNumber('📞 Ambulance Service: +91 99476 21789', '+919947621789')">
+        <span class="icon">🚑</span> Ambulance Service 
         <span class="tag">24hrs</span>
-    </a>
+    </button>
 </div>
 </body>
 <style>
-/* Floating Buttons Styles */
+/* Floating Buttons Container */
 .floating-buttons {
     position: fixed;
     right: 20px;
@@ -399,61 +399,93 @@
     z-index: 1000;
 }
 
+/* General Floating Button Styles */
 .floating-button {
     display: flex;
-    justify-content: center;
     align-items: center;
-    text-decoration: none;
+    justify-content: space-between;
+    gap: 10px;
     background-color: #0056b3;
     color: white;
     font-size: 16px;
     font-weight: bold;
-    padding: 15px;
+    padding: 15px 20px;
     border-radius: 50px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
-    width: 200px;
     text-align: center;
-}
-
-.ambulance-button {
-    background-color: #ff4c4c; /* Red color for ambulance button */
+    width: 250px;
     position: relative;
+    overflow: hidden;
 }
 
+/* Button Hover Effect */
+.floating-button:hover {
+    transform: scale(1.05);
+    background: linear-gradient(to right, #007bff, #003366);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Ambulance Button */
+.ambulance-button {
+    background-color: #ff4c4c;
+    color: white;
+}
+
+.ambulance-button:hover {
+    background: linear-gradient(to right, #ff4c4c, #a80000);
+}
+
+/* Tag (24hrs) on Ambulance Button */
 .ambulance-button .tag {
     position: absolute;
-    top: -10px;
-    right: -10px;
+    top: 5px; /* Adjust position for visibility */
+    right: 10px; /* Keeps the tag inside the button */
     background-color: white;
     color: #ff4c4c;
     font-size: 12px;
     font-weight: bold;
-    padding: 3px 6px;
+    padding: 3px 8px;
     border-radius: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    line-height: 1; /* Ensures proper alignment */
 }
 
-.floating-button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+/* Icon Design */
+.floating-button .icon {
+    font-size: 18px;
 }
 
-/* Desktop View Hover Display */
+/* Desktop View Media Query */
 @media (min-width: 1024px) {
-    .floating-button {
-        content: none;
-    }
-
-    .floating-button::after {
-        content: attr(href);
-        display: block;
-        color: #333;
+    .floating-button:hover::after {
+        content: attr(data-number);
+        position: absolute;
+        bottom: -30px;
+        left: 0;
+        right: 0;
+        color: white;
         font-size: 14px;
-        margin-top: 5px;
+        background-color: rgba(0, 0, 0, 0.8);
+        padding: 5px;
+        border-radius: 5px;
+        text-align: center;
     }
 }
 </style>
-<style>  
+<script>
+function showContactNumber(message, tel) {
+    if (window.innerWidth >= 1024) { // Desktop View
+        alert(`Call - ${message}`);
+    } else { // Mobile View
+        window.location.href = `tel:${tel}`;
+    }
+}
+</script>
+<style>
 /* Smooth scrolling effect */
 @keyframes smoothScroll {
     0% {
