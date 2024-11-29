@@ -343,188 +343,116 @@
         </div>
     </div>
 </div>
+<body>
+<div class="floating-buttons">
+    <button class="floating-button call-button" onclick="showContactNumber('+91 485 224 1274', '+914852241274')">
+        <span class="icon">📞</span> Book Appointments
+    </button>
+    <button class="floating-button ambulance-button" onclick="showContactNumber('+91 99476 21789', '+919947621789')">
+        <span class="icon">🚑</span> Ambulance Service 
+        <span class="tag">24hrs</span>
+    </button>
+</div>
+</body>
 <style>
-/* Floating Buttons */
+/* Floating Buttons Container */
 .floating-buttons {
     position: fixed;
-    bottom: 20px;
     right: 20px;
+    bottom: 50px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
     z-index: 1000;
 }
 
-.floating-buttons a {
+/* General Floating Button Styles */
+.floating-button {
     display: flex;
     align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 12px 25px;
-    border-radius: 8px;
-    text-decoration: none;
-    font-family: 'Roboto', Arial, sans-serif;
-    font-size: 1em;
-    font-weight: bold;
-    color: #ffffff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease, background-color 0.3s ease;
+    justify-content: space-between;
     gap: 10px;
+    background-color: #0056b3;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 15px 20px;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    text-align: center;
+    width: 250px;
+    position: relative;
+    overflow: hidden;
 }
 
-.floating-buttons a.book-appointment {
-    background-color: #0056b3; /* Matches header color */
-    border: 2px solid #003d80;
+/* Button Hover Effect */
+.floating-button:hover {
+    transform: scale(1.05);
+    background: linear-gradient(to right, #007bff, #003366);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
-.floating-buttons a.book-appointment:hover {
-    background-color: #003d80;
-    transform: scale(1.1);
+/* Ambulance Button */
+.ambulance-button {
+    background-color: #ff4c4c;
+    color: white;
 }
 
-.floating-buttons a.emergency {
-    background-color: #ff0000; /* Red color */
-    border: 2px solid #cc0000;
+.ambulance-button:hover {
+    background: linear-gradient(to right, #ff4c4c, #a80000);
 }
 
-.floating-buttons a.emergency:hover {
-    background-color: #cc0000;
-    transform: scale(1.1);
+/* Tag (24hrs) on Ambulance Button */
+.ambulance-button .tag {
+    position: absolute;
+    top: 5px; /* Adjust position for visibility */
+    right: 10px; /* Keeps the tag inside the button */
+    background-color: white;
+    color: #ff4c4c;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 3px 8px;
+    border-radius: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    line-height: 1; /* Ensures proper alignment */
 }
 
-.floating-buttons a .icon {
-    font-size: 1.2em;
-    margin-right: 8px;
+/* Icon Design */
+.floating-button .icon {
+    font-size: 18px;
+}
+
+/* Desktop View Media Query */
+@media (min-width: 1024px) {
+    .floating-button:hover::after {
+        content: attr(data-number);
+        position: absolute;
+        bottom: -30px;
+        left: 0;
+        right: 0;
+        color: white;
+        font-size: 14px;
+        background-color: rgba(0, 0, 0, 0.8);
+        padding: 5px;
+        border-radius: 5px;
+        text-align: center;
+    }
 }
 </style>
-
-<div class="floating-buttons">
-    <a href="tel:+914852241274" class="book-appointment">
-        <span class="icon">📞</span>Book Appointment
-    </a>
-    <a href="tel:9947621789" class="emergency">
-        <span class="icon">🚑</span>Emergency
-    </a>
-</div>
+<script>
+function showContactNumber(message, tel) {
+    if (window.innerWidth >= 1024) { // Desktop View
+        alert(`Call - ${message}`);
+    } else { // Mobile View
+        window.location.href = `tel:${tel}`;
+    }
+}
+</script>
 <style>
-    /* Floating Buttons */
-    .floating-buttons {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        z-index: 1000;
-    }
-    
-    .floating-buttons .button-container {
-        position: relative;
-    }
-    
-    .floating-buttons a {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        padding: 12px 25px;
-        border-radius: 8px;
-        text-decoration: none;
-        font-family: 'Roboto', Arial, sans-serif;
-        font-size: 1em;
-        font-weight: bold;
-        color: #ffffff;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        transition: transform 0.3s ease, background-color 0.3s ease;
-        gap: 10px;
-    }
-    
-    .floating-buttons a .icon {
-        font-size: 1.2em;
-        margin-right: 8px;
-    }
-    
-    /* Button Styles */
-    .floating-buttons a.book-appointment {
-        background-color: #0056b3; /* Matches header color */
-        border: 2px solid #003d80;
-    }
-    
-    .floating-buttons a.book-appointment:hover {
-        background-color: #003d80;
-        transform: scale(1.1);
-    }
-    
-    .floating-buttons a.emergency {
-        background-color: #ff0000; /* Red color */
-        border: 2px solid #cc0000;
-    }
-    
-    .floating-buttons a.emergency:hover {
-        background-color: #cc0000;
-        transform: scale(1.1);
-    }
-    
-    
-    /* Floating Buttons Dropdowns */
-.dropdown {
-    display: none;
-    position: absolute;
-    bottom: 50px; /* Adjusted to appear above the button */
-    left: 0;
-    background-color: #ffffff;
-    color: #333;
-    padding: 8px 15px;
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Slightly stronger shadow */
-    font-size: 0.9em;
-    font-weight: normal;
-    border: 1px solid #ddd;
-    z-index: 2000; /* Ensure it appears above other elements */
-    white-space: nowrap; /* Prevent text wrapping */
-}
-
-.dropdown.active {
-    display: block;
-}
-
-/* Adjust floating buttons container to prevent clipping */
-.floating-buttons {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    z-index: 1000; /* Dropdown's z-index is higher */
-}
-    </style>
-    
-    <div class="floating-buttons">
-    <!-- Book Appointment Button -->
-    <div class="button-container">
-        <a href="#" 
-           class="book-appointment" 
-           onclick="handleButtonClick(event, '+914852241274', 'dropdown-book')">
-            <span class="icon">📞</span>Book Appointment
-        </a>
-        <div class="dropdown" id="dropdown-book">
-            Call - <span>+91 485 224 1274</span>
-        </div>
-    </div>
-    <!-- Emergency Button -->
-    <div class="button-container">
-        <a href="#" 
-           class="emergency" 
-           onclick="handleButtonClick(event, '9947621789', 'dropdown-emergency')">
-            <span class="icon">🚑</span>Emergency
-        </a>
-        <div class="dropdown" id="dropdown-emergency">
-            Call - <span>9947621789</span>
-        </div>
-    </div>
-</div>
-    
     <script>
     function handleButtonClick(event, phoneNumber, dropdownId) {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
@@ -550,7 +478,6 @@
     }
 }
     </script>
-
 <style>
 /* Subtle Scrolling Text */
 .scroll-text {
