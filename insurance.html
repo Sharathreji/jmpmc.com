@@ -339,7 +339,7 @@
     <h3>TPA & INSURANCE COMPANIES</h3>
     <div class="cards">
         <!-- Medi Assist -->
-        <div class="card flip-card">
+        <div class="flip-card">
             <div class="flip-card-inner">
                 <div class="flip-card-front">
                     <img src="path/to/medi-assist.jpg" alt="Medi Assist" class="card-image">
@@ -378,24 +378,46 @@
                 </div>
             </div>
         </div>
-        <!-- Add similar structure for other cards -->
+
+        <!-- Health Insurance TPA of India -->
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <img src="path/to/hitpa.jpg" alt="HITPA" class="card-image">
+                    <h4>Health Insurance TPA of India</h4>
+                </div>
+                <div class="flip-card-back">
+                    <h4>Health Insurance TPA of India</h4>
+                    <ul class="scrollable-content">
+                        <li>National Insurance</li>
+                        <li>New India Assurance</li>
+                        <li>Oriental Insurance</li>
+                        <li>United India Insurance</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional TPA Cards -->
+        <!-- Repeat the structure for other companies -->
     </div>
 </div>
 <style>
-/* Flip Card Styling */
+/* Container Styles */
 .cards {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
+    margin-top: 20px;
 }
 
+/* Flip Card Styles */
 .flip-card {
     background-color: transparent;
     width: 300px;
     height: 400px;
     perspective: 1000px;
-    margin: auto;
 }
 
 .flip-card-inner {
@@ -403,12 +425,11 @@
     width: 100%;
     height: 100%;
     text-align: center;
-    transition: transform 0.8s;
+    transition: transform 0.6s;
     transform-style: preserve-3d;
 }
 
-.flip-card:hover .flip-card-inner,
-.flip-card:focus-within .flip-card-inner {
+.flip-card:hover .flip-card-inner {
     transform: rotateY(180deg);
 }
 
@@ -419,17 +440,17 @@
     height: 100%;
     backface-visibility: hidden;
     border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    padding: 15px;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 .flip-card-front {
     background-color: #f8f9fa;
-    color: #0056b3;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .flip-card-back {
@@ -439,18 +460,21 @@
     overflow-y: auto;
 }
 
-/* Card Image */
 .card-image {
     width: 100%;
     height: auto;
     border-radius: 10px;
 }
 
+h4 {
+    margin-top: 10px;
+}
+
 /* Scrollable Content */
 .scrollable-content {
     max-height: 250px;
     overflow-y: auto;
-    padding-right: 10px;
+    padding: 10px;
     list-style: none;
     text-align: left;
 }
@@ -459,7 +483,7 @@
     margin: 5px 0;
 }
 
-/* Responsiveness */
+/* Responsive Design */
 @media (max-width: 768px) {
     .cards {
         flex-direction: column;
@@ -468,6 +492,7 @@
 }
 </style>
 <script>
+// Ensure smooth functionality for flipping cards
 document.querySelectorAll('.flip-card').forEach(card => {
     card.addEventListener('click', () => {
         const innerCard = card.querySelector('.flip-card-inner');
