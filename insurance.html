@@ -335,7 +335,6 @@
 </nav>
     </nav>
 </div>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 <section id="tpa-insurance">
     <h3 class="section-title">TPA & Insurance Companies</h3>
     <div class="modern-cards">
@@ -351,15 +350,23 @@
                         <h5>Supported Companies</h5>
                         <div class="scrollable">
                             <ul>
-                                <li><i class="fas fa-check-circle"></i> Aditya</li>
-                                <li><i class="fas fa-check-circle"></i> Acko</li>
-                                <li><i class="fas fa-check-circle"></i> Bajaj Allianz</li>
-                                <li><i class="fas fa-check-circle"></i> CareHealth</li>
-                                <li><i class="fas fa-check-circle"></i> Cigna</li>
-                                <li><i class="fas fa-check-circle"></i> Future Generali</li>
-                                <li><i class="fas fa-check-circle"></i> GoDigit</li>
-                                <li><i class="fas fa-check-circle"></i> Kotak</li>
-                                <li><i class="fas fa-check-circle"></i> ...and more</li>
+                                <li>Aditya</li>
+                                <li>Acko</li>
+                                <li>Bajaj Allianz</li>
+                                <li>CareHealth</li>
+                                <li>Cigna</li>
+                                <li>Edelweiss</li>
+                                <li>Future Generali</li>
+                                <li>GoDigit</li>
+                                <li>IFFCO TOKIO</li>
+                                <li>Kotak</li>
+                                <li>Liberty</li>
+                                <li>Magna</li>
+                                <li>National Insurance</li>
+                                <li>Navi</li>
+                                <li>New India Assurance</li>
+                                <li>Oriental Insurance</li>
+                                <li>...and more</li>
                             </ul>
                         </div>
                     </div>
@@ -379,10 +386,10 @@
                         <h5>Supported Companies</h5>
                         <div class="scrollable">
                             <ul>
-                                <li><i class="fas fa-check-circle"></i> National Insurance</li>
-                                <li><i class="fas fa-check-circle"></i> New India Assurance</li>
-                                <li><i class="fas fa-check-circle"></i> Oriental Insurance</li>
-                                <li><i class="fas fa-check-circle"></i> United India Insurance</li>
+                                <li>National Insurance</li>
+                                <li>New India Assurance</li>
+                                <li>Oriental Insurance</li>
+                                <li>United India Insurance</li>
                             </ul>
                         </div>
                     </div>
@@ -390,14 +397,14 @@
             </div>
         </div>
 
-        <!-- Repeat this structure for other companies -->
+        <!-- Add similar structure for other TPAs -->
     </div>
 </section>
 <style>
 /* Section Title */
 .section-title {
     text-align: center;
-    font-size: 2em;
+    font-size: 2.5em;
     font-weight: bold;
     color: #0056b3;
     text-transform: uppercase;
@@ -420,7 +427,7 @@
     }
 }
 
-/* Cards Container */
+/* Modern Cards Layout */
 .modern-cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -429,7 +436,7 @@
     margin-top: 20px;
 }
 
-/* Flip Card Design */
+/* Card Design */
 .modern-card {
     perspective: 1000px;
     width: 100%;
@@ -508,7 +515,7 @@
 }
 
 .card-back h5 {
-    font-size: 1.1em;
+    font-size: 1.2em;
     margin-bottom: 10px;
     color: #ffc107;
 }
@@ -535,34 +542,7 @@
     align-items: center;
     color: #ffffff;
 }
-
-.card-back .scrollable ul li i {
-    margin-right: 8px;
-    color: #ffc107;
-}
-
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-    .modern-cards {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    }
-    .modern-card {
-        max-height: 300px;
-    }
-    .card-back .scrollable {
-        max-height: 120px;
-    }
-}
 </style>
-<script>
-document.querySelectorAll('.modern-card').forEach(card => {
-    card.addEventListener('click', () => {
-        const content = card.querySelector('.card-content');
-        content.style.transform = 
-            content.style.transform === 'rotateY(180deg)' ? 'rotateY(0deg)' : 'rotateY(180deg)';
-    });
-});
-</script>
 <body>
 <div class="floating-buttons">
     <button class="floating-button call-button" onclick="showContactNumber('+91 485 224 1274', '+914852241274')">
@@ -663,6 +643,15 @@ document.querySelectorAll('.modern-card').forEach(card => {
     }
 }
 </style>
+<script>
+document.querySelectorAll('.modern-card').forEach(card => {
+    card.addEventListener('click', () => {
+        const content = card.querySelector('.card-content');
+        content.style.transform = 
+            content.style.transform === 'rotateY(180deg)' ? 'rotateY(0deg)' : 'rotateY(180deg)';
+    });
+});
+</script>
 <script>
 function showContactNumber(message, tel) {
     if (window.innerWidth >= 1024) { // Desktop View
