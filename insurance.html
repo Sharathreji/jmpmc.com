@@ -356,7 +356,6 @@
                                 <li><i class="fas fa-check-circle"></i> Bajaj Allianz</li>
                                 <li><i class="fas fa-check-circle"></i> CareHealth</li>
                                 <li><i class="fas fa-check-circle"></i> Cigna</li>
-                                <li><i class="fas fa-check-circle"></i> Edelweiss</li>
                                 <li><i class="fas fa-check-circle"></i> Future Generali</li>
                                 <li><i class="fas fa-check-circle"></i> GoDigit</li>
                                 <li><i class="fas fa-check-circle"></i> Kotak</li>
@@ -391,14 +390,13 @@
             </div>
         </div>
 
-        <!-- Repeat for other companies (Family Health Plan, Vidal Health, etc.) -->
+        <!-- Repeat this structure for other companies -->
     </div>
 </section>
-<style>
 /* Section Title */
 .section-title {
     text-align: center;
-    font-size: 2.5em;
+    font-size: 2em;
     font-weight: bold;
     color: #0056b3;
     text-transform: uppercase;
@@ -426,15 +424,17 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
-    margin-top: 20px;
     justify-items: center;
+    margin-top: 20px;
 }
 
-/* Card Design */
+/* Flip Card Design */
 .modern-card {
     perspective: 1000px;
-    width: 300px;
-    height: 350px;
+    width: 100%;
+    max-width: 300px;
+    height: 100%;
+    max-height: 350px;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -472,9 +472,9 @@
 }
 
 .card-front img {
-    width: 80px;
+    width: 60px;
     height: auto;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     border-radius: 50%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -507,13 +507,13 @@
 }
 
 .card-back h5 {
-    font-size: 1.2em;
+    font-size: 1.1em;
     margin-bottom: 10px;
     color: #ffc107;
 }
 
 .card-back .scrollable {
-    max-height: 200px;
+    max-height: 150px;
     overflow-y: auto;
     width: 100%;
     padding: 10px;
@@ -539,7 +539,19 @@
     margin-right: 8px;
     color: #ffc107;
 }
-</style>
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .modern-cards {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+    .modern-card {
+        max-height: 300px;
+    }
+    .card-back .scrollable {
+        max-height: 120px;
+    }
+}
 <script>
 document.querySelectorAll('.modern-card').forEach(card => {
     card.addEventListener('click', () => {
