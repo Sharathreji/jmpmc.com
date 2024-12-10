@@ -21,9 +21,7 @@
                                 <li><i class="fas fa-check-circle"></i> Edelweiss</li>
                                 <li><i class="fas fa-check-circle"></i> Future Generali</li>
                                 <li><i class="fas fa-check-circle"></i> GoDigit</li>
-                                <li><i class="fas fa-check-circle"></i> IFFCO TOKIO</li>
                                 <li><i class="fas fa-check-circle"></i> Kotak</li>
-                                <li><i class="fas fa-check-circle"></i> Liberty</li>
                                 <li><i class="fas fa-check-circle"></i> ...and more</li>
                             </ul>
                         </div>
@@ -31,56 +29,187 @@
                 </div>
             </div>
         </div>
+
+        <!-- HITPA -->
+        <div class="modern-card">
+            <div class="card-content">
+                <div class="card-front">
+                    <img src="images/hitpa.png" alt="HITPA">
+                    <h4>HITPA</h4>
+                </div>
+                <div class="card-back">
+                    <div class="back-content">
+                        <h5>Supported Companies</h5>
+                        <div class="scrollable">
+                            <ul>
+                                <li><i class="fas fa-check-circle"></i> National Insurance</li>
+                                <li><i class="fas fa-check-circle"></i> New India Assurance</li>
+                                <li><i class="fas fa-check-circle"></i> Oriental Insurance</li>
+                                <li><i class="fas fa-check-circle"></i> United India Insurance</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Repeat for other companies (Family Health Plan, Vidal Health, etc.) -->
     </div>
 </section>
-/* Back Content Styling */
-.card-back .back-content {
+<style>
+/* Section Title */
+.section-title {
+    text-align: center;
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #0056b3;
+    text-transform: uppercase;
+    margin-bottom: 30px;
+    background: linear-gradient(to right, #0056b3, #007bff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+/* Animation for Title */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Cards Container */
+.modern-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+    justify-items: center;
+}
+
+/* Card Design */
+.modern-card {
+    perspective: 1000px;
+    width: 300px;
+    height: 350px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-content {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.6s ease-in-out;
+}
+
+.modern-card:hover .card-content {
+    transform: rotateY(180deg);
+}
+
+/* Front Side */
+.card-front {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 15px;
+    background: white;
+    text-align: center;
+    border: 1px solid #ddd;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.card-front img {
+    width: 80px;
+    height: auto;
+    margin-bottom: 15px;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-front h4 {
+    font-size: 1.2em;
+    color: #0056b3;
+}
+
+/* Back Side */
+.card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    transform: rotateY(180deg);
+    border-radius: 15px;
+    background: #0056b3;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.card-back .back-content {
     text-align: center;
-    padding: 15px;
     overflow: hidden;
 }
 
-/* Scrollable Area for Long Content */
+.card-back h5 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    color: #ffc107;
+}
+
 .card-back .scrollable {
-    max-height: 200px; /* Adjust to fit within the card */
-    overflow-y: auto; /* Enables vertical scrolling */
+    max-height: 200px;
+    overflow-y: auto;
     width: 100%;
     padding: 10px;
-    border: 1px solid #ffffff40; /* Subtle border */
+    border: 1px solid #ffffff40;
     border-radius: 10px;
-    background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
-.card-back .scrollable::-webkit-scrollbar {
-    width: 5px;
-}
-
-.card-back .scrollable::-webkit-scrollbar-thumb {
-    background: #ffc107;
-    border-radius: 5px;
-}
-
-.card-back ul {
+.card-back .scrollable ul {
     list-style: none;
-    padding: 0;
     margin: 0;
+    padding: 0;
 }
 
-.card-back ul li {
-    margin: 10px 0;
-    font-size: 0.9em;
-    color: #ffffff;
+.card-back .scrollable ul li {
+    margin: 5px 0;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    color: #ffffff;
 }
 
-.card-back ul li i {
-    margin-right: 10px;
+.card-back .scrollable ul li i {
+    margin-right: 8px;
     color: #ffc107;
-    font-size: 1em;
 }
+</style>
+<script>
+document.querySelectorAll('.modern-card').forEach(card => {
+    card.addEventListener('click', () => {
+        const content = card.querySelector('.card-content');
+        content.style.transform = 
+            content.style.transform === 'rotateY(180deg)' ? 'rotateY(0deg)' : 'rotateY(180deg)';
+    });
+});
+</script>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
