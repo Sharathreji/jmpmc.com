@@ -397,6 +397,35 @@
                 </div>
             </div>
         </div>
+<!-- Static Card: STAR HEALTH -->
+<div class="static-card">
+    <img src="path/to/star-health.jpg" alt="Star Health" class="card-image">
+    <h4>STAR HEALTH</h4>
+</div>
+
+<!-- Static Card: SBI GENERAL -->
+<div class="static-card">
+    <img src="path/to/sbi-general.jpg" alt="SBI General" class="card-image">
+    <h4>SBI GENERAL</h4>
+</div>
+
+<!-- Static Card: MANIPAL CIGNA -->
+<div class="static-card">
+    <img src="path/to/manipal-cigna.jpg" alt="Manipal Cigna" class="card-image">
+    <h4>MANIPAL CIGNA</h4>
+</div>
+
+<!-- Static Card: NAVI GENERAL -->
+<div class="static-card">
+    <img src="path/to/navi-general.jpg" alt="Navi General" class="card-image">
+    <h4>NAVI GENERAL</h4>
+</div>
+
+<!-- Static Card: MEDISEP -->
+<div class="static-card">
+    <img src="path/to/medisep.jpg" alt="Medisep" class="card-image">
+    <h4>MEDISEP</h4>
+</div>
 
         <!-- Additional TPA Cards -->
         <!-- Repeat the structure for other companies -->
@@ -522,7 +551,46 @@ h4 {
 
 .scrollable-content li {
     margin: 5px 0;
+}/* Static Cards */
+.static-card {
+    background-color: #f8f9fa;
+    width: 250px; /* Smaller size */
+    height: 300px; /* Reduced height */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+    padding: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
+.static-card:hover {
+    transform: translateY(-10px); /* Subtle lift effect on hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.static-card h4 {
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #0056b3; /* Primary theme color */
+    text-align: center;
+}
+
+.static-card img {
+    width: 100%; /* Image fits within the card */
+    height: auto;
+    border-radius: 10px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .static-card {
+        width: 90%; /* Full width on smaller screens */
+    }
 
 /* Responsive Design */
 @media (max-width: 768px) {
