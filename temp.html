@@ -1,109 +1,86 @@
-<body>
-<div class="floating-buttons">
-    <button class="floating-button call-button" onclick="showContactNumber('📞 Book Appointments: +91 485 224 1274', '+914852241274')">
-        <span class="icon">📞</span> Book Appointments
-    </button>
-    <button class="floating-button ambulance-button" onclick="showContactNumber('📞 Ambulance Service: +91 99476 21789', '+919947621789')">
-        <span class="icon">🚑</span> Ambulance Service 
-        <span class="tag">24hrs</span>
-    </button>
-</div>
-</body>
-<style>
-/* Floating Buttons Container */
-.floating-buttons {
-    position: fixed;
-    right: 20px;
-    bottom: 50px;
+<section id="tpa-insurance">
+    <h3 class="section-title">TPA & Insurance Companies</h3>
+    <div class="modern-cards">
+        <!-- Medi Assist -->
+        <div class="modern-card">
+            <div class="card-content">
+                <div class="card-front">
+                    <img src="images/medi_assist.png" alt="Medi Assist">
+                    <h4>Medi Assist</h4>
+                </div>
+                <div class="card-back">
+                    <div class="back-content">
+                        <h5>Supported Companies</h5>
+                        <div class="scrollable">
+                            <ul>
+                                <li><i class="fas fa-check-circle"></i> Aditya</li>
+                                <li><i class="fas fa-check-circle"></i> Acko</li>
+                                <li><i class="fas fa-check-circle"></i> Bajaj Allianz</li>
+                                <li><i class="fas fa-check-circle"></i> CareHealth</li>
+                                <li><i class="fas fa-check-circle"></i> Cigna</li>
+                                <li><i class="fas fa-check-circle"></i> Edelweiss</li>
+                                <li><i class="fas fa-check-circle"></i> Future Generali</li>
+                                <li><i class="fas fa-check-circle"></i> GoDigit</li>
+                                <li><i class="fas fa-check-circle"></i> IFFCO TOKIO</li>
+                                <li><i class="fas fa-check-circle"></i> Kotak</li>
+                                <li><i class="fas fa-check-circle"></i> Liberty</li>
+                                <li><i class="fas fa-check-circle"></i> ...and more</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+/* Back Content Styling */
+.card-back .back-content {
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    z-index: 1000;
-}
-
-/* General Floating Button Styles */
-.floating-button {
-    display: flex;
+    justify-content: center;
     align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    background-color: #0056b3;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    padding: 15px 20px;
-    border-radius: 50px;
-    border: none;
-    cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease;
     text-align: center;
-    width: 250px;
-    position: relative;
+    padding: 15px;
     overflow: hidden;
 }
 
-/* Button Hover Effect */
-.floating-button:hover {
-    transform: scale(1.05);
-    background: linear-gradient(to right, #007bff, #003366);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+/* Scrollable Area for Long Content */
+.card-back .scrollable {
+    max-height: 200px; /* Adjust to fit within the card */
+    overflow-y: auto; /* Enables vertical scrolling */
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ffffff40; /* Subtle border */
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
 }
 
-/* Ambulance Button */
-.ambulance-button {
-    background-color: #ff4c4c;
-    color: white;
+.card-back .scrollable::-webkit-scrollbar {
+    width: 5px;
 }
 
-.ambulance-button:hover {
-    background: linear-gradient(to right, #ff4c4c, #a80000);
+.card-back .scrollable::-webkit-scrollbar-thumb {
+    background: #ffc107;
+    border-radius: 5px;
 }
 
-/* Tag (24hrs) on Ambulance Button */
-.ambulance-button .tag {
-    position: absolute;
-    top: 5px; /* Adjust position for visibility */
-    right: 10px; /* Keeps the tag inside the button */
-    background-color: white;
-    color: #ff4c4c;
-    font-size: 12px;
-    font-weight: bold;
-    padding: 3px 8px;
-    border-radius: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-    line-height: 1; /* Ensures proper alignment */
+.card-back ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
-/* Icon Design */
-.floating-button .icon {
-    font-size: 18px;
+.card-back ul li {
+    margin: 10px 0;
+    font-size: 0.9em;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
 }
 
-/* Desktop View Media Query */
-@media (min-width: 1024px) {
-    .floating-button:hover::after {
-        content: attr(data-number);
-        position: absolute;
-        bottom: -30px;
-        left: 0;
-        right: 0;
-        color: white;
-        font-size: 14px;
-        background-color: rgba(0, 0, 0, 0.8);
-        padding: 5px;
-        border-radius: 5px;
-        text-align: center;
-    }
+.card-back ul li i {
+    margin-right: 10px;
+    color: #ffc107;
+    font-size: 1em;
 }
-</style>
-<script>
-function showContactNumber(message, tel) {
-    if (window.innerWidth >= 1024) { // Desktop View
-        alert(`Call - ${message}`);
-    } else { // Mobile View
-        window.location.href = `tel:${tel}`;
-    }
-}
-</script>
