@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JMP Medical Centre</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <style>
         /* General Styles */
@@ -358,22 +359,14 @@
                                 <li><i class="fas fa-check-circle"></i> Edelweiss</li>
                                 <li><i class="fas fa-check-circle"></i> Future Generali</li>
                                 <li><i class="fas fa-check-circle"></i> GoDigit</li>
-                                <li><i class="fas fa-check-circle"></i> IFFCO TOKIO</li>
                                 <li><i class="fas fa-check-circle"></i> Kotak</li>
-                                <li><i class="fas fa-check-circle"></i> Liberty</li>
-                                <li><i class="fas fa-check-circle"></i> Magna  </li>
-                                <li><i class="fas fa-check-circle"></i> National Insurance </li>
-                                <li><i class="fas fa-check-circle"></i> Navi  </li>
-                                <li><i class="fas fa-check-circle"></i> New India Assurance </li>
-                                <li><i class="fas fa-check-circle"></i> Navi  </li>
-                                <li><i class="fas fa-check-circle"></i> Navi  </li>
+                                <li><i class="fas fa-check-circle"></i> ...and more</li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
         <!-- HITPA -->
         <div class="modern-card">
@@ -385,23 +378,27 @@
                 <div class="card-back">
                     <div class="back-content">
                         <h5>Supported Companies</h5>
-                        <ul>
-                            <li><i class="fas fa-check-circle"></i> National Insurance</li>
-                            <li><i class="fas fa-check-circle"></i> New India Assurance</li>
-                            <li><i class="fas fa-check-circle"></i> Oriental Insurance</li>
-                            <li><i class="fas fa-check-circle"></i> United India Insurance</li>
-                        </ul>
+                        <div class="scrollable">
+                            <ul>
+                                <li><i class="fas fa-check-circle"></i> National Insurance</li>
+                                <li><i class="fas fa-check-circle"></i> New India Assurance</li>
+                                <li><i class="fas fa-check-circle"></i> Oriental Insurance</li>
+                                <li><i class="fas fa-check-circle"></i> United India Insurance</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- Repeat for other companies (Family Health Plan, Vidal Health, etc.) -->
     </div>
 </section>
 <style>
-    /* Main Section Title */
+/* Section Title */
 .section-title {
     text-align: center;
-    font-size: 2em;
+    font-size: 2.5em;
     font-weight: bold;
     color: #0056b3;
     text-transform: uppercase;
@@ -412,7 +409,7 @@
     animation: fadeIn 1.5s ease-in-out;
 }
 
-/* Keyframe Animation for Heading */
+/* Animation for Title */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -424,7 +421,7 @@
     }
 }
 
-/* Modern Cards Container */
+/* Cards Container */
 .modern-cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -433,7 +430,7 @@
     justify-items: center;
 }
 
-/* Modern Card Styles */
+/* Card Design */
 .modern-card {
     perspective: 1000px;
     width: 300px;
@@ -442,7 +439,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: transform 0.6s ease-in-out;
 }
 
 .card-content {
@@ -457,27 +453,22 @@
     transform: rotateY(180deg);
 }
 
-/* Front & Back Styles */
-.card-front,
-.card-back {
+/* Front Side */
+.card-front {
     position: absolute;
     width: 100%;
     height: 100%;
     backface-visibility: hidden;
     border-radius: 15px;
+    background: white;
+    text-align: center;
+    border: 1px solid #ddd;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-/* Front Side */
-.card-front {
-    background: #fff;
-    text-align: center;
-    border: 1px solid #ddd;
 }
 
 .card-front img {
@@ -495,86 +486,66 @@
 
 /* Back Side */
 .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    transform: rotateY(180deg);
+    border-radius: 15px;
     background: #0056b3;
     color: white;
-    transform: rotateY(180deg);
-    text-align: left;
-    padding: 20px;
-}
-
-.card-back ul {
-    list-style: none;
-    padding: 0;
-}
-
-.card-back ul li {
-    margin: 5px 0;
-    font-size: 0.9em;
-    color: white;
-}
-
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-    .card-content {
-        height: 250px;
-    }
-
-    .card-front img {
-        width: 60px;
-    }
-}/* Back Content Styling */
-.card-back .back-content {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.card-back .back-content {
     text-align: center;
-    padding: 15px;
+    overflow: hidden;
 }
 
 .card-back h5 {
     font-size: 1.2em;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     color: #ffc107;
-    text-transform: uppercase;
-    font-weight: bold;
 }
 
-.card-back ul {
+.card-back .scrollable {
+    max-height: 200px;
+    overflow-y: auto;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ffffff40;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.card-back .scrollable ul {
     list-style: none;
-    padding: 0;
     margin: 0;
+    padding: 0;
 }
 
-.card-back ul li {
-    margin: 10px 0;
-    font-size: 0.9em;
-    color: #ffffff;
+.card-back .scrollable ul li {
+    margin: 5px 0;
     display: flex;
     align-items: center;
-    justify-content: center;
+    color: #ffffff;
 }
 
-.card-back ul li i {
-    margin-right: 10px;
+.card-back .scrollable ul li i {
+    margin-right: 8px;
     color: #ffc107;
-    font-size: 1em;
-}
-
-/* Add hover effect for list items */
-.card-back ul li:hover {
-    color: #ffc107;
-    transform: scale(1.05);
-    transition: transform 0.3s ease, color 0.3s ease;
 }
 </style>
 <script>
 document.querySelectorAll('.modern-card').forEach(card => {
     card.addEventListener('click', () => {
         const content = card.querySelector('.card-content');
-        content.style.transform = content.style.transform === 'rotateY(180deg)' 
-            ? 'rotateY(0deg)' 
-            : 'rotateY(180deg)';
+        content.style.transform = 
+            content.style.transform === 'rotateY(180deg)' ? 'rotateY(0deg)' : 'rotateY(180deg)';
     });
 });
 </script>
