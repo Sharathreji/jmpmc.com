@@ -335,214 +335,147 @@
 </nav>
     </nav>
 </div>
-<section id="tpa-insurance">
-    <h3 class="section-title">TPA & Insurance Companies</h3>
-    <div class="modern-cards">
+<div class="content">
+    <h3>TPA & INSURANCE COMPANIES</h3>
+    <div class="cards">
         <!-- Medi Assist -->
-        <div class="modern-card">
-            <div class="card-content">
-                <div class="card-front">
-                    <img src="images/medi_assist.png" alt="Medi Assist">
+        <div class="card flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <img src="path/to/medi-assist.jpg" alt="Medi Assist" class="card-image">
                     <h4>Medi Assist</h4>
                 </div>
-                <div class="card-back">
-                    <div class="back-content">
-                        <h5>Supported Companies</h5>
-                        <div class="scrollable">
-                            <ul>
-                                <li>Aditya</li>
-                                <li>Acko</li>
-                                <li>Bajaj Allianz</li>
-                                <li>CareHealth</li>
-                                <li>Cigna</li>
-                                <li>Edelweiss</li>
-                                <li>Future Generali</li>
-                                <li>GoDigit</li>
-                                <li>IFFCO TOKIO</li>
-                                <li>Kotak</li>
-                                <li>Liberty</li>
-                                <li>Magna</li>
-                                <li>National Insurance</li>
-                                <li>Navi</li>
-                                <li>New India Assurance</li>
-                                <li>Oriental Insurance</li>
-                                <li>...and more</li>
-                            </ul>
-                        </div>
-                    </div>
+                <div class="flip-card-back">
+                    <h4>Medi Assist</h4>
+                    <ul class="scrollable-content">
+                        <li>Aditya</li>
+                        <li>Acko</li>
+                        <li>Bajaj Allianz</li>
+                        <li>Care Health</li>
+                        <li>Cigna</li>
+                        <li>Edelweiss</li>
+                        <li>Future Generali</li>
+                        <li>GoDigit</li>
+                        <li>IFFCO TOKIO</li>
+                        <li>India First</li>
+                        <li>Kotak</li>
+                        <li>Liberty</li>
+                        <li>Magna</li>
+                        <li>National Insurance</li>
+                        <li>Navi</li>
+                        <li>New India Assurance</li>
+                        <li>Oriental Insurance</li>
+                        <li>Raheja</li>
+                        <li>Reliance Life</li>
+                        <li>Reliance General</li>
+                        <li>Royal Sundaram</li>
+                        <li>SBI</li>
+                        <li>Shikhar</li>
+                        <li>TATA AIG</li>
+                        <li>United India Insurance</li>
+                        <li>Universal Sampo</li>
+                    </ul>
                 </div>
             </div>
         </div>
-
-        <!-- HITPA -->
-        <div class="modern-card">
-            <div class="card-content">
-                <div class="card-front">
-                    <img src="images/hitpa.png" alt="HITPA">
-                    <h4>HITPA</h4>
-                </div>
-                <div class="card-back">
-                    <div class="back-content">
-                        <h5>Supported Companies</h5>
-                        <div class="scrollable">
-                            <ul>
-                                <li>National Insurance</li>
-                                <li>New India Assurance</li>
-                                <li>Oriental Insurance</li>
-                                <li>United India Insurance</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Add similar structure for other TPAs -->
+        <!-- Add similar structure for other cards -->
     </div>
-</section>
+</div>
 <style>
-/* Section Title */
-.section-title {
-    text-align: center;
-    font-size: 2.5em;
-    font-weight: bold;
-    color: #0056b3;
-    text-transform: uppercase;
-    margin-bottom: 30px;
-    background: linear-gradient(to right, #0056b3, #007bff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: fadeIn 1.5s ease-in-out;
-}
-
-/* Animation for Title */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Modern Cards Layout */
-.modern-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-    justify-items: center;
-    margin-top: 20px;
-}
-
-/* Card Design */
-.modern-card {
-    perspective: 1000px;
-    width: 100%;
-    max-width: 300px;
-    height: 100%;
-    max-height: 350px;
-    cursor: pointer;
+/* Flip Card Styling */
+.cards {
     display: flex;
-    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
     justify-content: center;
 }
 
-.card-content {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    transform-style: preserve-3d;
-    transition: transform 0.6s ease-in-out;
+.flip-card {
+    background-color: transparent;
+    width: 300px;
+    height: 400px;
+    perspective: 1000px;
+    margin: auto;
 }
 
-.modern-card:hover .card-content {
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+
+.flip-card:hover .flip-card-inner,
+.flip-card:focus-within .flip-card-inner {
     transform: rotateY(180deg);
 }
 
-/* Front Side */
-.card-front {
+.flip-card-front,
+.flip-card-back {
     position: absolute;
     width: 100%;
     height: 100%;
     backface-visibility: hidden;
-    border-radius: 15px;
-    background: white;
-    text-align: center;
-    border: 1px solid #ddd;
+    border-radius: 10px;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
-    padding: 20px;
+    align-items: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 15px;
 }
 
-.card-front img {
-    width: 60px;
-    height: auto;
-    margin-bottom: 10px;
-    border-radius: 50%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.card-front h4 {
-    font-size: 1.2em;
+.flip-card-front {
+    background-color: #f8f9fa;
     color: #0056b3;
 }
 
-/* Back Side */
-.card-back {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    backface-visibility: hidden;
-    transform: rotateY(180deg);
-    border-radius: 15px;
-    background: #0056b3;
+.flip-card-back {
+    background-color: #0056b3;
     color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.card-back .back-content {
-    text-align: center;
-    overflow: hidden;
-}
-
-.card-back h5 {
-    font-size: 1.2em;
-    margin-bottom: 10px;
-    color: #ffc107;
-}
-
-.card-back .scrollable {
-    max-height: 150px;
+    transform: rotateY(180deg);
     overflow-y: auto;
+}
+
+/* Card Image */
+.card-image {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #ffffff40;
+    height: auto;
     border-radius: 10px;
-    background-color: rgba(255, 255, 255, 0.1);
 }
 
-.card-back .scrollable ul {
+/* Scrollable Content */
+.scrollable-content {
+    max-height: 250px;
+    overflow-y: auto;
+    padding-right: 10px;
     list-style: none;
-    margin: 0;
-    padding: 0;
+    text-align: left;
 }
 
-.card-back .scrollable ul li {
+.scrollable-content li {
     margin: 5px 0;
-    display: flex;
-    align-items: center;
-    color: #ffffff;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+    .cards {
+        flex-direction: column;
+        align-items: center;
+    }
 }
 </style>
+<script>
+document.querySelectorAll('.flip-card').forEach(card => {
+    card.addEventListener('click', () => {
+        const innerCard = card.querySelector('.flip-card-inner');
+        innerCard.style.transform =
+            innerCard.style.transform === 'rotateY(180deg)' ? '' : 'rotateY(180deg)';
+    });
+});
+</script>
 <body>
 <div class="floating-buttons">
     <button class="floating-button call-button" onclick="showContactNumber('+91 485 224 1274', '+914852241274')">
