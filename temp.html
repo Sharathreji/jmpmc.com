@@ -1,1 +1,41 @@
 #e66a10
+/* Heading Container Styles */
+.heading-container {
+    width: 100%;
+    background-color: #ffffff; /* White background for contrast */
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    border-radius: 10px; /* Rounded edges for modern look */
+    margin: 20px auto;
+    max-width: 800px; /* Limit the width for better focus */
+    animation: fadeIn 1s ease-in-out; /* Smooth appearance animation */
+}
+
+/* Heading Text */
+.heading-container h3 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #0056b3; /* Match the theme */
+    text-transform: uppercase;
+    margin: 0;
+}
+
+/* Optional Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+
+
+<div class="heading-container">
+    <h3>TPA & Insurance Companies</h3>
+</div>
