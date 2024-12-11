@@ -592,6 +592,9 @@ h4 {
     text-transform: uppercase;
     color: #0056b3;
 }
+.flip-card-inner {
+    transition: transform 0.8s ease-in-out;
+}
 /* Scrollable Content */
 .scrollable-content {
     max-height: 250px;
@@ -661,6 +664,44 @@ document.querySelectorAll('.flip-card').forEach(card => {
             innerCard.style.transform === 'rotateY(180deg)' ? '' : 'rotateY(180deg)';
     });
 });
+</script>
+<script>
+    // Select all flip cards
+    const flipCards = document.querySelectorAll('.flip-card');
+    let autoFlipInterval;
+
+    // Function to auto-flip the cards
+    const autoFlipCards = () => {
+        autoFlipInterval = setInterval(() => {
+            flipCards.forEach(card => {
+                const innerCard = card.querySelector('.flip-card-inner');
+                if (!innerCard.classList.contains('manual-flip')) {
+                    innerCard.style.transform =
+                        innerCard.style.transform === 'rotateY(180deg)' ? '' : 'rotateY(180deg)';
+                }
+            });
+        }, 3000); // Flip every 3 seconds
+    };
+
+    // Add event listener to disable auto-flip on user interaction
+    flipCards.forEach(card => {
+        card.addEventListener('click', () => {
+            const innerCard = card.querySelector('.flip-card-inner');
+
+            // Mark this card as manually flipped
+            innerCard.classList.add('manual-flip');
+
+            // Toggle flip state
+            innerCard.style.transform =
+                innerCard.style.transform === 'rotateY(180deg)' ? '' : 'rotateY(180deg)';
+
+            // Clear the interval to stop auto-flipping
+            clearInterval(autoFlipInterval);
+        });
+    });
+
+    // Start auto-flipping
+    autoFlipCards();
 </script>
 <body>
 <div class="floating-buttons">
