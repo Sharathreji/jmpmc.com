@@ -11,6 +11,7 @@ function renderDepartments() {
             background-color: #ffffff; 
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease;
+            position: relative; /* To allow proper positioning of the button */
         `;
 
         const doctorHTML = department.doctors.map(doctor => `
@@ -46,17 +47,13 @@ function renderDepartments() {
 
 // Function to navigate to review page
 function navigateToReview(departmentName) {
-    const basePath = 'review.html'; // Adjust this path if necessary
+    const basePath = 'review.html'; // Adjust this path as necessary
     const url = `${basePath}?department=${encodeURIComponent(departmentName)}`;
     window.location.href = url;
 }
 
 // Render departments on page load
 renderDepartments();
-
-
-
-
 
 
 
@@ -73,12 +70,9 @@ renderDepartments();
     border-radius: 25px;
     cursor: pointer;
     transition: all 0.3s ease;
-    margin-top: 10px;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    position: relative; /* Relative positioning inside the department details */
-    left: 0; /* Align to the left side */
+    position: absolute; /* Position relative to the department card */
+    right: 20px; /* Align to the right end */
+    bottom: 20px; /* Align to the bottom of the department card */
 }
 
 .review-button .arrow {
