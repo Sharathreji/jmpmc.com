@@ -300,6 +300,19 @@
 .review-button:hover .arrow {
     transform: translateX(5px); /* Moves the arrow slightly on hover */
 }
+
+/* Mobile View Adjustments */
+@media (max-width: 768px) {
+    .review-button {
+        position: static; /* Places the button in the document flow */
+        margin-top: 20px; /* Adds spacing above the button */
+        display: block; /* Centers the button */
+        text-align: center;
+        width: 80%; /* Adjusts width for smaller screens */
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
  </style>
 <body>
     <header>
