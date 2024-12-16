@@ -265,6 +265,41 @@
     background-color: #007bff; /* Matches main theme */
     color: white; /* White text on hover */
 }
+/* Review Button Styles */
+.review-button {
+    background-color: #0056b3; /* Matches website theme */
+    color: #ffffff;
+    font-size: 0.9em;
+    font-weight: bold;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: absolute; /* Enables positioning relative to the card */
+    bottom: 20px; /* Aligns to the bottom of the department card */
+    right: 20px; /* Aligns to the right of the department card */
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Arrow and Hover Effect */
+.review-button .arrow {
+    font-size: 1em;
+    transition: transform 0.3s ease;
+}
+
+.review-button:hover {
+    background: linear-gradient(to right, #007bff, #003366);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+}
+
+.review-button:hover .arrow {
+    transform: translateX(5px); /* Moves the arrow slightly on hover */
+}
  </style>
 <body>
     <header>
@@ -491,47 +526,51 @@
         }
     ];
 
-    // Function to render departments
     function renderDepartments() {
-        const departmentsContainer = document.getElementById('departments');
-        departments.forEach(department => {
-            const departmentCard = document.createElement('div');
-            departmentCard.className = 'department-card';
-            departmentCard.style.cssText = `
-                margin-bottom: 20px; 
-                border: 1px solid #ddd; 
-                border-radius: 10px; 
-                padding: 20px; 
-                background-color: #ffffff; 
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                transition: transform 0.3s ease;
-            `;
+    const departmentsContainer = document.getElementById('departments');
+    departments.forEach(department => {
+        const departmentCard = document.createElement('div');
+        departmentCard.className = 'department-card';
+        departmentCard.style.cssText = `
+            margin-bottom: 20px; 
+            border: 1px solid #ddd; 
+            border-radius: 10px; 
+            padding: 20px; 
+            background-color: #ffffff; 
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative; /* Ensures positioning context for the button */
+            transition: transform 0.3s ease;
+        `;
 
-            departmentCard.innerHTML = `
-                <h3 style="color: #007bff; cursor: pointer; text-align: center; margin: 0;" onclick="toggleDetails('${department.name}')">
-                    ${department.name}
-                </h3>
-                <div id="${department.name}-details" style="display: none; margin-top: 20px;">
-                    <p style="text-align: justify;">${department.details}</p>
-                    <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-top: 20px;">
-                        ${department.doctors.map(doctor => `
-                            <div style="width: 200px; text-align: center;">
-                                <img src="${doctor.photo}" alt="${doctor.name}" style="width: 100%; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
-                                <h4 style="color: #0056b3; margin: 10px 0 5px;">${doctor.name}</h4>
-                                <p style="margin: 0; font-size: 0.9em; color: #333;"><strong>${doctor.qualification}</strong></p>
-                                <p style="margin: 0; font-size: 0.85em; color: #666;">${doctor.role}</p>
-                            </div>
-                        `).join('')}
-                    </div>
+        departmentCard.innerHTML = `
+            <h3 style="color: #007bff; cursor: pointer; text-align: center; margin: 0;" onclick="toggleDetails('${department.name}')">
+                ${department.name}
+            </h3>
+            <div id="${department.name}-details" style="display: none; margin-top: 20px;">
+                <p style="text-align: justify;">${department.details}</p>
+                <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-top: 20px;">
+                    ${department.doctors.map(doctor => `
+                        <div style="width: 200px; text-align: center;">
+                            <img src="${doctor.photo}" alt="${doctor.name}" style="width: 100%; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+                            <h4 style="color: #0056b3; margin: 10px 0 5px;">${doctor.name}</h4>
+                            <p style="margin: 0; font-size: 0.9em; color: #333;"><strong>${doctor.qualification}</strong></p>
+                            <p style="margin: 0; font-size: 0.85em; color: #666;">${doctor.role}</p>
+                        </div>
+                    `).join('')}
                 </div>
-            `;
+                <!-- Review Button -->
+                <button class="review-button" onclick="location.href='reviews.html'">
+                    <span class="arrow">➤</span> Write a Review
+                </button>
+            </div>
+        `;
 
-            departmentCard.addEventListener('mouseover', () => departmentCard.style.transform = 'scale(1.02)');
-            departmentCard.addEventListener('mouseout', () => departmentCard.style.transform = 'scale(1)');
+        departmentCard.addEventListener('mouseover', () => departmentCard.style.transform = 'scale(1.02)');
+        departmentCard.addEventListener('mouseout', () => departmentCard.style.transform = 'scale(1)');
 
-            departmentsContainer.appendChild(departmentCard);
-        });
-    }
+        departmentsContainer.appendChild(departmentCard);
+    });
+}
 
     // Function to toggle department details
     function toggleDetails(departmentName) {
