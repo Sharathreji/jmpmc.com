@@ -265,7 +265,9 @@
     background-color: #007bff; /* Matches main theme */
     color: white; /* White text on hover */
 }
-     .review-button {
+ </style>
+<style>
+.review-button {
     background-color: #0056b3;
     color: #ffffff;
     font-size: 1em;
@@ -295,7 +297,7 @@
 .review-button:hover .arrow {
     margin-left: 10px;
 }
- </style>
+</style>
 <body>
     <header>
         <img src="images/jmplogo.png" alt="JMP Logo or Photo">
@@ -572,8 +574,6 @@
 
     // Render departments on page load
     renderDepartments();
-</script>
-    <script>
 // Function to render departments with a Review button
 function renderDepartments() {
     const departmentsContainer = document.getElementById('departments');
@@ -596,7 +596,7 @@ function renderDepartments() {
             </h3>
             <div id="${department.name}-details" style="display: none; margin-top: 20px;">
                 <p style="text-align: justify;">${department.details}</p>
-                <button class="review-button" onclick="window.location.href='review.html'">
+                <button class="review-button" onclick="navigateToReview('${department.name}')">
                     Review <span class="arrow">→</span>
                 </button>
                 <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-top: 20px;">
@@ -618,6 +618,16 @@ function renderDepartments() {
         departmentsContainer.appendChild(departmentCard);
     });
 }
+
+// Function to navigate to review page
+function navigateToReview(departmentName) {
+    const basePath = 'review.html'; // Adjust this path if necessary
+    const url = `${basePath}?department=${encodeURIComponent(departmentName)}`;
+    window.location.href = url;
+}
+
+// Render departments on page load
+renderDepartments();
 </script>
 <body>
 <div class="floating-buttons">
