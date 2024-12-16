@@ -266,40 +266,6 @@
     color: white; /* White text on hover */
 }
  </style>
- <STYLE>
-    .review-button {
-    background-color: #0056b3;
-    color: #ffffff;
-    font-size: 0.9em;
-    font-weight: bold;
-    padding: 8px 15px;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    position: absolute; /* Absolute positioning within the card */
-    left: 10px; /* Align to the left of the container */
-    bottom: 10px; /* Place at the bottom */
-    transition: all 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.review-button .arrow {
-    font-size: 1.2em;
-    margin-left: 5px;
-    transition: margin-left 0.3s ease;
-}
-
-.review-button:hover {
-    background-color: #003366;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.review-button:hover .arrow {
-    margin-left: 10px;
-}
- </STYLE>
 <body>
     <header>
         <img src="images/jmplogo.png" alt="JMP Logo or Photo">
@@ -321,7 +287,6 @@
        <li><a href="services.html#24-Hour Services">24-Hour Services</a></li>
         <li><a href="insurance.html">Insurance</a></li>
         <li><a href="careers.html">Careers</a></li>
-        <li><a href="reviews.html">Reviews & Suggestions</a></li>
     </ul>
 </nav>
     </ul>
@@ -576,60 +541,6 @@
 
     // Render departments on page load
     renderDepartments();
-
-    function renderDepartments() {
-    const departmentsContainer = document.getElementById('departments');
-    departments.forEach(department => {
-        const departmentCard = document.createElement('div');
-        departmentCard.className = 'department-card';
-        departmentCard.style.cssText = `
-            margin-bottom: 20px; 
-            border: 1px solid #ddd; 
-            border-radius: 10px; 
-            padding: 20px; 
-            background-color: #ffffff; 
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-        `;
-
-        departmentCard.innerHTML = `
-            <h3 style="color: #007bff; cursor: pointer; text-align: center; margin: 0;" onclick="toggleDetails('${department.name}')">
-                ${department.name}
-            </h3>
-            <div id="${department.name}-details" style="display: none; margin-top: 20px;">
-                <p style="text-align: justify;">${department.details}</p>
-                <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: flex-start; margin-top: 20px;">
-                    ${department.doctors.map(doctor => `
-                        <div style="width: 200px; text-align: center; position: relative; padding-bottom: 50px;">
-                            <img src="${doctor.photo}" alt="${doctor.name}" style="width: 100%; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
-                            <h4 style="color: #0056b3; margin: 10px 0 5px;">${doctor.name}</h4>
-                            <p style="margin: 0; font-size: 0.9em; color: #333;"><strong>${doctor.qualification}</strong></p>
-                            <p style="margin: 0; font-size: 0.85em; color: #666;">${doctor.role}</p>
-                            <button class="review-button" onclick="navigateToReview('${department.name}')">
-                                Review <span class="arrow">→</span>
-                            </button>
-                        </div>
-                    `).join('')}
-                </div>
-            </div>
-        `;
-
-        departmentCard.addEventListener('mouseover', () => departmentCard.style.transform = 'scale(1.02)');
-        departmentCard.addEventListener('mouseout', () => departmentCard.style.transform = 'scale(1)');
-
-        departmentsContainer.appendChild(departmentCard);
-    });
-}
-
-// Function to navigate to review page
-function navigateToReview(departmentName) {
-    const basePath = 'reviews.html'; // Adjust this path as needed
-    const url = `${basePath}?department=${encodeURIComponent(departmentName)}`;
-    window.location.href = url;
-}
-
-// Render departments on page load
-renderDepartments();
 </script>
 <body>
 <div class="floating-buttons">
