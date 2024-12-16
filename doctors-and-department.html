@@ -278,9 +278,9 @@
     cursor: pointer;
     transition: all 0.3s ease;
     margin-top: 10px;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
+    position: absolute; /* Position relative to the doctor's card */
+    left: 0; /* Align the button to the left edge */
+    bottom: 10px; /* Provide spacing from the bottom of the box */
 }
 
 .review-button .arrow {
@@ -572,10 +572,7 @@
         details.style.display = details.style.display === 'block' ? 'none' : 'block';
     }
 
-    // Render departments on page load
-    renderDepartments();
-// Function to render departments with a Review button
-function renderDepartments() {
+    function renderDepartments() {
     const departmentsContainer = document.getElementById('departments');
     departments.forEach(department => {
         const departmentCard = document.createElement('div');
@@ -596,16 +593,16 @@ function renderDepartments() {
             </h3>
             <div id="${department.name}-details" style="display: none; margin-top: 20px;">
                 <p style="text-align: justify;">${department.details}</p>
-                <button class="review-button" onclick="navigateToReview('${department.name}')">
-                    Review <span class="arrow">→</span>
-                </button>
-                <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-top: 20px;">
+                <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: flex-start; margin-top: 20px;">
                     ${department.doctors.map(doctor => `
-                        <div style="width: 200px; text-align: center;">
+                        <div style="width: 200px; text-align: center; position: relative;">
                             <img src="${doctor.photo}" alt="${doctor.name}" style="width: 100%; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
                             <h4 style="color: #0056b3; margin: 10px 0 5px;">${doctor.name}</h4>
                             <p style="margin: 0; font-size: 0.9em; color: #333;"><strong>${doctor.qualification}</strong></p>
                             <p style="margin: 0; font-size: 0.85em; color: #666;">${doctor.role}</p>
+                            <button class="review-button" onclick="navigateToReview('${department.name}')">
+                                Review <span class="arrow">→</span>
+                            </button>
                         </div>
                     `).join('')}
                 </div>
@@ -618,16 +615,6 @@ function renderDepartments() {
         departmentsContainer.appendChild(departmentCard);
     });
 }
-
-// Function to navigate to review page
-function navigateToReview(departmentName) {
-    const basePath = 'review.html'; // Adjust this path if necessary
-    const url = `${basePath}?department=${encodeURIComponent(departmentName)}`;
-    window.location.href = url;
-}
-
-// Render departments on page load
-renderDepartments();
 </script>
 <body>
 <div class="floating-buttons">
