@@ -13,6 +13,15 @@ function renderDepartments() {
             transition: transform 0.3s ease;
         `;
 
+        const doctorHTML = department.doctors.map(doctor => `
+            <div style="width: 200px; text-align: center;">
+                <img src="${doctor.photo}" alt="${doctor.name}" style="width: 100%; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+                <h4 style="color: #0056b3; margin: 10px 0 5px;">${doctor.name}</h4>
+                <p style="margin: 0; font-size: 0.9em; color: #333;"><strong>${doctor.qualification}</strong></p>
+                <p style="margin: 0; font-size: 0.85em; color: #666;">${doctor.role}</p>
+            </div>
+        `).join('');
+
         departmentCard.innerHTML = `
             <h3 style="color: #007bff; cursor: pointer; text-align: center; margin: 0;" onclick="toggleDetails('${department.name}')">
                 ${department.name}
@@ -20,18 +29,11 @@ function renderDepartments() {
             <div id="${department.name}-details" style="display: none; margin-top: 20px;">
                 <p style="text-align: justify;">${department.details}</p>
                 <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: flex-start; margin-top: 20px;">
-                    ${department.doctors.map(doctor => `
-                        <div style="width: 200px; text-align: center; position: relative; padding-bottom: 50px;">
-                            <img src="${doctor.photo}" alt="${doctor.name}" style="width: 100%; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
-                            <h4 style="color: #0056b3; margin: 10px 0 5px;">${doctor.name}</h4>
-                            <p style="margin: 0; font-size: 0.9em; color: #333;"><strong>${doctor.qualification}</strong></p>
-                            <p style="margin: 0; font-size: 0.85em; color: #666;">${doctor.role}</p>
-                            <button class="review-button" onclick="navigateToReview('${department.name}')">
-                                Review <span class="arrow">→</span>
-                            </button>
-                        </div>
-                    `).join('')}
+                    ${doctorHTML}
                 </div>
+                <button class="review-button" onclick="navigateToReview('${department.name}')">
+                    Review <span class="arrow">→</span>
+                </button>
             </div>
         `;
 
@@ -44,7 +46,7 @@ function renderDepartments() {
 
 // Function to navigate to review page
 function navigateToReview(departmentName) {
-    const basePath = 'review.html'; // Adjust this path as needed
+    const basePath = 'review.html'; // Adjust this path if necessary
     const url = `${basePath}?department=${encodeURIComponent(departmentName)}`;
     window.location.href = url;
 }
@@ -55,22 +57,28 @@ renderDepartments();
 
 
 
+
+
+
+
+
+
 .review-button {
     background-color: #0056b3;
     color: #ffffff;
-    font-size: 0.9em;
+    font-size: 1em;
     font-weight: bold;
-    padding: 8px 15px;
+    padding: 10px 20px;
     border: none;
-    border-radius: 20px;
+    border-radius: 25px;
     cursor: pointer;
-    position: absolute; /* Absolute positioning within the card */
-    left: 10px; /* Align to the left of the container */
-    bottom: 10px; /* Place at the bottom */
     transition: all 0.3s ease;
+    margin-top: 10px;
     display: inline-flex;
     align-items: center;
     gap: 5px;
+    position: relative; /* Relative positioning inside the department details */
+    left: 0; /* Align to the left side */
 }
 
 .review-button .arrow {
