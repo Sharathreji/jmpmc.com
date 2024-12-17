@@ -308,6 +308,10 @@
     background-color: #007bff; /* Matches main theme */
     color: white; /* White text on hover */
 }
+.flip-card-inner {
+    transition: transform 1s ease-in-out;
+    transform-style: preserve-3d;
+}
  </style>
 <body>
     <header>
@@ -700,42 +704,85 @@ document.querySelectorAll('.flip-card').forEach(card => {
 });
 </script>
 <script>
-    // Select all flip cards
+    document.addEventListener("DOMContentLoaded", () => {
     const flipCards = document.querySelectorAll('.flip-card');
-    let autoFlipInterval;
+    let isUserInteracted = false; // Stops the auto-flip on interaction
+    const scrollSpeed = 2; // Scroll speed (higher is faster)
+    const flipDelay = 2000; // Delay before unflipping cards
+    const scrollIntervalTime = 20; // Interval time for smooth scrolling
 
-    // Function to auto-flip the cards
-    const autoFlipCards = () => {
-        autoFlipInterval = setInterval(() => {
-            flipCards.forEach(card => {
-                const innerCard = card.querySelector('.flip-card-inner');
-                if (!innerCard.classList.contains('manual-flip')) {
-                    innerCard.style.transform =
-                        innerCard.style.transform === 'rotateY(180deg)' ? '' : 'rotateY(180deg)';
-                }
-            });
-        }, 3000); // Flip every 3 seconds
+    // Function to flip all cards
+    const flipAllCards = (flip) => {
+        flipCards.forEach(card => {
+            const innerCard = card.querySelector('.flip-card-inner');
+            innerCard.style.transform = flip ? 'rotateY(180deg)' : 'rotateY(0deg)';
+        });
     };
 
-    // Add event listener to disable auto-flip on user interaction
+    // Function to scroll content uniformly (down and up)
+    const scrollContent = (direction) => {
+        return new Promise(resolve => {
+            let allScrolled = false;
+            const interval = setInterval(() => {
+                allScrolled = true; // Assume all scrolls are done unless proven otherwise
+
+                flipCards.forEach(card => {
+                    const content = card.querySelector('.scrollable-content');
+                    if (content) {
+                        if (direction === 'down' && content.scrollTop + content.clientHeight < content.scrollHeight) {
+                            content.scrollTop += scrollSpeed; // Scroll down
+                            allScrolled = false;
+                        } 
+                        if (direction === 'up' && content.scrollTop > 0) {
+                            content.scrollTop -= scrollSpeed; // Scroll up
+                            allScrolled = false;
+                        }
+                    }
+                });
+
+                if (allScrolled) {
+                    clearInterval(interval);
+                    resolve(); // Finish when all scrolls are complete
+                }
+            }, scrollIntervalTime);
+        });
+    };
+
+    // Main function to control flipping and scrolling
+    const startFlipAndScroll = async () => {
+        if (isUserInteracted) return; // Stop the process if user interacted
+
+        // Step 1: Flip all cards to the back
+        flipAllCards(true);
+
+        // Step 2: Wait for the flip animation to complete
+        setTimeout(async () => {
+            // Step 3: Scroll all cards down
+            await scrollContent('down');
+
+            // Step 4: Scroll all cards back up
+            await scrollContent('up');
+
+            // Step 5: Unflip all cards after a delay
+            setTimeout(() => {
+                flipAllCards(false);
+
+                // Step 6: Repeat the process after 2 seconds
+                setTimeout(startFlipAndScroll, flipDelay);
+            }, flipDelay);
+        }, 1000); // Adjust the flip animation duration if needed
+    };
+
+    // Stop the flipping process on user interaction (click or touch)
     flipCards.forEach(card => {
         card.addEventListener('click', () => {
-            const innerCard = card.querySelector('.flip-card-inner');
-
-            // Mark this card as manually flipped
-            innerCard.classList.add('manual-flip');
-
-            // Toggle flip state
-            innerCard.style.transform =
-                innerCard.style.transform === 'rotateY(180deg)' ? '' : 'rotateY(180deg)';
-
-            // Clear the interval to stop auto-flipping
-            clearInterval(autoFlipInterval);
+            isUserInteracted = true;
         });
     });
 
-    // Start auto-flipping
-    autoFlipCards();
+    // Start the process after an initial delay
+    setTimeout(startFlipAndScroll, 3000);
+});
 </script>
 <body>
 <div class="floating-buttons">
