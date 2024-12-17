@@ -464,13 +464,66 @@
     <!-- Banner Section -->
 <div class="banner">
     <h2>One of the Main Hospitals in Piravom</h2>
-</div>
-  <div style="text-align: center; margin: 10px;">
-    <div class="scroll-text">
-    <div class="scroll-content">
-        <span class="highlight-text">📞 For Bookings Call: 0485 2243443 | 2242727 | 2241274</span>
+<!-- Scrolling Call Section -->
+<div class="scroll-text-container" style="
+    position: relative; 
+    overflow: hidden; 
+    background: linear-gradient(to right, #0056b3, #003366); 
+    color: #ffc107; 
+    padding: 10px 0; 
+    margin: 0.5cm auto; 
+    border-radius: 8px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 95%;">
+
+    <div id="scroll-text" style="
+        display: inline-block; 
+        white-space: nowrap; 
+        font-size: 1.2em; 
+        font-weight: bold; 
+        letter-spacing: 1px;
+        animation: scrollText 15s linear infinite; 
+        text-transform: uppercase; 
+        cursor: pointer;">
+        📞 For Bookings Call: 0485 2243443 | 2242727 | 2241274 &nbsp;&nbsp;&nbsp;&nbsp;
+        📞 For Bookings Call: 0485 2243443 | 2242727 | 2241274
     </div>
 </div>
+
+<!-- Keyframes for Scrolling -->
+<style>
+@keyframes scrollText {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+/* Hover and Focus Effects */
+#scroll-text:hover {
+    animation-play-state: paused;
+    color: #ffffff; /* White text on hover */
+    text-shadow: 0 0 5px #ffc107, 0 0 10px #ffc107; /* Glowing effect */
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    #scroll-text {
+        font-size: 1em; /* Smaller font for mobile screens */
+    }
+}
+</style>
+
+<!-- JavaScript to Pause Scrolling on Click -->
+<script>
+document.getElementById('scroll-text').addEventListener('click', function () {
+    this.style.animationPlayState = 'paused';
+    alert('📞 Book Now: 0485 2243443 | 2242727 | 2241274');
+});
+</script>
 <!-- Elegant Overview Section -->
 <!-- Elegant Overview Section -->
 <div id="overview" class="overview-section">
