@@ -471,60 +471,58 @@
     background: linear-gradient(to right, #0056b3, #003366); 
     color: #ffc107; 
     padding: 10px 0; 
-    margin: 0.5cm auto; 
+    margin: 1cm auto 0.5cm auto; /* 1cm below banner, 0.5cm above preview */
     border-radius: 8px; 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    max-width: 95%;">
-
-    <div id="scroll-text" style="
-        display: inline-block; 
-        white-space: nowrap; 
-        font-size: 1.2em; 
-        font-weight: bold; 
-        letter-spacing: 1px;
-        animation: scrollText 15s linear infinite; 
-        text-transform: uppercase; 
-        cursor: pointer;">
-        📞 For Bookings Call: 0485 2243443 | 2242727 | 2241274 &nbsp;&nbsp;&nbsp;&nbsp;
-        📞 For Bookings Call: 0485 2243443 | 2242727 | 2241274
+    max-width: 95%;
+    white-space: nowrap;">
+    <div class="scroll-wrapper" style="display: flex; animation: scrollText 12s linear infinite;">
+        <!-- Duplicate Content for Continuous Scrolling -->
+        <span class="scroll-text" style="font-size: 1.2em; font-weight: bold; letter-spacing: 1px;">
+            📞 For Bookings Call: 0485 2243443 | 2242727 | 2241274 &nbsp;&nbsp;&nbsp;&nbsp;
+            📞 For Bookings Call: 0485 2243443 | 2242727 | 2241274 &nbsp;&nbsp;&nbsp;&nbsp;
+        </span>
+        <span class="scroll-text" style="font-size: 1.2em; font-weight: bold; letter-spacing: 1px;">
+            📞 For Bookings Call: 0485 2243443 | 2242727 | 2241274 &nbsp;&nbsp;&nbsp;&nbsp;
+            📞 For Bookings Call: 0485 2243443 | 2242727 | 2241274 &nbsp;&nbsp;&nbsp;&nbsp;
+        </span>
     </div>
 </div>
 
-<!-- Keyframes for Scrolling -->
+<!-- CSS for Smooth, Continuous Scrolling -->
 <style>
 @keyframes scrollText {
     from {
-        transform: translateX(100%);
+        transform: translateX(0); /* Start at initial position */
     }
     to {
-        transform: translateX(-100%);
+        transform: translateX(-100%); /* Scroll entire width */
     }
 }
 
-/* Hover and Focus Effects */
-#scroll-text:hover {
+/* Hover Effect for Pause */
+.scroll-wrapper:hover {
     animation-play-state: paused;
-    color: #ffffff; /* White text on hover */
-    text-shadow: 0 0 5px #ffc107, 0 0 10px #ffc107; /* Glowing effect */
-    transition: color 0.3s ease, text-shadow 0.3s ease;
 }
 
-/* Responsive Adjustments */
+.scroll-text-container {
+    cursor: pointer; /* Pointer cursor for interactivity */
+}
+
+/* Responsive Design for Smaller Screens */
 @media (max-width: 768px) {
-    #scroll-text {
-        font-size: 1em; /* Smaller font for mobile screens */
+    .scroll-text {
+        font-size: 1em;
     }
 }
 </style>
 
-<!-- JavaScript to Pause Scrolling on Click -->
+<!-- JavaScript for Click Pause -->
 <script>
-document.getElementById('scroll-text').addEventListener('click', function () {
-    this.style.animationPlayState = 'paused';
+document.querySelector('.scroll-text-container').addEventListener('click', function () {
     alert('📞 Book Now: 0485 2243443 | 2242727 | 2241274');
 });
 </script>
-<!-- Elegant Overview Section -->
 <!-- Elegant Overview Section -->
 <div id="overview" class="overview-section">
     <h2>Preview</h2>
