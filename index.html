@@ -59,90 +59,249 @@
             color: #0056b3;
         }
 
-        /* Banner */
-        .banner {
-            background-color: #e9ecef;
-            text-align: center;
-            padding: 50px 20px;
-        }
-        .banner h2 {
-            font-size: 2.5em;
-            margin: 0;
-            color: #0056b3;
-        }
+/* Banner */
+.banner {
+    position: relative;
+    background-color: #ffffff; /* White background for a clean, minimalist look */
+    color: #0056b3; /* Dark blue text for contrast */
+    text-align: center;
+    padding: 100px 20px;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1); /* Soft shadow for subtle depth */
+    overflow: hidden;
+    margin-top: 2cm; /* Gap between header and banner */
+}
 
-        /* Scrolling Text */
-        .scroll-text {
-            font-size: 1.5em;
-            color: #0056b3;
-            white-space: nowrap;
-            overflow: hidden;
-            position: relative;
-        }
-        .scroll-content {
-            display: inline-block;
-            animation: scroll 20s linear infinite;
-        }
-        @keyframes scroll {
-            0% {
-                transform: translateX(100%);
-            }
-            50% {
-                transform: translateX(0);
-            }
-            100% {
-                transform: translateX(-100%);
-            }
-        }
-        .scroll-content:hover {
-            animation-play-state: paused;
-        }
-        
+/* Banner Title */
+.banner h2 {
+    font-family: 'Playfair Display', serif; /* Elegant serif font */
+    font-size: 3.5em;
+    font-weight: 700;
+    margin: 0;
+    color: #0056b3; /* Dark blue color */
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    position: relative;
+    animation: fadeInText 1.5s ease-out, slideIn 1s ease-out forwards; /* Combined animations */
+}
 
-        /* Content Section */
-        .content {
-            padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .content h3 {
-            color: #0056b3;
-            text-align: center;
-            margin-bottom: 20px;
-        }
+/* Banner Text Hover Effects */
+.banner h2:hover {
+    color: #ffc107; /* Yellow hover effect */
+    transform: scale(1.05); /* Slight zoom effect */
+    transition: all 0.3s ease;
+}
 
-        /* Cards for Departments */
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-        }
-        .card {
-            background-color: #ffffff;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
-        }
-        .card h4 {
-            margin: 0 0 10px;
-            color: #0056b3;
-            cursor: pointer;
-        }
-        .card ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: none;
-        }
-        .card ul li {
-            padding: 5px 0;
-        }
+/* Text underline animation */
+@keyframes underlineEffect {
+    0% {
+        width: 0;
+        left: 50%;
+    }
+    50% {
+        width: 60%;
+        left: 20%;
+    }
+    100% {
+        width: 0;
+        left: 50%;
+    }
+}
+
+.banner h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    width: 0;
+    height: 4px;
+    background-color: #ffc107; /* Yellow underline */
+    border-radius: 2px;
+    transform: translateX(-50%);
+    animation: underlineEffect 3s ease infinite; /* Underline effect animation */
+}
+
+/* Fade-in Text Animation */
+@keyframes fadeInText {
+    0% {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Banner Design Elements */
+.banner::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    background: url('images/abstract-shape.png') center center no-repeat; /* Add abstract shape or subtle texture */
+    opacity: 0.1; /* Light opacity for subtle design effect */
+    z-index: -1;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .banner {
+        padding: 60px 20px;
+    }
+
+    .banner h2 {
+        font-size: 2.5em; /* Adjust font size for smaller screens */
+    }
+}
+/* Scrolling Content */
+.scroll-content {
+    display: inline-block;
+    color: #ffc107; /* Highlight color */
+    animation: scroll 12s linear infinite; /* Faster scrolling */
+    font-family: 'Roboto', Arial, sans-serif;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); /* Text shadow for better visibility */
+}
+
+/* Keyframe Animation */
+@keyframes scroll {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+/* Highlight Text */
+.highlight-text {
+    display: inline-block;
+    background-color: #0056b3; /* Matches the header theme */
+    padding: 5px 20px;
+    border-radius: 50px; /* Rounded look for emphasis */
+    color: #ffc107; /* Matches theme's hover color */
+    text-transform: uppercase; /* Makes text bold and prominent */
+}
+
+/* Pause on Hover */
+.scroll-content:hover {
+    animation-play-state: paused;
+    cursor: pointer;
+}
+   /* General Content Section */
+.overview-section {
+    background-color: #ffffff; /* Clean, white background */
+    padding: 50px 20px;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    margin: 40px auto;
+    max-width: 1100px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    font-family: 'Roboto', Arial, sans-serif;
+}
+
+/* Decorative Lines */
+.overview-section::before, .overview-section::after {
+    content: "";
+    position: absolute;
+    width: 120px;
+    height: 5px;
+    background-color: #ffc107; /* Yellow accent color */
+    border-radius: 2px;
+}
+
+.overview-section::before {
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.overview-section::after {
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Headings Styling */
+.overview-section h2, .overview-section h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8em;
+    color: #0056b3; /* Primary blue color */
+    text-transform: uppercase;
+    margin: 0 0 20px 0;
+    position: relative;
+    line-height: 1.3;
+}
+
+.overview-section h2::after, .overview-section h3::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 3px;
+    margin: 10px auto 0;
+    background-color: #ffc107; /* Yellow underline accent */
+    border-radius: 2px;
+}
+
+/* Paragraph Styling */
+.overview-section p {
+    font-size: 1.2em;
+    line-height: 1.8;
+    color: #555555;
+    margin: 20px auto;
+    max-width: 800px;
+    text-align: center;
+}
+
+/* Subtle Content Decoration */
+.overview-section p::first-letter {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #007bff; /* Slight color pop on first letter */
+}
+
+/* Call to Action Button */
+.overview-section .cta-button {
+    display: inline-block;
+    background: linear-gradient(to right, #007bff, #0056b3);
+    color: #ffffff;
+    font-size: 1.2em;
+    font-weight: bold;
+    padding: 12px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    margin-top: 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.overview-section .cta-button:hover {
+    background: linear-gradient(to right, #0056b3, #003366);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .overview-section h2, .overview-section h3 {
+        font-size: 2.2em;
+    }
+
+    .overview-section p {
+        font-size: 1.1em;
+        padding: 0 10px;
+    }
+
+    .overview-section .cta-button {
+        font-size: 1em;
+        padding: 10px 20px;
+    }
+}
 
         /* Footer */
         footer {
@@ -335,29 +494,38 @@
 </nav>
     </nav>
 </div>
-    <div class="banner">
-        <h2>One of the Main Hospitals in Piravom</h2>
-    </div>
+    <!-- Banner Section -->
+<div class="banner">
+    <h2>One of the Main Hospitals in Piravom</h2>
+</div>
   <div style="text-align: center; margin: 10px;">
     <div class="scroll-text">
-        <div class="scroll-content">
-            For Bookings Call - 0485 2243443, 2242727, 2241274
-        </div>
+    <div class="scroll-content">
+        <span class="highlight-text">📞 For Bookings Call: 0485 2243443 | 2242727 | 2241274</span>
     </div>
 </div>
-<!-- Overview Section -->
-<div id="overview" class="overview-section" style="padding: 20px; font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
-    <h2 style="text-align:center;""font-size: 24px; color:#007bff; margin-bottom: 15px;">Preview</h2>
+<!-- Elegant Overview Section -->
+<!-- Elegant Overview Section -->
+<div id="overview" class="overview-section">
+    <h2>Preview</h2>
     <p>
-        PEACE FOUNDATION (Pachomios Educational And Charitable Enlightenment Foundation) was established to perpetuate the sacred memory of His Grace Joseph Mar Pachomios on 24th July 1997 under the patronage of St. George Orthodox Syrian Church, Karmelkunnu, Mulakulam (N) .Mar Pachomios is the true symbol of Christian virtues. He dedicated his whole life to the cause of the poor and the needy, the down-trodden and the ill-treated. The members of the foundation decided to give primary importance to health care and go ahead with the ambitious task to establishing a Multi-speciality hospital at Piravom.
+       PEACE FOUNDATION (Pachomios Educational And Charitable Enlightenment Foundation) was established to perpetuate 
+        the sacred memory of His Grace Joseph Mar Pachomios on <strong>24th July 1997</strong> under the patronage of 
+        St. George Orthodox Syrian Church, Karmelkunnu, Mulakulam (N). Mar Pachomios is the true symbol of Christian virtues. 
+        He dedicated his whole life to the cause of the poor and the needy, the down-trodden and the ill-treated. The members 
+        of the foundation decided to give primary importance to health care and go ahead with the ambitious task of establishing 
+        a Multi-specialty hospital at Piravom.
     </p>
-    <h3 style="text-align:center;"font-size: 24px; color:#007bff; margin-bottom: 15px;">Our Mission</h3>
-    <p>
-        The concept of a Multi speciality hospital is a boon to the inhabitants of this area satisfying the needs of thousands of people in and around piravom. The hospital aims to providing state-of-the-art medical attention at affordable expenses to the common man. 
 
+    <h3>Our Mission</h3>
+    <p>
+        The concept of a Multi-specialty hospital is a boon to the inhabitants of this area, satisfying the needs of thousands 
+        of people in and around Piravom. The hospital aims to provide state-of-the-art medical attention at affordable expenses 
+        to the common man.
     </p>
+
+    <a href="services.html" class="cta-button">Explore Our Services</a>
 </div>
-
 <!-- Image Section -->
 <div class="image-section" style="margin: 20px 0; text-align: center;">
     <img src="images/back.png" alt="JMP MEDICAL CENTRE" style="max-width: 100%; border-radius: 8px;">
