@@ -730,35 +730,43 @@ const flipCards = document.querySelectorAll('.flip-card');
 let isUserInteracted = false; // Flag to stop flipping on user interaction
 let isFlipping = false; // Prevent overlapping flip actions
 
-// Function to scroll content
-const scrollContent = (cards, reverse = false) => {
+// Function to scroll content uniformly
+const scrollContent = (scrollableCards) => {
     return new Promise(resolve => {
-        const scrollStep = reverse ? -2 : 2; // Scroll direction
-        let isScrollingDone = false;
+        let scrollStep = 2; // Scroll speed
+        let direction = 1; // Scroll direction: 1 for down, -1 for up
+        const maxScrollTime = 5000; // Maximum scroll time for safety
+        let timeElapsed = 0;
 
-        // Set interval for synchronized scrolling
-        const interval = setInterval(() => {
-            isScrollingDone = true; // Assume all cards are done unless proven otherwise
+        // Start synchronized scrolling
+        const scrollInterval = setInterval(() => {
+            let allCompleted = true; // Assume all cards are scrolled
 
-            cards.forEach(card => {
+            scrollableCards.forEach(card => {
                 const content = card.querySelector('.scrollable-content');
                 if (content) {
+                    // Scroll uniformly
+                    content.scrollTop += scrollStep * direction;
+
+                    // Check if scroll direction needs to reverse
                     if (
-                        (!reverse && content.scrollTop + content.clientHeight < content.scrollHeight) || // Scroll down
-                        (reverse && content.scrollTop > 0) // Scroll up
+                        (direction === 1 && content.scrollTop + content.clientHeight >= content.scrollHeight) || 
+                        (direction === -1 && content.scrollTop <= 0)
                     ) {
-                        content.scrollTop += scrollStep; // Scroll uniformly
-                        isScrollingDone = false; // Mark as not done
+                        // Reverse direction after reaching top or bottom
+                        direction *= -1;
+                    } else {
+                        allCompleted = false; // Not done scrolling yet
                     }
                 }
             });
 
-            // If all cards have finished scrolling
-            if (isScrollingDone) {
-                clearInterval(interval);
-                resolve();
+            timeElapsed += 20;
+            if (allCompleted || timeElapsed >= maxScrollTime) {
+                clearInterval(scrollInterval);
+                resolve(); // End scrolling after completion or timeout
             }
-        }, 20); // Adjust scroll speed here
+        }, 20); // Adjust scrolling speed here
     });
 };
 
@@ -766,45 +774,45 @@ const scrollContent = (cards, reverse = false) => {
 const flipAllCards = () => {
     flipCards.forEach(card => {
         const innerCard = card.querySelector('.flip-card-inner');
-        innerCard.style.transform =
-            innerCard.style.transform === 'rotateY(180deg)' ? '' : 'rotateY(180deg)';
+        innerCard.classList.toggle('flipped'); // Toggle flipped state
     });
 };
 
-// Function to handle flip and synchronized scrolling
+// Function to handle flipping and scrolling process
 const handleFlipAndScroll = async () => {
-    if (isUserInteracted || isFlipping) return; // Stop if interacted or already flipping
+    if (isUserInteracted || isFlipping) return; // Stop if user interacted
     isFlipping = true;
 
-    // Flip all cards together
+    // Flip all cards to back
     flipAllCards();
 
-    // Wait for flip animation to complete
+    // Wait for flip animation
     setTimeout(async () => {
-        // Scroll down and up all cards with content
-        await scrollContent(flipCards, false); // Scroll down
-        await scrollContent(flipCards, true);  // Scroll back up
+        const scrollableCards = Array.from(flipCards).filter(card => 
+            card.querySelector('.scrollable-content')
+        );
 
-        // Unflip all cards together
-        flipAllCards();
+        // Scroll all cards uniformly
+        await scrollContent(scrollableCards);
 
-        // Wait 2 seconds and repeat the process
+        // Wait 2 seconds before flipping back
         setTimeout(() => {
-            isFlipping = false; // Reset flipping flag
-            handleFlipAndScroll();
+            flipAllCards();
+            isFlipping = false; // Allow next flip
+            setTimeout(handleFlipAndScroll, 2000); // Repeat process
         }, 2000);
-    }, 1000); // Adjust for flip animation duration
+    }, 1000); // Adjust flip animation duration
 };
 
-// Stop flipping on user interaction (click/touch)
+// Stop flipping on user interaction
 flipCards.forEach(card => {
     card.addEventListener('click', () => {
-        isUserInteracted = true;
+        isUserInteracted = true; // Stop auto process
     });
 });
 
-// Start the synchronized flipping and scrolling after an initial delay
-setTimeout(() => handleFlipAndScroll(), 3000);
+// Start the flipping and scrolling process
+setTimeout(handleFlipAndScroll, 3000);
 </script>
 <body>
 <div class="floating-buttons">
