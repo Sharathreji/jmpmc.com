@@ -59,6 +59,51 @@
             color: #0056b3;
         }
 
+        /* Banner Section */
+.banner {
+    position: relative;
+    background: linear-gradient(135deg, #e3f2fd, #ffffff); /* Light blue gradient */
+    color: #0056b3;
+    text-align: center;
+    padding: 80px 20px;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    overflow: hidden;
+}
+
+/* Heading Styling */
+.banner h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3em;
+    font-weight: bold;
+    color: #0056b3;
+    text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    margin: 0 auto;
+    display: inline-block;
+    position: relative;
+    padding: 10px 0;
+}
+
+.banner h2::before,
+.banner h2::after {
+    content: '';
+    position: absolute;
+    height: 4px;
+    width: 60px;
+    background: #ffc107;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 2px;
+}
+
+/* Optional: Additional text under the banner */
+.banner p {
+    font-size: 1.2em;
+    color: #6c757d; /* Subtle gray for secondary text */
+    margin-top: 20px;
+    line-height: 1.6;
+}
 /* Banner */
 .banner {
     position: relative;
@@ -82,30 +127,6 @@
     letter-spacing: 2px;
     text-transform: uppercase;
     position: relative;
-    animation: fadeInText 1.5s ease-out, slideIn 1s ease-out forwards; /* Combined animations */
-}
-
-/* Banner Text Hover Effects */
-.banner h2:hover {
-    color: #ffc107; /* Yellow hover effect */
-    transform: scale(1.05); /* Slight zoom effect */
-    transition: all 0.3s ease;
-}
-
-/* Text underline animation */
-@keyframes underlineEffect {
-    0% {
-        width: 0;
-        left: 50%;
-    }
-    50% {
-        width: 60%;
-        left: 20%;
-    }
-    100% {
-        width: 0;
-        left: 50%;
-    }
 }
 
 .banner h2::after {
