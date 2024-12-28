@@ -414,6 +414,43 @@ section {
     color: #000;
     font-weight: bold;
 }
+/* Floating Navigation Box */
+#floating-box {
+    position: fixed;
+    top: 50%;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    background-color: #ffffff;
+    border: 2px solid #007bff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+#floating-box button {
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+#floating-box button:hover {
+    background-color: #0056b3;
+}
+
+#floating-box span {
+    font-weight: bold;
+    margin: 5px 0;
+    color: #343a40;
+}
  </style>
 <body>
     <header>
@@ -450,12 +487,22 @@ section {
     <button id="search-button">Search</button>
     <p id="search-message"></p>
 </section>
-    <!-- Surgeries and Procedures Section -->
+
+<!-- Floating Navigation Box -->
+<div id="floating-box" style="display: none;">
+    <button id="prev-button">▲</button>
+    <span id="current-match">0</span>/<span id="total-matches">0</span>
+    <button id="next-button">▼</button>
+</div>
+
+<!-- Surgeries and Procedures Section -->
 <section id="surgeries">
     <div class="heading-container">
         <h2>Surgeries and Procedures</h2>
     </div>
 </section>
+
+<!-- Other sections remain unchanged -->
 
 <!-- Department of Orthopaedics Section -->
 <section id="orthopaedics">
@@ -621,14 +668,22 @@ section {
 }
 </style>
 <script>
+let matches = []; // Array to hold matched elements
+let currentMatchIndex = -1; // Current index of highlighted match
+
 // Search Functionality
 document.getElementById("search-button").addEventListener("click", function () {
     const searchInput = document.getElementById("search-input").value.toLowerCase();
     const content = document.querySelectorAll(".procedure-list li");
     const message = document.getElementById("search-message");
-    let found = false;
+    const floatingBox = document.getElementById("floating-box");
+    const currentMatch = document.getElementById("current-match");
+    const totalMatches = document.getElementById("total-matches");
 
-    // Remove existing highlights
+    matches = [];
+    currentMatchIndex = -1;
+
+    // Reset previous highlights
     content.forEach((item) => {
         item.innerHTML = item.textContent; // Reset to original text
         item.classList.remove("highlight");
@@ -639,20 +694,53 @@ document.getElementById("search-button").addEventListener("click", function () {
         if (item.textContent.toLowerCase().includes(searchInput) && searchInput.trim() !== "") {
             const regex = new RegExp(`(${searchInput})`, "gi");
             item.innerHTML = item.textContent.replace(regex, "<span class='highlight'>$1</span>");
-            found = true;
+            item.classList.add("highlight");
+            matches.push(item);
         }
     });
 
-    // Display result message
-    if (found) {
+    // Update floating box and navigation
+    if (matches.length > 0) {
+        currentMatchIndex = 0;
+        scrollToMatch();
+        floatingBox.style.display = "flex";
+        currentMatch.textContent = currentMatchIndex + 1;
+        totalMatches.textContent = matches.length;
         message.textContent = `Found "${searchInput}"! Highlighted in the list.`;
         message.style.color = "#28a745"; // Green color for success
     } else if (searchInput.trim() === "") {
+        floatingBox.style.display = "none";
         message.textContent = "Please enter a search term.";
         message.style.color = "#ff0000"; // Red color for error
     } else {
+        floatingBox.style.display = "none";
         message.textContent = `"${searchInput}" not found. Try checking under the appropriate department.`;
         message.style.color = "#ff0000"; // Red color for not found
+    }
+});
+
+// Scroll to the current match
+function scrollToMatch() {
+    if (matches[currentMatchIndex]) {
+        matches[currentMatchIndex].scrollIntoView({ behavior: "smooth", block: "center" });
+        const currentMatch = document.getElementById("current-match");
+        currentMatch.textContent = currentMatchIndex + 1;
+    }
+}
+
+// Navigate to the previous match
+document.getElementById("prev-button").addEventListener("click", function () {
+    if (currentMatchIndex > 0) {
+        currentMatchIndex--;
+        scrollToMatch();
+    }
+});
+
+// Navigate to the next match
+document.getElementById("next-button").addEventListener("click", function () {
+    if (currentMatchIndex < matches.length - 1) {
+        currentMatchIndex++;
+        scrollToMatch();
     }
 });
 </script>
