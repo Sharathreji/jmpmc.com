@@ -232,6 +232,188 @@
     background-color: #007bff; /* Matches main theme */
     color: white; /* White text on hover */
 }
+/* General Styles */
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+    color: #343a40;
+}
+
+h2, h3, h4 {
+    font-family: 'Playfair Display', serif;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+h2 {
+    color: #ffffff;
+    font-size: 2.5em;
+}
+
+h3 {
+    color: #0056b3;
+    font-size: 2em;
+}
+
+h4 {
+    color: #0056b3;
+    font-size: 1.5em;
+    margin-top: 30px;
+}
+
+/* Surgeries Section */
+#surgeries {
+    margin: 40px auto;
+    padding: 0;
+    max-width: 1200px;
+}
+
+.heading-container {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 2s;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Department Sections */
+section {
+    margin: 40px auto;
+    padding: 30px;
+    border-radius: 15px;
+    background: linear-gradient(to bottom, #ffffff, #e9ecef);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    max-width: 1200px;
+}
+
+/* Image Container */
+.image-container {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.image-container img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Procedure Lists */
+.procedure-list {
+    list-style: none;
+    padding: 0;
+    max-width: 800px;
+    margin: 0 auto;
+    font-size: 1.1em;
+    line-height: 1.8em;
+    color: #343a40;
+}
+
+.procedure-list li {
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background: #f8f9fa;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.procedure-list li:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+    background: #007bff;
+    color: #fff;
+}
+
+.procedure-list li span {
+    margin-right: 10px;
+    color: #007bff;
+    font-size: 1.3em;
+    transition: color 0.3s ease;
+}
+
+.procedure-list li:hover span {
+    color: #fff;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    h2, h3, h4 {
+        font-size: 1.5em;
+    }
+
+    .procedure-list {
+        font-size: 1em;
+        line-height: 1.5em;
+    }
+}
+/* Search Bar */
+#search-bar {
+    margin: 30px auto;
+    max-width: 800px;
+    text-align: center;
+    padding: 20px;
+}
+
+#search-input {
+    width: 70%;
+    padding: 10px;
+    font-size: 1em;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+#search-input:focus {
+    border-color: #007bff;
+}
+
+#search-button {
+    padding: 10px 20px;
+    font-size: 1em;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#search-button:hover {
+    background-color: #0056b3;
+}
+
+#search-message {
+    margin-top: 10px;
+    font-size: 1em;
+    color: #ff0000;
+}
+
+/* Highlight Search Result */
+.highlight {
+    background-color: #ffc107;
+    color: #000;
+    font-weight: bold;
+}
  </style>
 <body>
     <header>
@@ -262,6 +444,83 @@
     </nav>
 </div>
 <body>
+    <!-- Search Bar Section -->
+<section id="search-bar">
+    <input type="text" id="search-input" placeholder="Search procedures or departments..." />
+    <button id="search-button">Search</button>
+    <p id="search-message"></p>
+</section>
+    <!-- Surgeries and Procedures Section -->
+<section id="surgeries">
+    <div class="heading-container">
+        <h2>Surgeries and Procedures</h2>
+    </div>
+</section>
+
+<!-- Department of Orthopaedics Section -->
+<section id="orthopaedics">
+    <h3>Department of Orthopaedics</h3>
+    <div class="image-container">
+        <img src="images/orthopaedics-placeholder.jpg" alt="Department of Orthopaedics">
+    </div>
+    <ul class="procedure-list">
+        <li><span>✔</span> Total knee arthroplasty</li>
+        <li><span>✔</span> Total hip arthroplasty</li>
+        <li><span>✔</span> Total shoulder arthroplasty</li>
+        <li><span>✔</span> Shoulder arthroscopy</li>
+        <li><span>✔</span> Knee arthroscopy</li>
+        <li><span>✔</span> Fracture fixations</li>
+        <li><span>✔</span> Tendon repairs</li>
+        <li><span>✔</span> CTS release, Trigger finger release</li>
+        <li><span>✔</span> Deformity corrections</li>
+        <li><span>✔</span> Manipulation under GA</li>
+        <li><span>✔</span> PRP treatment for rotator cuff injuries, tennis elbow, osteoarthritis</li>
+        <li><span>✔</span> Spine fixations</li>
+    </ul>
+</section>
+
+<!-- Department of Gynaecology & Obstetrics Section -->
+<section id="gynaecology">
+    <h3>Department of Gynaecology & Obstetrics</h3>
+    <div class="image-container">
+        <img src="images/gynaecology-placeholder.jpg" alt="Department of Gynaecology & Obstetrics">
+    </div>
+
+    <!-- Minor Procedures -->
+    <h4>Minor Procedures</h4>
+    <ul class="procedure-list">
+        <li><span>✔</span> COPPER T INSERTION</li>
+        <li><span>✔</span> COPPER T REMOVAL</li>
+        <li><span>✔</span> PIPPELLE BIOPSY</li>
+        <li><span>✔</span> D & C – Endometrial Biopsy for Abnormal Uterine Bleeding</li>
+        <li><span>✔</span> D & E – For Missed Abortion</li>
+        <li><span>✔</span> I & D – For Infected Vaginal Vulval Cysts</li>
+    </ul>
+
+    <!-- Major Procedures -->
+    <h4>Major Procedures</h4>
+    <ul class="procedure-list">
+        <li><span>✔</span> Vaginal Delivery</li>
+        <li><span>✔</span> Vacuum Delivery</li>
+        <li><span>✔</span> C. Section</li>
+        <li><span>✔</span> Ovarian Cystectomy</li>
+        <li><span>✔</span> Ovariotomy</li>
+        <li><span>✔</span> Tubal Pregnancy Medical and Surgical Treatment</li>
+        <li><span>✔</span> Abdominal Hysterectomy</li>
+        <li><span>✔</span> Myomectomy</li>
+        <li><span>✔</span> Tubal ligation</li>
+        <li><span>✔</span> Vaginal Hysterectomy</li>
+        <li><span>✔</span> Vaginal Hysterectomy with Cystocele Rectocele Repair</li>
+        <li><span>✔</span> Keyhole Surgery for Urine Leak</li>
+        <li><span>✔</span> Laparoscopic Surgeries</li>
+        <ul>
+            <li><span>✔</span> Diagnostic Lap for Infertility</li>
+            <li><span>✔</span> For Sterilisation</li>
+            <li><span>✔</span> Tubal Rupture</li>
+            <li><span>✔</span> Ovarian Cyst</li>
+        </ul>
+    </ul>
+</section>
 <div class="floating-buttons">
     <button class="floating-button call-button" onclick="showContactNumber('+91 485 224 1274', '+914852241274')">
         <span class="icon">📞</span> Book Appointments
@@ -361,6 +620,40 @@
     }
 }
 </style>
+<script>
+// Search Functionality
+document.getElementById("search-button").addEventListener("click", function () {
+    const searchInput = document.getElementById("search-input").value.toLowerCase();
+    const content = document.querySelectorAll(".procedure-list li");
+    const message = document.getElementById("search-message");
+    let found = false;
+
+    // Remove existing highlights
+    content.forEach((item) => {
+        item.classList.remove("highlight");
+    });
+
+    // Search and highlight
+    content.forEach((item) => {
+        if (item.textContent.toLowerCase().includes(searchInput)) {
+            item.classList.add("highlight");
+            found = true;
+        }
+    });
+
+    // Display message
+    if (found) {
+        message.textContent = Found "${searchInput}"! Highlighted in the list.;
+        message.style.color = "#28a745";
+    } else if (searchInput) {
+        message.textContent = "${searchInput}" not found. Try checking under the appropriate department.;
+        message.style.color = "#ff0000";
+    } else {
+        message.textContent = "Please enter a search term.";
+        message.style.color = "#ff0000";
+    }
+});
+</script>
 <script>
 function showContactNumber(message, tel) {
     if (window.innerWidth >= 1024) { // Desktop View
