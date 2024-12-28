@@ -630,27 +630,29 @@ document.getElementById("search-button").addEventListener("click", function () {
 
     // Remove existing highlights
     content.forEach((item) => {
+        item.innerHTML = item.textContent; // Reset to original text
         item.classList.remove("highlight");
     });
 
-    // Search and highlight
+    // Search and highlight matches
     content.forEach((item) => {
-        if (item.textContent.toLowerCase().includes(searchInput)) {
-            item.classList.add("highlight");
+        if (item.textContent.toLowerCase().includes(searchInput) && searchInput.trim() !== "") {
+            const regex = new RegExp(`(${searchInput})`, "gi");
+            item.innerHTML = item.textContent.replace(regex, "<span class='highlight'>$1</span>");
             found = true;
         }
     });
 
-    // Display message
+    // Display result message
     if (found) {
-        message.textContent = Found "${searchInput}"! Highlighted in the list.;
-        message.style.color = "#28a745";
-    } else if (searchInput) {
-        message.textContent = "${searchInput}" not found. Try checking under the appropriate department.;
-        message.style.color = "#ff0000";
-    } else {
+        message.textContent = `Found "${searchInput}"! Highlighted in the list.`;
+        message.style.color = "#28a745"; // Green color for success
+    } else if (searchInput.trim() === "") {
         message.textContent = "Please enter a search term.";
-        message.style.color = "#ff0000";
+        message.style.color = "#ff0000"; // Red color for error
+    } else {
+        message.textContent = `"${searchInput}" not found. Try checking under the appropriate department.`;
+        message.style.color = "#ff0000"; // Red color for not found
     }
 });
 </script>
