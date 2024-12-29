@@ -414,6 +414,7 @@ section {
     color: #000;
     font-weight: bold;
 }
+
 /* Floating Navigation Box */
 #floating-box {
     position: fixed;
@@ -671,10 +672,10 @@ section {
 let matches = []; // Array to hold matched elements
 let currentMatchIndex = -1; // Current index of highlighted match
 
-// Search Functionality
-document.getElementById("search-button").addEventListener("click", function () {
+// Function to reset and highlight matches
+function searchContent() {
     const searchInput = document.getElementById("search-input").value.toLowerCase();
-    const content = document.querySelectorAll(".procedure-list li");
+    const content = document.querySelectorAll(".procedure-list li, h2, h3, h4"); // Dynamically includes all relevant content
     const message = document.getElementById("search-message");
     const floatingBox = document.getElementById("floating-box");
     const currentMatch = document.getElementById("current-match");
@@ -707,19 +708,19 @@ document.getElementById("search-button").addEventListener("click", function () {
         currentMatch.textContent = currentMatchIndex + 1;
         totalMatches.textContent = matches.length;
         message.textContent = `Found "${searchInput}"! Highlighted in the list.`;
-        message.style.color = "#28a745"; // Green color for success
+        message.style.color = "#28a745"; // Green for success
     } else if (searchInput.trim() === "") {
         floatingBox.style.display = "none";
         message.textContent = "Please enter a search term.";
-        message.style.color = "#ff0000"; // Red color for error
+        message.style.color = "#ff0000"; // Red for empty input
     } else {
         floatingBox.style.display = "none";
         message.textContent = `"${searchInput}" not found. Try checking under the appropriate department.`;
-        message.style.color = "#ff0000"; // Red color for not found
+        message.style.color = "#ff0000"; // Red for no matches
     }
-});
+}
 
-// Scroll to the current match
+// Function to scroll to the current match
 function scrollToMatch() {
     if (matches[currentMatchIndex]) {
         matches[currentMatchIndex].scrollIntoView({ behavior: "smooth", block: "center" });
@@ -743,6 +744,9 @@ document.getElementById("next-button").addEventListener("click", function () {
         scrollToMatch();
     }
 });
+
+// Search button click event
+document.getElementById("search-button").addEventListener("click", searchContent);
 </script>
 <script>
 function showContactNumber(message, tel) {
