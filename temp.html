@@ -1,91 +1,290 @@
-function renderDepartments() {
-    const departmentsContainer = document.getElementById('departments');
-    departments.forEach(department => {
-        const departmentCard = document.createElement('div');
-        departmentCard.className = 'department-card';
-        departmentCard.style.cssText = `
-            margin-bottom: 20px; 
-            border: 1px solid #ddd; 
-            border-radius: 10px; 
-            padding: 20px; 
-            background-color: #ffffff; 
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-            position: relative; /* To allow proper positioning of the button */
-        `;
-
-        const doctorHTML = department.doctors.map(doctor => `
-            <div style="width: 200px; text-align: center;">
-                <img src="${doctor.photo}" alt="${doctor.name}" style="width: 100%; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
-                <h4 style="color: #0056b3; margin: 10px 0 5px;">${doctor.name}</h4>
-                <p style="margin: 0; font-size: 0.9em; color: #333;"><strong>${doctor.qualification}</strong></p>
-                <p style="margin: 0; font-size: 0.85em; color: #666;">${doctor.role}</p>
-            </div>
-        `).join('');
-
-        departmentCard.innerHTML = `
-            <h3 style="color: #007bff; cursor: pointer; text-align: center; margin: 0;" onclick="toggleDetails('${department.name}')">
-                ${department.name}
-            </h3>
-            <div id="${department.name}-details" style="display: none; margin-top: 20px;">
-                <p style="text-align: justify;">${department.details}</p>
-                <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: flex-start; margin-top: 20px;">
-                    ${doctorHTML}
+<div class="content">
+    <div class="department-container">
+        <h2>Doctors & Departments</h2>
+        <div class="department-grid">
+            <!-- Example Department -->
+            <div class="department-box">
+                <h3>General Medicine</h3>
+                <p>Provides comprehensive care for outpatient, inpatient, ICU, and emergency services.</p>
+                <div class="doctor-list">
+                    <div class="doctor">
+                        <img src="images/drrajeev.png" alt="Dr. RAJEEV VENUGOPAL">
+                        <h4>Dr. RAJEEV VENUGOPAL</h4>
+                        <p class="qualification">MD (Med.), DNB (Med.), D.Diab</p>
+                        <p class="role">CONSULTANT PHYSICIAN & DIABETOLOGIST</p>
+                    </div>
+                    <div class="doctor">
+                        <img src="images/doc1.jfif" alt="Dr. JILU MARIA JOSEPH">
+                        <h4>Dr. JILU MARIA JOSEPH</h4>
+                        <p class="qualification">MD, DNB, General Medicine</p>
+                        <p class="role">GENERAL PHYSICIAN</p>
+                    </div>
                 </div>
-                <button class="review-button" onclick="navigateToReview('${department.name}')">
-                    Review <span class="arrow">→</span>
-                </button>
             </div>
-        `;
+            <!-- Add other departments similarly -->
+        </div>
+    </div>
+</div>
 
-        departmentCard.addEventListener('mouseover', () => departmentCard.style.transform = 'scale(1.02)');
-        departmentCard.addEventListener('mouseout', () => departmentCard.style.transform = 'scale(1)');
 
-        departmentsContainer.appendChild(departmentCard);
-    });
+
+
+/* Doctors & Departments Section */
+.department-container {
+    background-color: #fefefe;
+    padding: 40px;
+    margin: 20px auto;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 1200px;
+    text-align: center;
 }
 
-// Function to navigate to review page
-function navigateToReview(departmentName) {
-    const basePath = 'review.html'; // Adjust this path as necessary
-    const url = `${basePath}?department=${encodeURIComponent(departmentName)}`;
-    window.location.href = url;
+.department-container h2 {
+    color: #0056b3;
+    font-size: 2.5em;
+    margin-bottom: 20px;
 }
 
-// Render departments on page load
-renderDepartments();
+/* Department Grid */
+.department-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
 
+/* Individual Department Box */
+.department-box {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
 
+.department-box:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
 
+/* Doctor Details */
+.doctor-list {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+}
 
+.doctor {
+    text-align: center;
+    width: 200px;
+}
 
+.doctor img {
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+}
 
-.review-button {
-    background-color: #0056b3;
-    color: #ffffff;
-    font-size: 1em;
+.doctor h4 {
+    color: #0056b3;
+    margin-bottom: 5px;
+}
+
+.doctor .qualification {
+    font-size: 0.9em;
+    color: #555;
+    margin: 0;
+}
+
+.doctor .role {
+    font-size: 0.85em;
     font-weight: bold;
+    color: #000;
+    margin: 0;
+}
+
+
+
+
+
+
+
+<div class="department-box" data-aos="fade-up">
+
+
+.view-details {
+    background-color: #0056b3;
+    color: #fff;
     padding: 10px 20px;
     border: none;
-    border-radius: 25px;
+    border-radius: 20px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    position: absolute; /* Position relative to the department card */
-    right: 20px; /* Align to the right end */
-    bottom: 20px; /* Align to the bottom of the department card */
+    transition: background 0.3s ease;
 }
 
-.review-button .arrow {
-    font-size: 1.2em;
-    margin-left: 5px;
-    transition: margin-left 0.3s ease;
-}
-
-.review-button:hover {
+.view-details:hover {
     background-color: #003366;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.review-button:hover .arrow {
-    margin-left: 10px;
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>AOS.init();</script>
+
+
+
+<button class="view-details">View Details</button>
+
+
+
+
+<div class="search-container">
+    <input type="text" id="search-input" placeholder="Search here..." />
+    <button id="search-button">Search</button>
+    <div class="navigation-buttons">
+        <button id="prev-button">⬆ Up</button>
+        <button id="next-button">⬇ Down</button>
+    </div>
+    <p id="search-feedback" style="display: none; color: red; margin-top: 10px;"></p>
+</div>
+
+
+
+
+
+
+.search-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px auto;
+    max-width: 600px;
+    gap: 10px;
 }
+
+#search-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+button {
+    padding: 10px 15px;
+    font-size: 1em;
+    color: #fff;
+    background-color: #0056b3;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #003366;
+}
+
+.navigation-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+#search-feedback {
+    font-size: 0.9em;
+}
+
+
+
+
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    const searchInput = document.getElementById("search-input");
+    const searchButton = document.getElementById("search-button");
+    const prevButton = document.getElementById("prev-button");
+    const nextButton = document.getElementById("next-button");
+    const searchFeedback = document.getElementById("search-feedback");
+    let currentMatchIndex = -1;
+    let matches = [];
+
+    // Search function
+    const performSearch = () => {
+        const searchText = searchInput.value.trim().toLowerCase();
+        const contentElements = document.querySelectorAll("h1, h2, h3, p, span, div");
+
+        // Clear previous highlights
+        contentElements.forEach(el => {
+            el.innerHTML = el.innerHTML.replace(/<mark>(.*?)<\/mark>/g, "$1");
+        });
+
+        matches = [];
+        currentMatchIndex = -1;
+
+        if (searchText) {
+            contentElements.forEach((el, index) => {
+                const innerText = el.textContent.toLowerCase();
+                if (innerText.includes(searchText)) {
+                    const regex = new RegExp(`(${searchText})`, "gi");
+                    el.innerHTML = el.innerHTML.replace(regex, "<mark>$1</mark>");
+                    matches.push({ element: el, index });
+                }
+            });
+
+            if (matches.length > 0) {
+                searchFeedback.style.display = "none";
+                currentMatchIndex = 0;
+                navigateToMatch();
+            } else {
+                searchFeedback.textContent = "Word not available.";
+                searchFeedback.style.display = "block";
+            }
+        } else {
+            searchFeedback.textContent = "Please enter a search term.";
+            searchFeedback.style.display = "block";
+        }
+    };
+
+    // Navigate to the current match
+    const navigateToMatch = () => {
+        if (matches.length > 0 && currentMatchIndex >= 0) {
+            const { element } = matches[currentMatchIndex];
+            element.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+    };
+
+    // Navigate to the previous match
+    const navigatePrev = () => {
+        if (matches.length > 0 && currentMatchIndex > 0) {
+            currentMatchIndex--;
+            navigateToMatch();
+        }
+    };
+
+    // Navigate to the next match
+    const navigateNext = () => {
+        if (matches.length > 0 && currentMatchIndex < matches.length - 1) {
+            currentMatchIndex++;
+            navigateToMatch();
+        }
+    };
+
+    // Event listeners
+    searchButton.addEventListener("click", performSearch);
+    prevButton.addEventListener("click", navigatePrev);
+    nextButton.addEventListener("click", navigateNext);
+
+    // Allow "Enter" key to trigger search
+    searchInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+            performSearch();
+        }
+    });
+});
