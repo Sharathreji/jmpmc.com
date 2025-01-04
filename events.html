@@ -266,6 +266,20 @@
     background-color: #007bff; /* Matches main theme */
     color: white; /* White text on hover */
 }
+<!-- Add CSS for Automatic Scrolling -->
+<style>
+@keyframes scrollImages {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+#event-carousel:hover {
+    animation-play-state: paused;
+}
+</style>
  </style>
 <body>
     <header>
@@ -285,12 +299,10 @@
         <li><a href="doctors-and-department.html">Departments & Doctors</a></li>
         <li><a href="surgeries.html">Surgeries</a></li>
         <li><a href="services.html">Our Services</a></li>
-        <li><a href="services.html#24-Hour Services">24-Hour Services</a></li>
+       <li><a href="services.html#24-Hour Services">24-Hour Services</a></li>
         <li><a href="insurance.html">Insurance</a></li>
-        <li><a href="events.html">Events & Gallery</a></li>
-        <li><a href="reviews.html">Doctors Review</a></li>
-        <li><a href="feedback.html">Feedback Form</a></li>
         <li><a href="careers.html">Careers</a></li>
+        <li><a href="reviews.html">Reviews & Suggestions</a></li>
     </ul>
 </nav>
     </ul>
@@ -304,22 +316,16 @@
             Events
         </div>
         <div style="border: 1px solid #ddd; border-radius: 8px; padding: 15px; background-color: #f8f9fa;">
-            <div style="overflow: hidden; max-width: 100%; position: relative;">
-                <div style="display: flex; overflow-x: auto; gap: 10px; scroll-snap-type: x mandatory;">
-                    <!-- Example Images with Captions (Replace with actual paths and text) -->
-                    <div style="text-align: center; scroll-snap-align: start;">
-                        <img src="images/event1.jpg" alt="Event 1" style="height: 200px; border-radius: 8px;">
-                        <p style="margin-top: 5px; font-size: 0.9em; color: #343a40;">Caption for Event 1</p>
-                    </div>
-                    <div style="text-align: center; scroll-snap-align: start;">
-                        <img src="images/event2.jpg" alt="Event 2" style="height: 200px; border-radius: 8px;">
-                        <p style="margin-top: 5px; font-size: 0.9em; color: #343a40;">Caption for Event 2</p>
-                    </div>
-                    <div style="text-align: center; scroll-snap-align: start;">
-                        <img src="images/event3.jpg" alt="Event 3" style="height: 200px; border-radius: 8px;">
-                        <p style="margin-top: 5px; font-size: 0.9em; color: #343a40;">Caption for Event 3</p>
-                    </div>
+            <div style="position: relative; overflow: hidden; max-width: 100%; height: 250px; border-radius: 8px;">
+                <div id="event-carousel" style="display: flex; animation: scrollImages 10s linear infinite;">
+                    <!-- Example Images (Replace with actual paths) -->
+                    <img src="images/event1.jpg" alt="Event 1" style="height: 100%; flex: 0 0 auto; margin-right: 10px; border-radius: 8px;">
+                    <img src="images/event2.jpg" alt="Event 2" style="height: 100%; flex: 0 0 auto; margin-right: 10px; border-radius: 8px;">
+                    <img src="images/event3.jpg" alt="Event 3" style="height: 100%; flex: 0 0 auto; margin-right: 10px; border-radius: 8px;">
                 </div>
+            </div>
+            <div style="margin-top: 10px;">
+                <p style="text-align: center; font-size: 1em; color: #343a40;">Details about the event will go here. Replace this text with the event description.</p>
             </div>
         </div>
     </div>
@@ -333,15 +339,11 @@
             <!-- Example Images with Captions (Replace with actual paths and text) -->
             <div style="text-align: center;">
                 <img src="images/gallery1.jpg" alt="Gallery Image 1" style="width: 100%; border-radius: 8px;">
+                <p style="margin-top: 5px; font-size: 0.9em; color: #343a40;">Caption for Image 1</p>
             </div>
             <div style="text-align: center;">
                 <img src="images/gallery2.jpg" alt="Gallery Image 2" style="width: 100%; border-radius: 8px;">
-            </div>
-            <div style="text-align: center;">
-                <img src="images/gallery3.jpg" alt="Gallery Image 3" style="width: 100%; border-radius: 8px;">
-            </div>
-            <div style="text-align: center;">
-                <img src="images/gallery4.jpg" alt="Gallery Image 4" style="width: 100%; border-radius: 8px;">
+                <p style="margin-top: 5px; font-size: 0.9em; color: #343a40;">Caption for Image 2</p>
             </div>
         </div>
     </div>
