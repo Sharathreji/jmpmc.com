@@ -2,111 +2,22 @@
     <div style="background-color: #007bff; color: white; padding: 15px; text-align: center; border-radius: 8px; font-size: 1.5em; font-weight: bold;">
         Events
     </div>
-    <div class="carousel-container" id="event-carousel">
-        <div class="carousel-track">
-            <img src="images/ecas.png" alt="Event Image 1" class="carousel-image">
-            <img src="images/ect4.png" alt="Event Image 2" class="carousel-image">
-            <img src="images/ein1.png" alt="Event Image 3" class="carousel-image">
-            <!-- Add more images as needed -->
+    <div class="event-carousel-wrapper" style="border: 1px solid #ddd; border-radius: 8px; background-color: #f8f9fa; overflow-x: auto; white-space: nowrap; scroll-behavior: smooth; padding: 10px;">
+        <div class="event-card" style="display: inline-block; width: 90%; max-width: 300px; margin: 10px; vertical-align: top;">
+            <img src="images/ecas.png" alt="Event 1" style="width: 100%; border-radius: 8px; object-fit: cover;">
+            <h3 style="color: #0056b3; font-size: 1.2em; margin-top: 10px;">Event Title 1</h3>
+            <p style="font-size: 0.9em; color: #343a40;">Details about the event go here. Replace this text with the event description.</p>
         </div>
+        <div class="event-card" style="display: inline-block; width: 90%; max-width: 300px; margin: 10px; vertical-align: top;">
+            <img src="images/ect4.png" alt="Event 2" style="width: 100%; border-radius: 8px; object-fit: cover;">
+            <h3 style="color: #0056b3; font-size: 1.2em; margin-top: 10px;">Event Title 2</h3>
+            <p style="font-size: 0.9em; color: #343a40;">Details about the event go here. Replace this text with the event description.</p>
+        </div>
+        <div class="event-card" style="display: inline-block; width: 90%; max-width: 300px; margin: 10px; vertical-align: top;">
+            <img src="images/ein1.png" alt="Event 3" style="width: 100%; border-radius: 8px; object-fit: cover;">
+            <h3 style="color: #0056b3; font-size: 1.2em; margin-top: 10px;">Event Title 3</h3>
+            <p style="font-size: 0.9em; color: #343a40;">Details about the event go here. Replace this text with the event description.</p>
+        </div>
+        <!-- Add more event cards as needed -->
     </div>
 </div>
-
-
-
-
-.carousel-container {
-    position: relative;
-    overflow: hidden;
-    width: 100%;
-    max-width: 1000px; /* Adjust as needed */
-    margin: 0 auto;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #f8f9fa;
-}
-
-.carousel-track {
-    display: flex;
-    transition: transform 0.5s ease-in-out;
-    touch-action: pan-x;
-    will-change: transform;
-}
-
-.carousel-image {
-    flex-shrink: 0;
-    width: 100%;
-    max-width: 100%;
-    height: auto;
-    object-fit: cover;
-    border-radius: 8px;
-}
-
-/* Responsive Styling */
-@media (max-width: 768px) {
-    .carousel-image {
-        height: 200px; /* Maintain image height for smaller screens */
-    }
-}
-
-
-<script>
-    const carousel = document.getElementById('event-carousel');
-    const track = carousel.querySelector('.carousel-track');
-    const images = Array.from(track.children);
-    let startX = 0;
-    let currentTranslate = 0;
-    let prevTranslate = 0;
-    let animationID = 0;
-    let isDragging = false;
-
-    // Touch/Mouse Down
-    carousel.addEventListener('mousedown', startDrag);
-    carousel.addEventListener('touchstart', startDrag);
-
-    // Touch/Mouse Move
-    carousel.addEventListener('mousemove', dragMove);
-    carousel.addEventListener('touchmove', dragMove);
-
-    // Touch/Mouse Up
-    carousel.addEventListener('mouseup', endDrag);
-    carousel.addEventListener('touchend', endDrag);
-    carousel.addEventListener('mouseleave', endDrag);
-
-    function startDrag(e) {
-        isDragging = true;
-        startX = getPositionX(e);
-        prevTranslate = currentTranslate;
-        animationID = requestAnimationFrame(animation);
-    }
-
-    function dragMove(e) {
-        if (!isDragging) return;
-        const currentX = getPositionX(e);
-        const deltaX = currentX - startX;
-        currentTranslate = prevTranslate + deltaX;
-        track.style.transform = `translateX(${currentTranslate}px)`;
-    }
-
-    function endDrag() {
-        cancelAnimationFrame(animationID);
-        isDragging = false;
-
-        // Snap to nearest image
-        const trackWidth = track.offsetWidth;
-        const containerWidth = carousel.offsetWidth;
-        const totalImages = images.length;
-        const imageWidth = containerWidth / totalImages;
-        const snapIndex = Math.round(-currentTranslate / imageWidth);
-        currentTranslate = -snapIndex * imageWidth;
-        track.style.transform = `translateX(${currentTranslate}px)`;
-    }
-
-    function getPositionX(e) {
-        return e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
-    }
-
-    function animation() {
-        if (isDragging) requestAnimationFrame(animation);
-    }
-</script>
