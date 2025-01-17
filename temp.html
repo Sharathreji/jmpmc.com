@@ -1,70 +1,81 @@
-/* Event Cards Styling */
+<div class="events-section">
+    <div class="events-heading">
+        <h2>Upcoming Events</h2>
+    </div>
+    <div class="event-cards">
+        <!-- First Event Card -->
+        <div class="event-card">
+            <div class="carousel">
+                <div class="carousel-track">
+                    <img src="images/event1.jpg" alt="Event Image 1">
+                    <img src="images/event2.jpg" alt="Event Image 2">
+                    <img src="images/event3.jpg" alt="Event Image 3">
+                </div>
+            </div>
+            <h3 class="event-title">Community Health Camp</h3>
+            <p class="event-description">
+                Join us for a free health check-up camp in collaboration with leading healthcare professionals. 
+                Open to all age groups!
+            </p>
+        </div>
+
+        <!-- Second Event Card -->
+        <div class="event-card">
+            <div class="carousel">
+                <div class="carousel-track">
+                    <img src="images/event4.jpg" alt="Event Image 4">
+                    <img src="images/event5.jpg" alt="Event Image 5">
+                    <img src="images/event6.jpg" alt="Event Image 6">
+                </div>
+            </div>
+            <h3 class="event-title">Annual Blood Donation Drive</h3>
+            <p class="event-description">
+                Participate in our blood donation drive and help save lives. Certificates will be provided to all donors.
+            </p>
+        </div>
+    </div>
+</div>
+
+
+
+/* Events Section */
+.event-cards {
+    display: flex; /* Use flexbox for layout */
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    gap: 20px; /* Add space between cards */
+    justify-content: center; /* Center align the cards */
+    margin: 0 auto; /* Center the container on the page */
+    max-width: 1200px; /* Limit the container width */
+}
+
+/* Event Card */
 .event-card {
-    background-color: #ffffff;
-    border-radius: 15px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    text-align: center;
-    max-width: 600px; /* Increase max width for desktop */
-    width: 90%; /* Allow flexibility for smaller screens */
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    padding: 20px;
+    flex: 1 1 calc(50% - 20px); /* Each card takes up 50% of the row minus the gap */
+    max-width: 600px; /* Limit the width of each card */
+    box-sizing: border-box; /* Include padding and borders in the width */
 }
 
-.event-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
-}
-
-/* Carousel Styling */
-.carousel {
-    position: relative;
-    overflow: hidden;
-    height: 300px; /* Increase height for desktop */
-    margin-bottom: 20px;
-    border-radius: 10px;
-}
-
-.carousel-track {
-    display: flex;
-    transition: transform 0.8s ease-in-out;
-    width: 100%;
-}
-
-.carousel-track img {
-    width: 100%;
-    height: 300px; /* Adjust height to match carousel container */
-    object-fit: cover;
-    border-radius: 10px;
-}
-
-/* Responsive Design */
+/* Responsive Adjustments */
 @media (max-width: 768px) {
-    .carousel {
-        height: 200px; /* Smaller height for tablets */
-    }
-
-    .carousel-track img {
-        height: 200px; /* Match carousel height */
-    }
-
     .event-card {
-        max-width: 90%; /* Adjust card size for tablets */
-        padding: 15px;
+        flex: 1 1 calc(100% - 20px); /* Cards take full width on smaller screens */
+    }
+
+    .carousel {
+        height: 200px; /* Adjust carousel height for smaller screens */
+    }
+
+    .event-description {
+        font-size: 0.9em; /* Slightly smaller text */
     }
 }
 
 @media (max-width: 480px) {
     .carousel {
-        height: 150px; /* Smaller height for mobile devices */
-    }
-
-    .carousel-track img {
-        height: 150px; /* Match carousel height */
+        height: 150px; /* Smaller height for very small screens */
     }
 
     .event-card {
-        max-width: 100%; /* Full width for small screens */
-        padding: 10px;
+        padding: 10px; /* Reduce padding for compact display */
     }
 }
