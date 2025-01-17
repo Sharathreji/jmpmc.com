@@ -452,49 +452,61 @@
     font-family: 'Playfair Display', serif;
 }
 
-/* Gallery Grid */
-.gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 0; /* No space between images */
-    overflow: hidden;
-    border-radius: 15px; /* Rounded edges for the gallery */
-}
-
-/* Enhanced Gallery Grid */
-.gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Ensures large images */
-    gap: 10px; /* Adds spacing for better visibility */
-    overflow: hidden;
+/* Improved Gallery Section */
+.gallery-section {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef); /* Soft gradient */
+    padding: 50px 0;
     border-radius: 15px;
+    text-align: center;
+    overflow: hidden;
 }
 
-/* Larger and More Noticeable Images */
+/* Stylish Gallery Heading */
+.gallery-heading h2 {
+    font-size: 2.5em;
+    color: #0056b3;
+    background: white;
+    padding: 10px 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+    margin-bottom: 30px;
+}
+
+/* Edge-to-Edge Grid */
+.gallery-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0; /* Removes spacing */
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+/* Full-width images without gaps */
 .gallery-grid img {
-    width: 100%;
+    width: calc(100% / 3); /* 3 images per row */
     height: auto;
     object-fit: cover;
-    border-radius: 10px;
     transition: transform 0.3s ease, filter 0.3s ease;
 }
 
-/* Enhanced Hover Effect */
+/* Hover Effect */
 .gallery-grid img:hover {
-    transform: scale(1.08); /* More noticeable zoom */
+    transform: scale(1.02);
     filter: brightness(90%);
 }
 
 /* Responsive Adjustments */
 @media (max-width: 768px) {
-    .gallery-grid {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    .gallery-grid img {
+        width: calc(100% / 2); /* 2 images per row */
     }
 }
 
 @media (max-width: 480px) {
-    .gallery-grid {
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Larger images even on small screens */
+    .gallery-grid img {
+        width: 100%; /* Full-width images on small screens */
     }
 }
  </style>
