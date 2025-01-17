@@ -287,6 +287,28 @@
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 0; /* Removes spaces between images */
 }
+.modern-event img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px; /* Rounded corners for a polished look */
+    object-fit: cover; /* Ensures the image fits nicely without distortion */
+}
+
+.modern-event .event-content h3 {
+    font-family: 'Playfair Display', serif; /* Add a modern font for titles */
+    font-weight: bold;
+}
+
+.modern-event .event-content p {
+    font-family: 'Roboto', Arial, sans-serif; /* Keep it clean and professional */
+    color: #555;
+}
+
+@media (max-width: 768px) {
+    .modern-event {
+        flex-direction: column; /* Ensures stacking for smaller screens */
+    }
+}
  </style>
 <body>
     <header>
