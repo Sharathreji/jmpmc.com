@@ -364,20 +364,15 @@
 }
 
 /* Event Cards Styling */
-.event-cards {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
-}
-
+/* Event Cards Styling */
 .event-card {
     background-color: #ffffff;
     border-radius: 15px;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     text-align: center;
-    max-width: 400px;
+    max-width: 600px; /* Increase max width for desktop */
+    width: 90%; /* Allow flexibility for smaller screens */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     padding: 20px;
 }
@@ -391,7 +386,7 @@
 .carousel {
     position: relative;
     overflow: hidden;
-    height: 220px;
+    height: 300px; /* Increase height for desktop */
     margin-bottom: 20px;
     border-radius: 10px;
 }
@@ -404,41 +399,41 @@
 
 .carousel-track img {
     width: 100%;
-    height: 220px;
+    height: 300px; /* Adjust height to match carousel container */
     object-fit: cover;
     border-radius: 10px;
 }
 
-/* Event Title */
-.event-title {
-    font-size: 1.8em;
-    color: #0056b3;
-    margin: 10px 0;
-    font-family: 'Playfair Display', serif;
+/* Responsive Design */
+@media (max-width: 768px) {
+    .carousel {
+        height: 200px; /* Smaller height for tablets */
+    }
+
+    .carousel-track img {
+        height: 200px; /* Match carousel height */
+    }
+
+    .event-card {
+        max-width: 90%; /* Adjust card size for tablets */
+        padding: 15px;
+    }
 }
 
-/* Event Description */
-.event-description {
-    font-size: 1em;
-    color: #343a40;
-    line-height: 1.6;
-    padding: 0 10px;
-}
+@media (max-width: 480px) {
+    .carousel {
+        height: 150px; /* Smaller height for mobile devices */
+    }
 
-/* Carousel Controls */
-.carousel-controls {
-    position: absolute;
-    top: 50%;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    transform: translateY(-50%);
-    padding: 0 10px;
-}
+    .carousel-track img {
+        height: 150px; /* Match carousel height */
+    }
 
-.carousel-controls button {
-    background: rgba(0, 0, 0, 0.8);
-} 
+    .event-card {
+        max-width: 100%; /* Full width for small screens */
+        padding: 10px;
+    }
+}
  </style>
 <body>
     <header>
