@@ -265,48 +265,48 @@
 #menu ul li a:hover {
     background-color: #007bff; /* Matches main theme */
     color: white; /* White text on hover */
-/* Event Carousel Wrapper */
-.event-carousel-wrapper {
-    display: flex;
-    gap: 10px;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    border-radius: 8px;
-    padding: 10px 0;
 }
-
-/* Carousel Images */
-.event-carousel-image {
-    flex: 0 0 auto;
+@keyframes scrollImages {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+#event-carousel:hover {
+    animation-play-state: paused;
+}
+.gallery img {
+    width: 100%; /* Makes images responsive */
+    height: auto; /* Maintains aspect ratio */
+    display: block;
+}
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 0; /* Removes spaces between images */
+}
+.modern-event img {
     width: 100%;
-    max-width: 300px;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    height: auto;
+    border-radius: 8px; /* Rounded corners for a polished look */
+    object-fit: cover; /* Ensures the image fits nicely without distortion */
 }
 
-/* Modern Scrollbar Styling */
-.event-carousel-wrapper::-webkit-scrollbar {
-    height: 8px;
+.modern-event .event-content h3 {
+    font-family: 'Playfair Display', serif; /* Add a modern font for titles */
+    font-weight: bold;
 }
 
-.event-carousel-wrapper::-webkit-scrollbar-thumb {
-    background: linear-gradient(to right, #007bff, #0056b3);
-    border-radius: 8px;
-    border: 2px solid #f8f9fa;
+.modern-event .event-content p {
+    font-family: 'Roboto', Arial, sans-serif; /* Keep it clean and professional */
+    color: #555;
 }
 
-.event-carousel-wrapper::-webkit-scrollbar-track {
-    background-color: #ddd;
-    border-radius: 8px;
-}
-
-/* Responsive Design */
 @media (max-width: 768px) {
-    .event-carousel-image {
-        max-width: 250px;
-        height: 150px;
+    .modern-event {
+        flex-direction: column; /* Ensures stacking for smaller screens */
     }
 }
  </style>
@@ -340,44 +340,35 @@
 </div>
 <div class="content">
     <!-- Events Section -->
-   <div style="margin-bottom: 40px;">
+  <div style="margin-bottom: 40px;">
     <div style="background-color: #007bff; color: white; padding: 15px; text-align: center; border-radius: 8px; font-size: 1.5em; font-weight: bold;">
         Events
     </div>
-    <div class="event-carousel-wrapper" style="border: 1px solid #ddd; border-radius: 8px; background-color: #f8f9fa; overflow-x: auto; white-space: nowrap; scroll-behavior: smooth; padding: 10px;">
-        <div class="event-card" style="display: inline-block; width: 90%; max-width: 300px; margin: 10px; vertical-align: top;">
-            <img src="images/ecas.png" alt="Event 1" style="width: 100%; border-radius: 8px; object-fit: cover;">
-            <h3 style="color: #0056b3; font-size: 1.2em; margin-top: 10px;">Event Title 1</h3>
-            <p style="font-size: 0.9em; color: #343a40;">Details about the event go here. Replace this text with the event description.</p>
+    <div style="border: 1px solid #ddd; border-radius: 8px; padding: 15px; background-color: #f8f9fa;">
+        <div class="modern-event" style="display: flex; flex-direction: column; gap: 15px;">
+            <div class="event-image-wrapper" style="position: relative; width: 100%; overflow: hidden; border-radius: 8px;">
+                <img src="images/ecas.png" alt="Event 1" style="width: 100%; height: auto; display: block;">
+            </div>
+            <div class="event-content" style="text-align: center; font-size: 1em; color: #343a40; line-height: 1.5;">
+                <h3 style="color: #0056b3; font-size: 1.2em; margin-bottom: 10px;">Event Title</h3>
+                <p style="margin: 0 0 10px;">Details about the event go here. Replace this text with the event description.</p>
+            </div>
         </div>
-        <div class="event-card" style="display: inline-block; width: 90%; max-width: 300px; margin: 10px; vertical-align: top;">
-            <img src="images/ect4.png" alt="Event 2" style="width: 100%; border-radius: 8px; object-fit: cover;">
-            <h3 style="color: #0056b3; font-size: 1.2em; margin-top: 10px;">Event Title 2</h3>
-            <p style="font-size: 0.9em; color: #343a40;">Details about the event go here. Replace this text with the event description.</p>
-        </div>
-        <div class="event-card" style="display: inline-block; width: 90%; max-width: 300px; margin: 10px; vertical-align: top;">
-            <img src="images/ein1.png" alt="Event 3" style="width: 100%; border-radius: 8px; object-fit: cover;">
-            <h3 style="color: #0056b3; font-size: 1.2em; margin-top: 10px;">Event Title 3</h3>
-            <p style="font-size: 0.9em; color: #343a40;">Details about the event go here. Replace this text with the event description.</p>
-        </div>
-        <!-- Add more event cards as needed -->
     </div>
 </div>
-    
-    
 
     <!-- Gallery Section -->
-   <div>
-    <div style="background-color: #007bff; color: white; padding: 15px; text-align: center; border-radius: 8px; font-size: 1.5em; font-weight: bold;">
-        Gallery
+    <div>
+        <div style="background-color: #007bff; color: white; padding: 15px; text-align: center; border-radius: 8px; font-size: 1.5em; font-weight: bold;">
+            Gallery
+        </div>
+        <div class="gallery" style="border: 1px solid #ddd; border-radius: 8px; background-color: #f8f9fa;">
+            <img src="images/ect4.png" alt="Gallery Image 1">
+            <img src="images/ein1.png" alt="Gallery Image 2">
+            <img src="images/ein2.png" alt="Gallery Image 3">
+            <!-- Add more images as needed -->
+        </div>
     </div>
-    <div class="gallery" style="border: 1px solid #ddd; border-radius: 8px; background-color: #f8f9fa; margin-top: 15px;">
-        <img src="images/ect4.png" alt="Gallery Image 1">
-        <img src="images/ein1.png" alt="Gallery Image 2">
-        <img src="images/ein2.png" alt="Gallery Image 3">
-        <!-- Add more images as needed -->
-    </div>
-</div>
 <body>
 <div class="floating-buttons">
     <button class="floating-button call-button" onclick="showContactNumber('+91 485 224 1274', '+914852241274')">
@@ -558,27 +549,7 @@ document.getElementById('menu-toggle').addEventListener('click', function () {
     menu.classList.toggle('show');
 });
 </script>
-<script>
-    const carousel = document.getElementById('event-carousel');
 
-    // Auto-scroll functionality
-    function autoScroll() {
-        if (carousel.scrollWidth - carousel.scrollLeft <= carousel.clientWidth) {
-            carousel.scrollTo({ left: 0, behavior: 'smooth' }); // Reset to start
-        } else {
-            carousel.scrollBy({ left: 1, behavior: 'smooth' }); // Scroll 1 pixel
-        }
-    }
-
-    // Start auto-scrolling
-    let autoScrollInterval = setInterval(autoScroll, 50);
-
-    // Pause auto-scroll on hover
-    carousel.addEventListener('mouseover', () => clearInterval(autoScrollInterval));
-    carousel.addEventListener('mouseout', () => {
-        autoScrollInterval = setInterval(autoScroll, 50);
-    });
-</script>
 
 </body>
 </html>             
