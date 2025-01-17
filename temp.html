@@ -16,17 +16,66 @@
 
 
 
-<div class="gallery-section">
-    <div class="gallery-heading">
-        <h2>Gallery</h2>
-    </div>
-    <div class="gallery-grid">
-        <img src="images/gallery1.jpg" alt="Gallery Image 1">
-        <img src="images/gallery2.jpg" alt="Gallery Image 2">
-        <img src="images/gallery3.jpg" alt="Gallery Image 3">
-        <img src="images/gallery4.jpg" alt="Gallery Image 4">
-        <img src="images/gallery5.jpg" alt="Gallery Image 5">
-        <img src="images/gallery6.jpg" alt="Gallery Image 6">
-        <!-- Add more images as needed -->
-    </div>
-</div>
+/* Gallery Section Styling */
+.gallery-section {
+    background: linear-gradient(135deg, #ffffff, #f8f9fa);
+    padding: 60px 20px;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    margin-top: 40px;
+    text-align: center;
+}
+
+/* Gallery Heading */
+.gallery-heading h2 {
+    display: inline-block;
+    font-size: 2.5em;
+    color: #0056b3;
+    background-color: #ffffff;
+    padding: 10px 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 40px;
+    font-family: 'Playfair Display', serif;
+}
+
+/* Gallery Grid */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 0; /* No space between images */
+    overflow: hidden;
+    border-radius: 15px; /* Rounded edges for the gallery */
+}
+
+/* Gallery Images */
+.gallery-grid img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.gallery-grid img:hover {
+    transform: scale(1.05); /* Zoom-in effect */
+    filter: brightness(90%);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .gallery-heading h2 {
+        font-size: 2em; /* Adjust heading size for tablets */
+    }
+    .gallery-grid {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Smaller columns for smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .gallery-heading h2 {
+        font-size: 1.8em; /* Smaller heading for mobile */
+    }
+    .gallery-grid {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Smaller columns for mobile */
+    }
+}
