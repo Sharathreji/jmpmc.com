@@ -1,9 +1,9 @@
 <div class="events-section">
     <div class="events-heading">
-        <h2>Events</h2>
+        <h2>Upcoming Events</h2>
     </div>
     <div class="event-cards">
-        <!-- First Event Card -->
+        <!-- Event Card -->
         <div class="event-card">
             <div class="carousel">
                 <div class="carousel-track">
@@ -12,49 +12,103 @@
                     <img src="images/event3.jpg" alt="Event Image 3">
                 </div>
             </div>
-            <div class="carousel-controls">
-                <button class="prev">❮</button>
-                <button class="next">❯</button>
-            </div>
-            <h3>Event Title</h3>
-            <p>Description of the event goes here. This is a placeholder for event details. Add more cards as needed!</p>
+            <h3 class="event-title">Community Health Camp</h3>
+            <p class="event-description">
+                Join us for a free health check-up camp in collaboration with leading healthcare professionals. 
+                Open to all age groups!
+            </p>
         </div>
     </div>
 </div>
 
+/* Events Section Styling */
+.events-section {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    padding: 60px 20px;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
 
-/* Carousel Container */
+.events-heading h2 {
+    display: inline-block;
+    font-size: 2.5em;
+    color: #0056b3;
+    background-color: #ffffff;
+    padding: 10px 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 40px;
+    font-family: 'Playfair Display', serif;
+}
+
+/* Event Cards Styling */
+.event-cards {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.event-card {
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: center;
+    max-width: 400px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 20px;
+}
+
+.event-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+/* Carousel Styling */
 .carousel {
     position: relative;
     overflow: hidden;
-    width: 100%;
-    height: 200px;
+    height: 220px;
+    margin-bottom: 20px;
     border-radius: 10px;
-    margin-bottom: 15px;
 }
 
-/* Carousel Track (Images) */
 .carousel-track {
     display: flex;
-    transition: transform 0.5s ease-in-out;
+    transition: transform 0.8s ease-in-out;
     width: 100%;
 }
 
-/* Carousel Images */
 .carousel-track img {
     width: 100%;
-    max-width: 400px;
-    height: 200px;
+    height: 220px;
     object-fit: cover;
     border-radius: 10px;
+}
+
+/* Event Title */
+.event-title {
+    font-size: 1.8em;
+    color: #0056b3;
+    margin: 10px 0;
+    font-family: 'Playfair Display', serif;
+}
+
+/* Event Description */
+.event-description {
+    font-size: 1em;
+    color: #343a40;
+    line-height: 1.6;
+    padding: 0 10px;
 }
 
 /* Carousel Controls */
 .carousel-controls {
     position: absolute;
     top: 50%;
-    left: 0;
-    right: 0;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     transform: translateY(-50%);
@@ -62,43 +116,7 @@
 }
 
 .carousel-controls button {
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.carousel-controls button:hover {
-    background-color: rgba(0, 0, 0, 0.8);
-}
-
-/* Indicators (Optional: Attractive Dots) */
-.carousel-indicators {
-    display: flex;
-    justify-content: center;
-    gap: 5px;
-    position: absolute;
-    bottom: 10px;
-    width: 100%;
-}
-
-.carousel-indicators button {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.5);
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.carousel-indicators button.active {
-    background-color: rgba(255, 255, 255, 0.9);
-}
+    background:
 
 
 
@@ -108,13 +126,10 @@ document.addEventListener('DOMContentLoaded', function () {
     carousels.forEach((carousel) => {
         const track = carousel.querySelector('.carousel-track');
         const images = Array.from(track.children);
-        const nextButton = carousel.querySelector('.next');
-        const prevButton = carousel.querySelector('.prev');
-
         let currentIndex = 0;
 
         const moveToSlide = (index) => {
-            track.style.transform = `translateX(-${index * images[0].offsetWidth}px)`;
+            track.style.transform = `translateX(-${index * 100}%)`;
         };
 
         const autoScroll = () => {
@@ -122,24 +137,10 @@ document.addEventListener('DOMContentLoaded', function () {
             moveToSlide(currentIndex);
         };
 
-        let autoScrollInterval = setInterval(autoScroll, 3000);
+        let autoScrollInterval = setInterval(autoScroll, 4000);
 
-        nextButton.addEventListener('click', () => {
-            currentIndex = (currentIndex + 1) % images.length;
-            moveToSlide(currentIndex);
-            clearInterval(autoScrollInterval); // Pause auto-scroll on manual interaction
-            autoScrollInterval = setInterval(autoScroll, 3000); // Restart auto-scroll
-        });
-
-        prevButton.addEventListener('click', () => {
-            currentIndex = (currentIndex - 1 + images.length) % images.length;
-            moveToSlide(currentIndex);
-            clearInterval(autoScrollInterval); // Pause auto-scroll on manual interaction
-            autoScrollInterval = setInterval(autoScroll, 3000); // Restart auto-scroll
-        });
-
-        // Pause scrolling on hover
+        // Pause auto-scroll on hover
         carousel.addEventListener('mouseover', () => clearInterval(autoScrollInterval));
-        carousel.addEventListener('mouseout', () => (autoScrollInterval = setInterval(autoScroll, 3000)));
+        carousel.addEventListener('mouseout', () => (autoScrollInterval = setInterval(autoScroll, 4000)));
     });
 });
