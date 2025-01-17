@@ -1,81 +1,66 @@
-<div class="events-section">
-    <div class="events-heading">
-        <h2>Upcoming Events</h2>
-    </div>
-    <div class="event-cards">
-        <!-- First Event Card -->
-        <div class="event-card">
-            <div class="carousel">
-                <div class="carousel-track">
-                    <img src="images/event1.jpg" alt="Event Image 1">
-                    <img src="images/event2.jpg" alt="Event Image 2">
-                    <img src="images/event3.jpg" alt="Event Image 3">
-                </div>
-            </div>
-            <h3 class="event-title">Community Health Camp</h3>
-            <p class="event-description">
-                Join us for a free health check-up camp in collaboration with leading healthcare professionals. 
-                Open to all age groups!
-            </p>
-        </div>
-
-        <!-- Second Event Card -->
-        <div class="event-card">
-            <div class="carousel">
-                <div class="carousel-track">
-                    <img src="images/event4.jpg" alt="Event Image 4">
-                    <img src="images/event5.jpg" alt="Event Image 5">
-                    <img src="images/event6.jpg" alt="Event Image 6">
-                </div>
-            </div>
-            <h3 class="event-title">Annual Blood Donation Drive</h3>
-            <p class="event-description">
-                Participate in our blood donation drive and help save lives. Certificates will be provided to all donors.
-            </p>
-        </div>
-    </div>
-</div>
-
-
-
-/* Events Section */
-.event-cards {
-    display: flex; /* Use flexbox for layout */
-    flex-wrap: wrap; /* Allow wrapping on smaller screens */
-    gap: 20px; /* Add space between cards */
-    justify-content: center; /* Center align the cards */
-    margin: 0 auto; /* Center the container on the page */
-    max-width: 1200px; /* Limit the container width */
+/* Events Section Styling */
+.events-section {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    padding: 40px 15px;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin: 0 auto;
+    max-width: 1200px; /* Limit the max width on larger screens */
 }
 
 /* Event Card */
 .event-card {
-    flex: 1 1 calc(50% - 20px); /* Each card takes up 50% of the row minus the gap */
-    max-width: 600px; /* Limit the width of each card */
-    box-sizing: border-box; /* Include padding and borders in the width */
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: center;
+    max-width: 600px;
+    margin: 20px auto; /* Center the cards */
+    padding: 20px;
+    width: 100%; /* Full width within its container */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Responsive Adjustments */
+.event-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+/* Carousel Adjustments */
+.carousel {
+    position: relative;
+    overflow: hidden;
+    width: 100%; /* Full width for all screen sizes */
+    height: auto; /* Adjust height dynamically */
+    border-radius: 10px;
+}
+
+.carousel-track img {
+    width: 100%; /* Full width images */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 10px;
+}
+
+/* Media Queries */
 @media (max-width: 768px) {
+    .events-section {
+        padding: 30px 10px; /* Adjust padding for tablets */
+    }
+
     .event-card {
-        flex: 1 1 calc(100% - 20px); /* Cards take full width on smaller screens */
-    }
-
-    .carousel {
-        height: 200px; /* Adjust carousel height for smaller screens */
-    }
-
-    .event-description {
-        font-size: 0.9em; /* Slightly smaller text */
+        max-width: 90%; /* Adjust card width for smaller screens */
     }
 }
 
 @media (max-width: 480px) {
-    .carousel {
-        height: 150px; /* Smaller height for very small screens */
+    .events-section {
+        padding: 20px 5px; /* Further adjust padding for small phones */
     }
 
     .event-card {
-        padding: 10px; /* Reduce padding for compact display */
+        max-width: 100%; /* Allow full width for very small screens */
+        padding: 15px;
     }
 }
