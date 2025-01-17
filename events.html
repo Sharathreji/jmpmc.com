@@ -342,6 +342,103 @@
 .carousel-indicators button.active {
     background-color: rgba(255, 255, 255, 0.9);
 }
+/* Events Section Styling */
+.events-section {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    padding: 60px 20px;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.events-heading h2 {
+    display: inline-block;
+    font-size: 2.5em;
+    color: #0056b3;
+    background-color: #ffffff;
+    padding: 10px 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 40px;
+    font-family: 'Playfair Display', serif;
+}
+
+/* Event Cards Styling */
+.event-cards {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.event-card {
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: center;
+    max-width: 400px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 20px;
+}
+
+.event-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+/* Carousel Styling */
+.carousel {
+    position: relative;
+    overflow: hidden;
+    height: 220px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.8s ease-in-out;
+    width: 100%;
+}
+
+.carousel-track img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+/* Event Title */
+.event-title {
+    font-size: 1.8em;
+    color: #0056b3;
+    margin: 10px 0;
+    font-family: 'Playfair Display', serif;
+}
+
+/* Event Description */
+.event-description {
+    font-size: 1em;
+    color: #343a40;
+    line-height: 1.6;
+    padding: 0 10px;
+}
+
+/* Carousel Controls */
+.carousel-controls {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+    padding: 0 10px;
+}
+
+.carousel-controls button {
+    background: rgba(0, 0, 0, 0.8);
+} 
  </style>
 <body>
     <header>
@@ -376,7 +473,7 @@
         <h2>Events</h2>
     </div>
     <div class="event-cards">
-        <!-- First Event Card -->
+        <!-- Event Card -->
         <div class="event-card">
             <div class="carousel">
                 <div class="carousel-track">
@@ -385,12 +482,11 @@
                     <img src="images/ein1.png" alt="Event Image 3">
                 </div>
             </div>
-            <div class="carousel-controls">
-                <button class="prev">❮</button>
-                <button class="next">❯</button>
-            </div>
-            <h3>Event Title</h3>
-            <p>Description of the event goes here. This is a placeholder for event details. Add more cards as needed!</p>
+            <h3 class="event-title">Community Health Camp</h3>
+            <p class="event-description">
+                Join us for a free health check-up camp in collaboration with leading healthcare professionals. 
+                Open to all age groups!
+            </p>
         </div>
     </div>
 </div>
