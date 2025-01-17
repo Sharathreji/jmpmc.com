@@ -2,97 +2,66 @@
     <div style="background-color: #007bff; color: white; padding: 15px; text-align: center; border-radius: 8px; font-size: 1.5em; font-weight: bold;">
         Events
     </div>
-    <div class="event-carousel-wrapper" id="event-carousel">
-        <div class="event-card">
-            <img src="images/ecas.png" alt="Event 1">
-            <h3>Event Title 1</h3>
-            <p>Details about the event go here. Replace this text with the event description.</p>
+    <div style="border: 1px solid #ddd; border-radius: 8px; background-color: #f8f9fa; padding: 15px;">
+        <h3 style="color: #0056b3; text-align: center; font-size: 1.5em; margin-bottom: 10px;">Event Title</h3>
+        <p style="text-align: center; font-size: 1em; color: #343a40; margin-bottom: 20px;">
+            Details about the event go here. Replace this text with the event description. You can elaborate on the event's highlights, purpose, or participants here.
+        </p>
+        <div class="event-carousel-wrapper" id="event-carousel">
+            <img src="images/ecas.png" alt="Event Image 1" class="event-carousel-image">
+            <img src="images/ect4.png" alt="Event Image 2" class="event-carousel-image">
+            <img src="images/ein1.png" alt="Event Image 3" class="event-carousel-image">
         </div>
-        <div class="event-card">
-            <img src="images/ect4.png" alt="Event 2">
-            <h3>Event Title 2</h3>
-            <p>Details about the event go here. Replace this text with the event description.</p>
-        </div>
-        <div class="event-card">
-            <img src="images/ein1.png" alt="Event 3">
-            <h3>Event Title 3</h3>
-            <p>Details about the event go here. Replace this text with the event description.</p>
-        </div>
-        <!-- Add more event cards as needed -->
     </div>
 </div>
 
 
 
-/* Carousel Wrapper */
+/* Event Carousel Wrapper */
 .event-carousel-wrapper {
     display: flex;
-    gap: 15px;
+    gap: 10px;
     overflow-x: auto;
     scroll-behavior: smooth;
-    padding: 10px;
-    background-color: #f8f9fa;
-    border: 1px solid #ddd;
     border-radius: 8px;
-    position: relative;
+    padding: 10px 0;
 }
 
-/* Event Cards */
-.event-card {
-    flex: 0 0 300px;
-    background-color: #ffffff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    padding: 15px;
-}
-
-.event-card img {
+/* Carousel Images */
+.event-carousel-image {
+    flex: 0 0 auto;
     width: 100%;
-    height: 180px;
+    max-width: 300px;
+    height: 200px;
     object-fit: cover;
     border-radius: 8px;
-}
-
-.event-card h3 {
-    color: #0056b3;
-    margin-top: 10px;
-    font-size: 1.2em;
-}
-
-.event-card p {
-    color: #343a40;
-    font-size: 0.9em;
-    margin-top: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 /* Modern Scrollbar Styling */
 .event-carousel-wrapper::-webkit-scrollbar {
-    height: 12px;
+    height: 8px;
 }
 
 .event-carousel-wrapper::-webkit-scrollbar-thumb {
     background: linear-gradient(to right, #007bff, #0056b3);
-    border-radius: 6px;
+    border-radius: 8px;
     border: 2px solid #f8f9fa;
 }
 
 .event-carousel-wrapper::-webkit-scrollbar-track {
     background-color: #ddd;
-    border-radius: 6px;
+    border-radius: 8px;
 }
 
-/* Responsive Styling */
+/* Responsive Design */
 @media (max-width: 768px) {
-    .event-card {
-        flex: 0 0 250px;
-    }
-
-    .event-card img {
+    .event-carousel-image {
+        max-width: 250px;
         height: 150px;
     }
 }
+
 
 
 <script>
@@ -101,9 +70,9 @@
     // Auto-scroll functionality
     function autoScroll() {
         if (carousel.scrollWidth - carousel.scrollLeft <= carousel.clientWidth) {
-            carousel.scrollTo({ left: 0, behavior: 'smooth' }); // Reset to the start
+            carousel.scrollTo({ left: 0, behavior: 'smooth' }); // Reset to start
         } else {
-            carousel.scrollBy({ left: 1, behavior: 'smooth' }); // Scroll by 1 pixel
+            carousel.scrollBy({ left: 1, behavior: 'smooth' }); // Scroll 1 pixel
         }
     }
 
