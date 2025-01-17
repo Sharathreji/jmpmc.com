@@ -2,22 +2,117 @@
     <div style="background-color: #007bff; color: white; padding: 15px; text-align: center; border-radius: 8px; font-size: 1.5em; font-weight: bold;">
         Events
     </div>
-    <div class="event-carousel-wrapper" style="border: 1px solid #ddd; border-radius: 8px; background-color: #f8f9fa; overflow-x: auto; white-space: nowrap; scroll-behavior: smooth; padding: 10px;">
-        <div class="event-card" style="display: inline-block; width: 90%; max-width: 300px; margin: 10px; vertical-align: top;">
-            <img src="images/ecas.png" alt="Event 1" style="width: 100%; border-radius: 8px; object-fit: cover;">
-            <h3 style="color: #0056b3; font-size: 1.2em; margin-top: 10px;">Event Title 1</h3>
-            <p style="font-size: 0.9em; color: #343a40;">Details about the event go here. Replace this text with the event description.</p>
+    <div class="event-carousel-wrapper" id="event-carousel">
+        <div class="event-card">
+            <img src="images/ecas.png" alt="Event 1">
+            <h3>Event Title 1</h3>
+            <p>Details about the event go here. Replace this text with the event description.</p>
         </div>
-        <div class="event-card" style="display: inline-block; width: 90%; max-width: 300px; margin: 10px; vertical-align: top;">
-            <img src="images/ect4.png" alt="Event 2" style="width: 100%; border-radius: 8px; object-fit: cover;">
-            <h3 style="color: #0056b3; font-size: 1.2em; margin-top: 10px;">Event Title 2</h3>
-            <p style="font-size: 0.9em; color: #343a40;">Details about the event go here. Replace this text with the event description.</p>
+        <div class="event-card">
+            <img src="images/ect4.png" alt="Event 2">
+            <h3>Event Title 2</h3>
+            <p>Details about the event go here. Replace this text with the event description.</p>
         </div>
-        <div class="event-card" style="display: inline-block; width: 90%; max-width: 300px; margin: 10px; vertical-align: top;">
-            <img src="images/ein1.png" alt="Event 3" style="width: 100%; border-radius: 8px; object-fit: cover;">
-            <h3 style="color: #0056b3; font-size: 1.2em; margin-top: 10px;">Event Title 3</h3>
-            <p style="font-size: 0.9em; color: #343a40;">Details about the event go here. Replace this text with the event description.</p>
+        <div class="event-card">
+            <img src="images/ein1.png" alt="Event 3">
+            <h3>Event Title 3</h3>
+            <p>Details about the event go here. Replace this text with the event description.</p>
         </div>
         <!-- Add more event cards as needed -->
     </div>
 </div>
+
+
+
+/* Carousel Wrapper */
+.event-carousel-wrapper {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    position: relative;
+}
+
+/* Event Cards */
+.event-card {
+    flex: 0 0 300px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    padding: 15px;
+}
+
+.event-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.event-card h3 {
+    color: #0056b3;
+    margin-top: 10px;
+    font-size: 1.2em;
+}
+
+.event-card p {
+    color: #343a40;
+    font-size: 0.9em;
+    margin-top: 5px;
+}
+
+/* Modern Scrollbar Styling */
+.event-carousel-wrapper::-webkit-scrollbar {
+    height: 12px;
+}
+
+.event-carousel-wrapper::-webkit-scrollbar-thumb {
+    background: linear-gradient(to right, #007bff, #0056b3);
+    border-radius: 6px;
+    border: 2px solid #f8f9fa;
+}
+
+.event-carousel-wrapper::-webkit-scrollbar-track {
+    background-color: #ddd;
+    border-radius: 6px;
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+    .event-card {
+        flex: 0 0 250px;
+    }
+
+    .event-card img {
+        height: 150px;
+    }
+}
+
+
+<script>
+    const carousel = document.getElementById('event-carousel');
+
+    // Auto-scroll functionality
+    function autoScroll() {
+        if (carousel.scrollWidth - carousel.scrollLeft <= carousel.clientWidth) {
+            carousel.scrollTo({ left: 0, behavior: 'smooth' }); // Reset to the start
+        } else {
+            carousel.scrollBy({ left: 1, behavior: 'smooth' }); // Scroll by 1 pixel
+        }
+    }
+
+    // Start auto-scrolling
+    let autoScrollInterval = setInterval(autoScroll, 50);
+
+    // Pause auto-scroll on hover
+    carousel.addEventListener('mouseover', () => clearInterval(autoScrollInterval));
+    carousel.addEventListener('mouseout', () => {
+        autoScrollInterval = setInterval(autoScroll, 50);
+    });
+</script>
