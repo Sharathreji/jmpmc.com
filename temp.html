@@ -2,40 +2,45 @@
     <div style="background-color: #007bff; color: white; padding: 15px; text-align: center; border-radius: 8px; font-size: 1.5em; font-weight: bold;">
         Events
     </div>
-    <div style="border: 1px solid #ddd; border-radius: 8px; padding: 15px; background-color: #f8f9fa;">
-        <div class="modern-event" style="display: flex; flex-direction: column; gap: 15px;">
-            <div class="event-image-wrapper" style="position: relative; width: 100%; overflow: hidden; border-radius: 8px;">
-                <img src="images/ecas.png" alt="Event 1" style="width: 100%; height: auto; display: block;">
-            </div>
-            <div class="event-content" style="text-align: center; font-size: 1em; color: #343a40; line-height: 1.5;">
-                <h3 style="color: #0056b3; font-size: 1.2em; margin-bottom: 10px;">Event Title</h3>
-                <p style="margin: 0 0 10px;">Details about the event go here. Replace this text with the event description.</p>
-            </div>
+    <div class="event-carousel-wrapper" style="border: 1px solid #ddd; border-radius: 8px; padding: 15px; background-color: #f8f9fa; overflow: hidden;">
+        <div class="event-carousel" style="display: flex; animation: scrollImages 10s linear infinite;">
+            <img src="images/ecas.png" alt="Event Image 1" style="width: 100%; max-width: 400px; margin: 0 10px; border-radius: 8px;">
+            <img src="images/ect4.png" alt="Event Image 2" style="width: 100%; max-width: 400px; margin: 0 10px; border-radius: 8px;">
+            <img src="images/ein1.png" alt="Event Image 3" style="width: 100%; max-width: 400px; margin: 0 10px; border-radius: 8px;">
         </div>
     </div>
 </div>
 
 
 
-.modern-event img {
-    width: 100%;
-    height: auto;
-    border-radius: 8px; /* Rounded corners for a polished look */
-    object-fit: cover; /* Ensures the image fits nicely without distortion */
-}
-
-.modern-event .event-content h3 {
-    font-family: 'Playfair Display', serif; /* Add a modern font for titles */
-    font-weight: bold;
-}
-
-.modern-event .event-content p {
-    font-family: 'Roboto', Arial, sans-serif; /* Keep it clean and professional */
-    color: #555;
-}
-
-@media (max-width: 768px) {
-    .modern-event {
-        flex-direction: column; /* Ensures stacking for smaller screens */
+@keyframes scrollImages {
+    0% {
+        transform: translateX(0);
     }
+    100% {
+        transform: translateX(calc(-100% + 100vw));
+    }
+}
+
+.event-carousel {
+    display: flex;
+    gap: 10px;
+}
+
+.event-carousel-wrapper {
+    overflow: hidden;
+    position: relative;
+}
+
+.event-carousel img {
+    flex-shrink: 0;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    object-fit: cover;
+}
+
+
+.event-carousel-wrapper:hover .event-carousel {
+    animation-play-state: paused;
 }
