@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Bookings</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+    <header>
+        <h1>Bookings</h1>
+    </header>
+
+    <section class="doctor-list">
+        <div class="doctor-card" onclick="location.href='bookingdoc1.html';">
+            <img src="images/doctor1.jpg" alt="Doctor 1">
+            <h3>Dr. John Doe</h3>
+        </div>
+        <div class="doctor-card" onclick="location.href='bookingdoc1.html';">
+            <img src="images/doctor2.jpg" alt="Doctor 2">
+            <h3>Dr. Jane Smith</h3>
+        </div>
+        <div class="doctor-card" onclick="location.href='bookingdoc1.html';">
+            <img src="images/doctor3.jpg" alt="Doctor 3">
+            <h3>Dr. Michael Lee</h3>
+        </div>
+        <div class="doctor-card" onclick="location.href='bookingdoc1.html';">
+            <img src="images/doctor4.jpg" alt="Doctor 4">
+            <h3>Dr. Sarah Johnson</h3>
+        </div>
+        <div class="doctor-card" onclick="location.href='bookingdoc1.html';">
+            <img src="images/doctor5.jpg" alt="Doctor 5">
+            <h3>Dr. Robert Brown</h3>
+        </div>
+        <div class="doctor-card" onclick="location.href='bookingdoc1.html';">
+            <img src="images/doctor6.jpg" alt="Doctor 6">
+            <h3>Dr. Emily Davis</h3>
+        </div>
+        <div class="doctor-card" onclick="location.href='bookingdoc1.html';">
+            <img src="images/doctor7.jpg" alt="Doctor 7">
+            <h3>Dr. William Taylor</h3>
+        </div>
+        <div class="doctor-card" onclick="location.href='bookingdoc1.html';">
+            <img src="images/doctor8.jpg" alt="Doctor 8">
+            <h3>Dr. Olivia Martinez</h3>
+        </div>
+        <div class="doctor-card" onclick="location.href='bookingdoc1.html';">
+            <img src="images/doctor9.jpg" alt="Doctor 9">
+            <h3>Dr. David Wilson</h3>
+        </div>
+        <div class="doctor-card" onclick="location.href='bookingdoc1.html';">
+            <img src="images/doctor10.jpg" alt="Doctor 10">
+            <h3>Dr. Sophia Clark</h3>
+        </div>
+    </section>
+
+</body>
+</html>
