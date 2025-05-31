@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JMP Medical Centre</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #343a40;
+        }
+
+        /* Header */
+        header {
+            background-color: #0056b3; 
+            color: #ffffff;
+            text-align: center;
+            padding: 20px;
+        }
+        /* Increase logo size */
+    header img {
+        max-height: 120px;  /* Increase the size of the logo */
+        width: auto;        /* Maintain the aspect ratio */
+        margin-bottom: 10px;
+        }
+        header h1 {
+            margin: 0;
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5em;
+        }
+        header p {
+            margin: 5px 0;
+            font-size: 1em;
+        }
+
+        /* Navigation Bar */
+        nav {
+            background-color: #007bff;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 10px;
+        }
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        nav a:hover {
+            background-color: #ffc107;
+            color: #0056b3;
+        }
+
+        /* Banner Section */
+.banner {
+    position: relative;
+    background: linear-gradient(135deg, #e3f2fd, #ffffff); /* Light blue gradient */
+    color: #0056b3;
+    text-align: center;
+    padding: 80px 20px;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    overflow: hidden;
+}
+
+/* Heading Styling */
+.banner h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3em;
+    font-weight: bold;
+    color: #0056b3;
+    text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    margin: 0 auto;
+    display: inline-block;
+    position: relative;
+    padding: 10px 0;
+}
+
+.banner h2::before,
+.banner h2::after {
+    content: '';
+    position: absolute;
+    height: 4px;
+    width: 60px;
+    background: #ffc107;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 2px;
+}
+
+/* Optional: Additional text under the banner */
+.banner p {
+    font-size: 1.2em;
+    color: #6c757d; /* Subtle gray for secondary text */
+    margin-top: 20px;
+    line-height: 1.6;
+}
+/* Banner */
+.banner {
+    position: relative;
+    background-color: #ffffff; /* White background for a clean, minimalist look */
+    color: #0056b3; /* Dark blue text for contrast */
+    text-align: center;
+    padding: 100px 20px;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1); /* Soft shadow for subtle depth */
+    overflow: hidden;
+    margin-top: 2cm; /* Gap between header and banner */
+}
+
+/* Banner Title */
+.banner h2 {
+    font-family: 'Playfair Display', Imprint MT Shadow; /* Elegant serif font */
+    font-size: 3.5em;
+    font-weight: 700;
+    margin: 0;
+    color: #0056b3; /* Dark blue color */
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    position: relative;
+}
+
+.banner h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    width: 0;
+    height: 4px;
+    background-color: #ffc107; /* Yellow underline */
+    border-radius: 2px;
+    transform: translateX(-50%);
+    animation: underlineEffect 3s ease infinite; /* Underline effect animation */
+}
+
+/* Fade-in Text Animation */
+@keyframes fadeInText {
+    0% {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Banner Design Elements */
+.banner::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    background: url('images/abstract-shape.png') center center no-repeat; /* Add abstract shape or subtle texture */
+    opacity: 0.1; /* Light opacity for subtle design effect */
+    z-index: -1;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .banner {
+        padding: 60px 20px;
+    }
+
+    .banner h2 {
+        font-size: 2.5em; /* Adjust font size for smaller screens */
+    }
+}
+
+   /* General Content Section */
+.overview-section {
+    background-color: #ffffff; /* Clean, white background */
+    padding: 50px 20px;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    margin: 40px auto;
+    max-width: 1100px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    font-family: 'Roboto', Arial, sans-serif;
+}
+
+/* Decorative Lines */
+.overview-section::before, .overview-section::after {
+    content: "";
+    position: absolute;
+    width: 120px;
+    height: 5px;
+    background-color: #ffc107; /* Yellow accent color */
+    border-radius: 2px;
+}
+
+.overview-section::before {
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.overview-section::after {
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Headings Styling */
+.overview-section h2, .overview-section h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8em;
+    color: #0056b3; /* Primary blue color */
+    text-transform: uppercase;
+    margin: 0 0 20px 0;
+    position: relative;
+    line-height: 1.3;
+}
+
+.overview-section h2::after, .overview-section h3::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 3px;
+    margin: 10px auto 0;
+    background-color: #ffc107; /* Yellow underline accent */
+    border-radius: 2px;
+}
+
+/* Paragraph Styling */
+.overview-section p {
+    font-size: 1.2em;
+    line-height: 1.8;
+    color: #555555;
+    margin: 20px auto;
+    max-width: 800px;
+    text-align: center;
+}
+
+/* Subtle Content Decoration */
+.overview-section p::first-letter {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #007bff; /* Slight color pop on first letter */
+}
+
+/* Call to Action Button */
+.overview-section .cta-button {
+    display: inline-block;
+    background: linear-gradient(to right, #ffc107, #dfa906);
+    color: #0056b3;
+    font-size: 1.2em;
+    font-weight: bold;
+    padding: 12px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    margin-top: 30px;
+    box-shadow: 0 4px 10px rgba(240, 217, 16, 0.2);
+    transition: all 0.3s ease;
+}
+
+.overview-section .cta-button:hover {
+    background: linear-gradient(to right, #ffc107, #dfa906);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .overview-section h2, .overview-section h3 {
+        font-size: 2.2em;
+    }
+
+    .overview-section p {
+        font-size: 1.1em;
+        padding: 0 10px;
+    }
+
+    .overview-section .cta-button {
+        font-size: 1em;
+        padding: 10px 20px;
+    }
+}
+
+        /* Footer */
+        footer {
+            background-color: #0056b3;
+            color: #ffffff;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+        }
+        footer p {
+            margin: 10px 0;
+        }
+        footer .icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        footer .icons a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 1.5em;
+            transition: color 0.3s ease;
+        }
+        footer .icons a:hover {
+            color: #ffc107;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+            .banner h2 {
+                font-size: 2em;
+            }
+            .scroll-text {
+                font-size: 1.2em;
+            }
+        }
+    </style>
+</head>
+<style>
+    /* Accordion Styles */
+    .accordion {
+        max-width: 800px;
+        margin: 20px auto;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        overflow: hidden;
+        background-color: #f8f9fa;
+    }
+    
+    .accordion-item {
+        border-top: 1px solid #ddd;
+    }
+    
+    .accordion-item:first-child {
+        border-top: none;
+    }
+    
+    .accordion-header {
+        background-color: #0056b3;
+        color: white;
+        padding: 15px;
+        font-size: 1.2em;
+        text-align: left;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        width: 100%;
+        text-align: left;
+    }
+    
+    .accordion-header:hover {
+        background-color: #ffc107;
+        color: #0056b3;
+    }
+    
+    .accordion-content {
+        background-color: #ffffff;
+        color: #343a40;
+        padding: 10px 20px;
+        display: none;
+        font-size: 1em;
+        line-height: 1.5;
+    }
+    
+    .accordion-content p {
+        margin: 0;
+    }
+    
+    .accordion-header.active + .accordion-content {
+        display: block;
+    }
+    </style>
+ <style>
+/* General Menu Styles */
+.menu-container {
+    background-color: #007bff; /* Keep the primary blue color */
+    color: white;
+    font-family: Arial, sans-serif;
+    width: 100%;
+    position: relative;
+}
+
+.menu-bar {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px 15px;
+    cursor: pointer; /* Makes the entire bar clickable */
+    background-color: #0056b3; /* Slightly darker blue for the bar */
+}
+
+.menu-icon {
+    font-size: 24px;
+    margin-right: 10px;
+}
+
+.menu-label {
+    font-size: 18px;
+}
+
+/* Dropdown Menu Styling */
+#menu {
+    display: none;
+    flex-direction: column;
+    background: linear-gradient(to bottom, #f8f9fa, #e9ecef); /* Light gradient for dropdown */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for a modern look */
+    transition: all 0.3s ease-in-out; /* Animation for dropdown appearance */
+    overflow: hidden; /* Ensures smooth dropdown effect */
+    max-height: 0; /* Initially hidden */
+}
+
+#menu.show {
+    display: flex;
+    max-height: 500px; /* Maximum dropdown height (adjustable) */
+}
+
+#menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#menu ul li {
+    text-align: center;
+    border-bottom: 1px solid #dcdcdc;
+}
+
+#menu ul li a {
+    text-decoration: none;
+    color: #0056b3; /* Blue text for contrast */
+    padding: 10px 15px;
+    display: block;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth hover effect */
+}
+
+#menu ul li a:hover {   
+    background-color: #007bff; /* Matches main theme */
+    color: white; /* White text on hover */
+}
+ </style>
+<body>
+    <header>
+        <img src="images/jmplogo.png" alt="JMP Logo or Photo">
+        <h1>JMP Medical Centre</h1>
+        <p>Managed by Peace Foundation</p>
+        <p>Piravom, Ernakulam, 686664, Kerala</p>
+    </header>
+    <div class="menu-container">
+    <div id="menu-toggle" class="menu-bar">
+        <span class="menu-icon">&#9776;</span>
+        <span class="menu-label">Menu</span>
+    </div>
+    <nav id="menu" class="hidden">
+    <ul>
+        <li><a href="#overview">About Us</a></li>
+        <li><a href="doctors-and-department.html">Departments & Doctors</a></li>
+        <li><a href="surgeries.html">Surgeries</a></li>
+        <li><a href="services.html">Our Services</a></li>
+        <li><a href="services.html#24-Hour Services">24-Hour Services</a></li>
+        <li><a href="insurance.html">Insurance</a></li>
+        <li><a href="events.html">Events & Gallery</a></li>
+        <li><a href="reviews.html">Doctors Review</a></li>
+        <li><a href="feedback.html">Feedback Form</a></li>
+        <li><a href="careers.html">Careers</a></li>
+    </ul>
+</nav>
+    </ul>
+</nav>
+    </nav>
+</div>
+    <!-- Banner Section -->
+<div class="banner">
+    <h2>Innovative Care & Inspiring Wellness</h2>
+<!-- Scrolling Call Section -->
+<div class="scroll-text-container" style="
+    position: relative; 
+    overflow: hidden; 
+    background: linear-gradient(to right, #0056b3, #003366); 
+    color: #ffc107; 
+    padding: 10px 0; 
+    margin: 1cm auto 0.5cm auto; /* 1cm below banner, 0.5cm above preview */
+    border-radius: 8px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 95%;
+    white-space: nowrap;">
+    <div class="scroll-wrapper" style="display: flex; animation: scrollText 12s linear infinite;">
+        <!-- Duplicate Content for Continuous Scrolling -->
+        <span class="scroll-text" style="font-size: 1.2em; font-weight: bold; letter-spacing: 1px;">
+            📞 For Bookings Call: 0485 2243443 | 2242727 | 2241274 &nbsp;&nbsp;&nbsp;&nbsp;
+            📞 For Bookings Call: 0485 2243443 | 2242727 | 2241274 &nbsp;&nbsp;&nbsp;&nbsp;
+        </span>
+        <span class="scroll-text" style="font-size: 1.2em; font-weight: bold; letter-spacing: 1px;">
+            📞 For Bookings Call: 0485 2243443 | 2242727 | 2241274 &nbsp;&nbsp;&nbsp;&nbsp;
+            📞 For Bookings Call: 0485 2243443 | 2242727 | 2241274 &nbsp;&nbsp;&nbsp;&nbsp;
+        </span>
+    </div>
+</div>
+
+<!-- CSS for Smooth, Continuous Scrolling -->
+<style>
+@keyframes scrollText {
+    from {
+        transform: translateX(0); /* Start at initial position */
+    }
+    to {
+        transform: translateX(-100%); /* Scroll entire width */
+    }
+}
+
+/* Hover Effect for Pause */
+.scroll-wrapper:hover {
+    animation-play-state: paused;
+}
+
+.scroll-text-container {
+    cursor: pointer; /* Pointer cursor for interactivity */
+}
+
+/* Responsive Design for Smaller Screens */
+@media (max-width: 768px) {
+    .scroll-text {
+        font-size: 1em;
+    }
+}
+</style>
+
+<!-- JavaScript for Click Pause -->
+<script>
+document.querySelector('.scroll-text-container').addEventListener('click', function () {
+    alert('📞 Book Now: 0485 2243443 | 2242727 | 2241274');
+});
+</script>
+<!-- Elegant Overview Section -->
+<div id="overview" class="overview-section">
+    <h2>Preview</h2>
+    <p>
+       PEACE FOUNDATION (Pachomios Educational And Charitable Enlightenment Foundation) was established to perpetuate 
+        the sacred memory of His Grace Joseph Mar Pachomios on <strong>24th July 1997</strong> under the patronage of 
+        St. George Orthodox Syrian Church, Karmelkunnu, Mulakulam (N). Mar Pachomios is the true symbol of Christian virtues. 
+        He dedicated his whole life to the cause of the poor and the needy, the down-trodden and the ill-treated. The members 
+        of the foundation decided to give primary importance to health care and go ahead with the ambitious task of establishing 
+        a Multi-specialty hospital at Piravom.
+    </p>
+
+    <h3>Our Mission</h3>
+    <p>
+        The concept of a Multi-specialty hospital is a boon to the inhabitants of this area, satisfying the needs of thousands 
+        of people in and around Piravom. The hospital aims to provide state-of-the-art medical attention at affordable expenses 
+        to the common man.
+    </p>
+
+    <a href="services.html" class="cta-button">Explore Our Services</a>
+</div>
+<!-- Image Section -->
+<div class="image-section" style="margin: 20px 0; text-align: center;">
+    <img src="images/back.png" alt="JMP MEDICAL CENTRE" style="max-width: 100%; border-radius: 8px;">
+</div>
+
+<!-- Address Section -->
+<div class="address-section" style="background-color: #ffffff; padding: 20px; font-family: Arial, sans-serif; border-radius: 8px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
+    <h2 style="font-size: 20px; color: #1c4681; margin-bottom: 10px;">Address</h2>
+    <p style="margin: 0;">
+        JMP Medical Center, Kakkad P O,<br>
+          Piravom, Kerala 686664
+    </p>
+    <div style="margin-top: 10px;">
+        <a href="https://maps.app.goo.gl/pA925zdsK1QT9Rfa7" target="_blank" style="text-decoration: none; padding: 10px 20px; background-color: #1d3557; color: #fff; border-radius: 4px; font-size: 16px;">
+            Get Directions
+        </a>
+    </div>
+</div>
+</div>
+</style>
+<body>
+<div class="floating-buttons">
+    <button class="floating-button call-button" onclick="showContactNumber('📞 Book Appointments: +91 485 224 1274', '+914852241274')">
+        <span class="icon">📞</span> Book Appointments
+    </button>
+    <button class="floating-button ambulance-button" onclick="showContactNumber('📞 Ambulance Service: +91 99476 21789', '+919947621789')">
+        <span class="icon">🚑</span> Ambulance Service 
+        <span class="tag">24hrs</span>
+    </button>
+</div>
+</body>
+<style>
+/* Floating Buttons Container */
+.floating-buttons {
+    position: fixed;
+    right: 20px;
+    bottom: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 1000;
+}
+
+/* General Floating Button Styles */
+.floating-button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    background-color: #0056b3;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 15px 20px;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    text-align: center;
+    width: 250px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Button Hover Effect */
+.floating-button:hover {
+    transform: scale(1.05);
+    background: linear-gradient(to right, #007bff, #003366);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Ambulance Button */
+.ambulance-button {
+    background-color: #ff4c4c;
+    color: white;
+}
+
+.ambulance-button:hover {
+    background: linear-gradient(to right, #ff4c4c, #a80000);
+}
+
+/* Tag (24hrs) on Ambulance Button */
+.ambulance-button .tag {
+    position: absolute;
+    top: 5px; /* Adjust position for visibility */
+    right: 10px; /* Keeps the tag inside the button */
+    background-color: white;
+    color: #ff4c4c;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 3px 8px;
+    border-radius: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    line-height: 1; /* Ensures proper alignment */
+}
+
+/* Icon Design */
+.floating-button .icon {
+    font-size: 18px;
+}
+
+/* Desktop View Media Query */
+@media (min-width: 1024px) {
+    .floating-button:hover::after {
+        content: attr(data-number);
+        position: absolute;
+        bottom: -30px;
+        left: 0;
+        right: 0;
+        color: white;
+        font-size: 14px;
+        background-color: rgba(0, 0, 0, 0.8);
+        padding: 5px;
+        border-radius: 5px;
+        text-align: center;
+    }
+}
+</style>
+<script>
+function showContactNumber(message, tel) {
+    if (window.innerWidth >= 1024) { // Desktop View
+        alert(`Call - ${message}`);
+    } else { // Mobile View
+        window.location.href = `tel:${tel}`;
+    }
+}
+</script>
+<style>
+/* Smooth scrolling effect */
+@keyframes smoothScroll {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+.scroll-content:hover {
+    animation-play-state: paused; /* Pause animation on hover */
+}
+</style>                
+    <footer>
+        <p>&copy; 2024 JMP Medical Centre. All rights reserved.</p>
+        <div class="icons">
+            <a href="#">&#128222;</a>
+            <a href="#">&#128231;</a>
+            <a href="#">&#127968;</a>
+        </div>
+    </footer>
+    <script>
+        function toggleSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            section.style.display = section.style.display === 'block' ? 'none' : 'block';
+        }
+    </script>
+    <script>
+        document.querySelectorAll('.accordion-header').forEach(button => {
+            button.addEventListener('click', () => {
+                const activeButton = document.querySelector('.accordion-header.active');
+                if (activeButton && activeButton !== button) {
+                    activeButton.classList.remove('active');
+                    activeButton.nextElementSibling.style.display = 'none';
+
+                }
+
+                button.classList.toggle('active');
+                const content = button.nextElementSibling;
+                content.style.display = content.style.display === 'block' ? 'none' : 'block';
+            });
+        });
+    </script>
+
+<script>
+document.getElementById('menu-toggle').addEventListener('click', function () {
+    const menu = document.getElementById('menu');
+    menu.classList.toggle('show');
+});
+</script>
+
+
+</body>
+</html>             
