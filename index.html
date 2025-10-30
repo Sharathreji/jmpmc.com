@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Malayalam Template - For Kavya CJ CRP</title>
+  <title>Malayalam Template - For Kavya C J CRP</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
@@ -33,6 +33,7 @@
       padding: 10px;
       border-radius: 8px;
       resize: none;
+      font-size: 16px;
     }
   </style>
 </head>
@@ -40,8 +41,8 @@
   <div class="card">
     <h1 class="text-3xl font-semibold text-indigo-700 mb-2">For Kavya C J CRP</h1>
     <p class="text-gray-600 mb-4">
-      Type in <b>Manglish</b> (Roman Malayalam). It will automatically convert to Malayalam (like EasyMalayalamTyping.com).<br>
-      Wait a second after each word for live transliteration.
+      Type in <b>Manglish</b>. Each word will convert to Malayalam <b>after you press space</b> — just like EasyMalayalamTyping.com.<br>
+      Numbers (e.g. 2008, 10) and English terms will stay as-is.
     </p>
 
     <h2 class="text-lg font-semibold mb-2">Malayalam Template</h2>
@@ -73,36 +74,52 @@ blanks.forEach((b, i) => {
   const div = document.createElement("div");
   div.innerHTML = `
     <label class="block text-sm text-gray-600 mb-1">Blank ${i + 1}</label>
-    <textarea id="input_${i}" rows="1" placeholder="Type in Manglish..."></textarea>
+    <textarea id="input_${i}" rows="1" placeholder="Type in Manglish and press space..."></textarea>
   `;
   inputsArea.appendChild(div);
 });
 
-/* Transliterate each field when user stops typing */
+/* Add transliteration on space */
 document.querySelectorAll("textarea").forEach(t => {
-  let timeout;
-  t.addEventListener("input", () => {
-    clearTimeout(timeout);
-    timeout = setTimeout(() => transliterateField(t), 500);
+  t.addEventListener("keyup", async (e) => {
+    if (e.key === " ") {
+      const value = t.value;
+      const words = value.split(/\s+/);
+      const lastWord = words[words.length - 2]; // the word before last space
+
+      if (!lastWord) return;
+
+      // Skip if number or contains digits
+      if (/^[0-9]+$/.test(lastWord)) return;
+
+      // Skip if capital English or acronym like CRP, KM, etc.
+      if (/^[A-Z]+$/.test(lastWord)) return;
+
+      const malWord = await transliterateWord(lastWord);
+      if (malWord) {
+        words[words.length - 2] = malWord;
+        t.value = words.join(" ") + " ";
+        updateOutput();
+      }
+    } else {
+      updateOutput();
+    }
   });
 });
 
-/* Call Google Input Tools Transliteration API */
-async function transliterateField(field) {
-  const txt = field.value.trim();
-  if (!txt) return updateOutput();
-
-  const url = `https://inputtools.google.com/request?text=${encodeURIComponent(txt)}&itc=ml-t-i0-und&num=1&cp=0&cs=1&ie=utf-8&oe=utf-8`;
+/* Transliteration via Google Input Tools API */
+async function transliterateWord(word) {
+  const url = `https://inputtools.google.com/request?text=${encodeURIComponent(word)}&itc=ml-t-i0-und&num=1&ie=utf-8&oe=utf-8`;
   try {
     const res = await fetch(url);
     const data = await res.json();
     if (data[0] === "SUCCESS" && data[1]?.[0]?.[1]?.[0]) {
-      field.value = data[1][0][1][0];
-      updateOutput();
+      return data[1][0][1][0];
     }
   } catch (err) {
     console.error("Transliteration error:", err);
   }
+  return word; // fallback
 }
 
 /* Update the final output sentence */
