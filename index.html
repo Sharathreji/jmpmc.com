@@ -1,236 +1,243 @@
 <!doctype html>
-
-<html lang="en">
+<html lang="ml">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Malayalam Typing — Template Variable Manglish → Malayalam</title>
+  <title>Template — Manglish → Malayalam</title>
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    :root{--bg:#f7fafc;--card:#ffffff;--accent:#0b69ff}
-    body{font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;background:var(--bg);margin:0;padding:24px;color:#111}
-    .container{max-width:900px;margin:0 auto}
-    .card{background:var(--card);border-radius:12px;padding:18px;box-shadow:0 6px 20px rgba(12,20,40,0.06)}
-    h1{margin:0 0 8px;font-size:20px}
-    p.lead{margin:0 0 16px;color:#444}
-    .template{font-family:serif;background:#f1f5f9;padding:12px;border-radius:8px;margin-bottom:12px;white-space:pre-wrap}
-    .row{display:flex;gap:12px;flex-wrap:wrap}
-    label{font-size:13px;color:#333}
-    input[type=text], textarea{width:100%;padding:10px;border-radius:8px;border:1px solid #e2e8f0;font-size:15px}
-    .col{flex:1;min-width:220px}
-    .actions{display:flex;gap:8px;margin-top:12px}
-    button{background:var(--accent);color:white;border:0;padding:8px 12px;border-radius:8px;cursor:pointer}
-    button.ghost{background:transparent;color:var(--accent);border:1px solid rgba(11,105,255,0.12)}
-    .output{margin-top:12px;padding:12px;border-radius:8px;background:#fff;min-height:120px;border:1px solid #e6eef8}
-    small.hint{color:#666}
-    .vars{margin-top:12px}
-    .var-row{display:flex;gap:8px;align-items:center;margin-bottom:8px}
-    .var-row input{flex:1}
-    .footer{margin-top:14px;color:#666;font-size:13px}
+    body{font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;}
+    .card{max-width:960px;margin:28px auto;padding:22px;background:white;border-radius:12px;box-shadow:0 10px 30px rgba(2,6,23,0.06)}
+    pre.template{white-space:pre-wrap;word-break:break-word;background:#f8fafc;padding:12px;border-radius:8px;border:1px solid #eef2f7}
+    .hint{color:#64748b;font-size:13px}
   </style>
 </head>
-<body>
-  <div class="container">
-    <div class="card">
-      <h1>Malayalam Typing — Template with Variable Manglish → Malayalam</h1>
-      <p class="lead">Type variables in <strong>Manglish</strong> (roman letters) into the input boxes — they will be transliterated to Malayalam automatically and injected into the template. Copy / download the full Malayalam statement.</p><div class="template" id="templatePreview"></div>
+<body class="bg-slate-50">
+  <div class="card">
+    <h1 class="text-2xl font-semibold">Template — Manglish → Malayalam</h1>
+    <p class="hint mt-1">Type each blank in Manglish (roman letters). The page converts each input to Malayalam and places them into the template in order. Press <strong>Copy</strong> to copy the final Malayalam sentence.</p>
 
-  <div class="vars" id="varsArea"></div>
+    <div class="mt-4">
+      <label class="block text-sm font-medium text-slate-700">Template preview</label>
+      <pre id="templatePreview" class="template text-lg">_________________________ എന്ന ആളുകളുടെ _______________ സർവ്വേ നമ്പറിൽപെട്ട __ ആര് ___ സ്ക്വേ .മീ   സ്ഥലം  പരിശോധിച്ചതിൽ  ടി  സ്ഥലത്തിന്റെ സമീപത്തു നെൽകൃഷി ചെയ്യുന്ന പ്രദേശം  ഇല്ല സ്ഥലത്തു ____ വർഷം  പ്രായമുള്ള  ___ തെങ്ങ്, സ്ഥലത്തിൻ്റെ വടക്ക് __________, തെക്ക് ____________,  കിഴക്കു  _____________, പടിഞ്ഞാറ്‌ ____________________.   സ്ഥലം  2008 നെൽവയൽ/ തണ്ണീർത്തട സംരക്ഷണ നിയമപ്രകാരം നെൽവയൽ/തണ്ണീർത്തടം എന്നിവയുടെ നിർവചനത്തിൽ വരുന്നതല്ല എന്ന് അനുമാനിക്കാവുന്നതാണ്. ആയതിനാൽ മേൽപ്പറഞ്ഞ സ്ഥലം ഡാറ്റ ബാങ്കിൽ നിന്നും ഒഴിവാക്കാവുന്നതാണ്.</pre>
+    </div>
 
-  <div class="actions">
-    <button id="copyBtn">Copy to clipboard</button>
-    <button id="downloadBtn" class="ghost">Download .txt</button>
-    <button id="resetBtn" class="ghost">Reset variables</button>
+    <div class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <label class="block text-sm font-medium text-slate-700">Fill blanks (type in Manglish)</label>
+        <div id="inputsArea" class="space-y-3 mt-2"></div>
+
+        <div class="flex gap-2 mt-4">
+          <button id="copyBtn" class="px-3 py-2 bg-indigo-600 text-white rounded">Copy</button>
+          <button id="downloadBtn" class="px-3 py-2 border border-indigo-600 text-indigo-600 rounded">Download .txt</button>
+          <button id="resetBtn" class="px-3 py-2 bg-slate-100 rounded">Reset</button>
+        </div>
+
+        <p class="hint mt-3">Order: inputs will be placed into blanks from left → right / top → bottom in the template preview.</p>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-slate-700">Final Malayalam sentence</label>
+        <div id="finalOutput" class="rounded p-3 bg-white border border-slate-200 min-h-[220px] text-lg"></div>
+
+        <div class="mt-3 text-sm text-slate-500">If you need different placeholder ordering or named placeholders (e.g., {{name}}) I can update it — this version replaces blanks in sequence.</div>
+      </div>
+    </div>
   </div>
 
-  <div class="output" id="fullOutput" aria-live="polite"></div>
+<script>
+/*
+  Behavior:
+  - Count blank segments (underscores or sequences of underscores) in the template preview.
+  - Create input boxes equal to the number of blanks.
+  - Each input transliterates from Manglish to Malayalam live and replaces the blanks in order.
+*/
 
-  <div class="footer">Prototype transliteration: rule-based client-side engine for common Manglish patterns. It covers many normal cases but not all Malayalam orthographic exceptions. Want it improved or extended? I can add more rules or a dictionary.</div>
-</div>
+/* ---------- Template (taken from your message) ---------- */
+const RAW_TEMPLATE = `_________________________ എന്ന ആളുകളുടെ _______________ സർവ്വേ നമ്പറിൽപെട്ട __ ആര് ___ സ്ക്വേ .മീ   സ്ഥലം  പരിശോധിച്ചതിൽ  ടി  സ്ഥലത്തിന്റെ സമീപത്തു നെൽകൃഷി ചെയ്യുന്ന പ്രദേശം  ഇല്ല സ്ഥലത്തു ____ വർഷം  പ്രായമുള്ള  ___ തെങ്ങ്, സ്ഥലത്തിൻ്റെ വടക്ക് __________, തെക്ക് ____________,  കിഴക്കു  _____________, പടിഞ്ഞാറ്‌ ____________________.   സ്ഥലം  2008 നെൽവയൽ/ തണ്ണീർത്തട സംരക്ഷണ നിയമപ്രകാരം നെൽവയൽ/തണ്ണീർത്തടം എന്നിവയുടെ നിർവചനത്തിൽ വരുന്നതല്ല എന്ന് അനുമാനിക്കാവുന്നതാണ്. ആയതിനാൽ മേൽപ്പറഞ്ഞ സ്ഥലം ഡാറ്റ ബാങ്കിൽ നിന്നും ഒഴിവാക്കാവുന്നതാണ്.`;
 
-  </div><script>
-/* ---------- TEMPLATE (you can edit this text) ---------- */
-const TEMPLATE = `( (name1) ) എന്ന ആളുകളുടെ ( (survey) ) സർവ്വേ നമ്പറിൽ പെട്ട ( (area_num) ) ആർ ( (sqm) ) സ്ക്വേ .മീ   സ്ഥലം  പരിശോധിച്ചതിൽ  ( (note) )  സ്ഥലത്തിന്റെ സമീപത്തു ( (nearby) ) സ്ഥലം.   സ്ഥലം  ( (yearinfo) ) നെൽവയൽ/ തണ്ണീർത്തട സംരക്ഷണ നിയമപ്രകാരം നെൽവയൽ/തണ്ണീർത്തടം എന്നിവയുടെ നിർവചനത്തിൽ വരുന്നതല്ല എന്ന് അനുമാനിക്കാവുന്നതാണ്. ആയതിനാൽ മേൽപ്പറഞ്ഞ സ്ഥലം ഡാറ്റ ബാങ്കിൽ നിന്നും ഒഴിവാക്കാവുന്നതാണ്.`
-
-/* ---------- VARIABLE KEYS (order matters for UI) ---------- */
-const VAR_KEYS = [
-  {key:'name1', label:'Name(s) (e.g. pm shivankutty and sheela poomangalath)'} ,
-  {key:'survey', label:'Survey number (e.g. 585/11-1)'} ,
-  {key:'area_num', label:'Area number (e.g. 4)'} ,
-  {key:'sqm', label:'Sqm / value (e.g. 43)'} ,
-  {key:'note', label:'Short note (e.g. T sthalathinte samipathu nelkrishi cheyyunna pradesham illa)'} ,
-  {key:'nearby', label:'Nearby description (e.g. 35 varsam prayaulla thenngu)'} ,
-  {key:'yearinfo', label:'Year / extra (e.g. 2008 nelevayal)'}
-]
-
-/* ---------- Lightweight phonetic transliterator (basic rules) ---------- */
+/* ---------- Simple transliteration helper ----------
+   This is a small rule-based transliterator (covers common Manglish patterns and a small dictionary).
+   It's not perfect like a full engine, but works for names/words in most cases.
+   If you want an authoritative engine later we can add a richer mapping or use a library.
+*/
 function transliterateManglishToMalayalam(input){
   if(!input) return '';
-  input = input.trim();
-  // Normalize common sequences
-  input = input.replace(/rr/g,'ɾ'); // retroflex placeholder
-  // tokenization by words
-  const words = input.split(/(\s+)/);
-  return words.map(token => {
-    if(token.trim()==='') return token;
-    return transliterateWord(token);
-  }).join('');
-}
+  // small dictionary for common tokens (extendable)
+  const DICT = {
+    'pm':'പി എം','and':'ആൻഡ്','shivan':'ശിവൻ','shivankutty':'ശിവൻകുട്ടി','kuttan':'കുട്ടൻ',
+    'sheela':'ഷീല','poomangalath':'പൂമംഗലത്ത്','pambakkud':'പാമ്പാക്കുട','neelkrishi':'നെൽകൃഷി',
+    'balakrishnan':'ബാലകൃഷ്ണൻ','biju':'ബിജു','thengu':'തെങ്ങ്','thenngu':'തെങ്ങ്'
+  };
+  // if whole token matches dictionary, return directly
+  const low = input.toLowerCase().trim();
+  if(DICT[low]) return DICT[low];
 
-function transliterateWord(w){
-  // very small rule-based engine: handle vowels, consonants and common combos
-  // order of replacements matters (longest first)
-  let s = w.toLowerCase();
-
-  // replacements map: manglish -> malayalam unicode
-  const map = [
-    ['aa','ആ'],['a','അ'],['i','ഇ'],['ii','ഈ'],['ee','ഈ'],['u','ഉ'],['uu','ഊ'],
-    ['e','എ'],['o','ഒ'],['au','ഔ'],['ai','ഐ'],
-
-    ['kha','ഖ'],['k','ക'],['kh','ഖ'],['ng','ങ'],['g','ഗ'],['gh','ഘ'],
-    ['ch','ച'],['chh','ഛ'],['nj','ഞ'],['j','ജ'],['jh','ഝ'],
-    ['tth','ഠ'],['tt','ട്ട'],['t','ത'],['th','ഥ'],['d','ദ'],['dh','ധ'],
-    ['nn','ണ'],['n','ന'],['p','പ'],['ph','ഫ'],['f','ഫ'],['b','ബ'],['bh','ഭ'],
-    ['m','മ'],['y','യ'],['r','റ'],['rr','റ'],['l','ല'],['ll','ള'],['v','വ'],['w','വ'],
-    ['s','സ'],['sh','ശ'],['ss','ശ'],['h','ഹ'],
-
-    // numerals & punctuation
+  // basic syllable map (longer patterns first)
+  const MAP = [
+    ['aa','ആ'],['ai','ഐ'],['au','ഔ'],['ee','ീ'],['ii','ീ'],['uu','ൂ'],['ng','ങ്ങ'],['nk','ങ്ക'],
+    ['kh','ഖ'],['gh','ഘ'],['ch','ച'],['sh','ശ'],['zh','ഴ'],['th','ഥ'],['dh','ധ'],['ph','ഫ'],['bh','ഭ'],
+    ['rr','ര്‍'],['rl','ര്‍ൽ'],
+    ['a','അ'],['A','അ'],['i','ഇ'],['I','ഇ'],['u','ഉ'],['e','എ'],['o','ഒ'],
+    ['k','ക'],['g','ഗ'],['j','ജ'],['t','ത'],['d','ദ'],['n','ന'],['p','പ'],['b','ബ'],['m','മ'],['y','യ'],['r','ര'],['l','ല'],['v','വ'],['s','സ'],['h','ഹ'],
     ['0','0'],['1','1'],['2','2'],['3','3'],['4','4'],['5','5'],['6','6'],['7','7'],['8','8'],['9','9'],
     ['/','/'],['-','-']
   ];
 
-  // Very naive approach: try to map longest substrings
+  // Normalize: split by hyphens or spaces and transliterate each piece
+  // We'll do a greedy longest-match replacement on the lowercase string.
+  let s = low;
+  // prioritize longer patterns
+  MAP.sort((a,b)=>b[0].length - a[0].length);
+
   let out = '';
-  for(let i=0;i<s.length;){
+  let i = 0;
+  while(i < s.length){
     let matched = false;
-    // try length 4 -> 1
-    for(let L=4;L>=1;L--){
-      if(i+L> s.length) continue;
-      let chunk = s.substring(i,i+L);
-      // special handling for vowels after consonants (matra)
-      // check if chunk begins with vowel sequences
-      const vowelMap = {'aa':'ാ','a':'','i':'ി','ii':'ീ','ee':'ീ','u':'ു','uu':'ൂ','e':'േ','o':'ൊ','ai':'ൈ','au':'ൌ'};
-
-      // consonant map
-      const cMap = {
-        'k':'ക','kh':'ഖ','g':'ഗ','gh':'ഘ','ng':'ങ',
-        'c':'ക','ch':'ച','j':'ജ','jh':'ഝ','nj':'ഞ',
-        't':'ത','th':'ഥ','d':'ദ','dh':'ധ',
-        'tt':'ട്ട','tth':'ഠ','nn':'ണ',
-        'n':'ന','p':'പ','ph':'ഫ','f':'ഫ','b':'ബ','bh':'ഭ',
-        'm':'മ','y':'യ','r':'ര','rr':'റ','l':'ല','ll':'ള','v':'വ','w':'വ',
-        's':'സ','sh':'ശ','h':'ഹ','z':'ഴ'
-      };
-
-      // pure vowel
-      if(vowelMap[chunk]){
-        // if previous char in out is a consonant without virama, attach matra
-        const lastChar = out.slice(-1);
-        if(lastChar && isMalayalamConsonant(lastChar) && !hasVowelSign(lastChar)){
-          out = out.slice(0,-1) + attachMatra(lastChar, vowelMap[chunk]);
-        }else{
-          // independent vowel
-          out += independentVowel(chunk);
-        }
-        i += L; matched = true; break;
-      }
-      // consonant
-      if(cMap[chunk]){
-        out += cMap[chunk] + '\u0D4D'; // add virama; vowel handling will remove/replace
-        i += L; matched = true; break;
+    for(const [pat,ml] of MAP){
+      if(s.substr(i, pat.length) === pat){
+        out += ml;
+        i += pat.length;
+        matched = true;
+        break;
       }
     }
     if(!matched){
-      // fallback: copy char
-      out += s[i]; i++;
+      // fallback: keep the original char (useful for punctuation or unknown letters)
+      out += s[i];
+      i++;
     }
   }
-  // cleanup: remove trailing viramas and fix common sequences
-  out = out.replace(/\u0D4D$/,'');
-  // simple fix: replace sequences of base+virama+base to conjuncts - omitted for simplicity
+  // A couple of cleanups to make combined output more readable:
+  out = out.replace(/ +/g,' ');
   return out;
 }
 
-function isMalayalamConsonant(ch){
-  // crude check for Malayalam block
-  const code = ch.charCodeAt(0);
-  return code>=0x0D15 && code<=0x0D39; // 'ക'..'ഹ'
-}
-function hasVowelSign(ch){
-  // check if last char already has a vowel sign (simple heuristic)
-  return false;
-}
-function attachMatra(base, matra){
-  // remove virama if present
-  base = base.replace('\u0D4D','');
-  return base + matra;
-}
-function independentVowel(chunk){
-  const iv = {'aa':'ആ','a':'അ','i':'ഇ','ii':'ഈ','ee':'ഈ','u':'ഉ','uu':'ഊ','e':'എ','o':'ഒ','ai':'ഐ','au':'ഔ'};
-  return iv[chunk] || chunk;
-}
-
-/* ---------- UI wiring ---------- */
-const varsArea = document.getElementById('varsArea');
-const templatePreview = document.getElementById('templatePreview');
-const fullOutput = document.getElementById('fullOutput');
-
-// state
-const state = {};
-VAR_KEYS.forEach(v=> state[v.key]='');
-
-function buildUI(){
-  templatePreview.textContent = TEMPLATE.replace(/\((.*?) \)/g,'($1)');
-  varsArea.innerHTML = '';
-  VAR_KEYS.forEach(v=>{
-    const row = document.createElement('div'); row.className='var-row';
-    const label = document.createElement('label'); label.textContent = v.label; label.style.width='220px';
-    const input = document.createElement('input'); input.type='text'; input.placeholder=v.label; input.dataset.key=v.key;
-    input.addEventListener('input', onVarInput);
-    row.appendChild(label); row.appendChild(input);
-    varsArea.appendChild(row);
-  })
-  renderOutput();
-}
-
-function onVarInput(e){
-  const k = e.target.dataset.key; const val = e.target.value;
-  // transliterate and update state
-  state[k] = transliterateManglishToMalayalam(val) || '';
-  renderOutput();
-}
-
-function renderOutput(){
-  let out = TEMPLATE;
-  for(const k of VAR_KEYS.map(x=>x.key)){
-    out = out.replace(new RegExp('\\\\\(' + k + '\\\ \\)','g'),'');
+/* ---------- Find blanks in template ----------
+   We'll treat any continuous run of underscore characters ("_") as one blank.
+   Order of blanks is left-to-right as they appear in the template.
+*/
+function findBlanks(template){
+  const blanks = [];
+  const re = /_+/g;
+  let m;
+  while((m = re.exec(template)) !== null){
+    blanks.push({start: m.index, end: m.index + m[0].length});
   }
-  // simpler: replace tokens like ((key)) or ( (key) )
-  out = out.replace(/\((.*?) \)/g,'(($1))');
-  for(const k of VAR_KEYS){
-    out = out.replace(new RegExp('\\\\\\\\(\\s*'+k.key+'\\s*\\\\\\\)','g'),'');
-    out = out.replace(new RegExp('\(\s*'+k.key+'\s*\)','g'), state[k.key] || '');
-  }
-  // fallback presentational fixes
-  out = out.replace(/\s+/g,' ').trim();
-  fullOutput.textContent = out;
+  return blanks;
 }
 
-// buttons
-document.getElementById('copyBtn').addEventListener('click',async ()=>{
-  const text = fullOutput.textContent;
-  try{ await navigator.clipboard.writeText(text); alert('Copied to clipboard'); }catch(e){ alert('Copy failed. Select and copy manually.'); }
+/* ---------- Build UI: inputs for each blank ---------- */
+const templatePreviewEl = document.getElementById('templatePreview');
+const inputsArea = document.getElementById('inputsArea');
+const finalOutput = document.getElementById('finalOutput');
+templatePreviewEl.textContent = RAW_TEMPLATE;
+
+let blanks = findBlanks(RAW_TEMPLATE);
+if(blanks.length === 0){
+  // fallback: if no underscores are detected, try to detect parenthetical blanks "________"
+  blanks = [];
+}
+
+function createInputs(){
+  inputsArea.innerHTML = '';
+  for(let i=0;i<blanks.length;i++){
+    const div = document.createElement('div');
+    div.className = 'flex gap-2 items-start';
+    const label = document.createElement('label');
+    label.className = 'text-sm text-slate-700 w-32';
+    label.textContent = `Blank ${i+1}`;
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.dataset.index = i;
+    input.placeholder = 'Type in Manglish (roman letters)';
+    input.className = 'flex-1 p-2 rounded border border-slate-200';
+    input.addEventListener('input', onInputChange);
+    div.appendChild(label);
+    div.appendChild(input);
+    inputsArea.appendChild(div);
+  }
+  // If there are no blanks (edge case), create a big free input
+  if(blanks.length === 0){
+    const div = document.createElement('div');
+    const input = document.createElement('textarea');
+    input.rows = 6;
+    input.placeholder = 'Type full Manglish sentence here if no blanks detected...';
+    input.className = 'w-full p-2 rounded border border-slate-200';
+    input.addEventListener('input', onFreeInput);
+    div.appendChild(input);
+    inputsArea.appendChild(div);
+  }
+  renderFinal();
+}
+
+function onInputChange(e){
+  const idx = Number(e.target.dataset.index);
+  const manglish = e.target.value;
+  // transliterate and store on element for convenience
+  e.target.dataset.malayalam = transliterateManglishToMalayalam(manglish);
+  renderFinal();
+}
+
+function onFreeInput(e){
+  const mel = transliterateManglishToMalayalam(e.target.value);
+  finalOutput.textContent = mel;
+}
+
+/* ---------- Assemble final sentence by replacing blanks one-by-one ---------- */
+function renderFinal(){
+  let out = RAW_TEMPLATE;
+  // for each blank in order, replace the first occurrence of a run of underscores with the transliterated input
+  const inputs = inputsArea.querySelectorAll('input');
+  if(inputs.length === 0){
+    finalOutput.textContent = out;
+    return;
+  }
+  let temp = out;
+  for(let i=0;i<inputs.length;i++){
+    const el = inputs[i];
+    const val = el.dataset.malayalam || '';
+    // replace first run of underscores
+    temp = temp.replace(/_+/, val || '_____');
+  }
+  // cleanup extra spaces
+  temp = temp.replace(/\s+/g,' ').trim();
+  finalOutput.textContent = temp;
+}
+
+/* ---------- Buttons: copy, download, reset ---------- */
+document.getElementById('copyBtn').addEventListener('click', async ()=>{
+  const text = finalOutput.textContent || '';
+  if(!text){ alert('Nothing to copy'); return; }
+  try{
+    await navigator.clipboard.writeText(text);
+    alert('Copied to clipboard ✅');
+  }catch(e){
+    // fallback: select text for manual copy
+    alert('Copy failed — please select the text and copy manually.');
+  }
 });
 
 document.getElementById('downloadBtn').addEventListener('click', ()=>{
-  const blob = new Blob([fullOutput.textContent], {type:'text/plain;charset=utf-8'});
+  const text = finalOutput.textContent || '';
+  if(!text){ alert('Nothing to download'); return; }
+  const blob = new Blob([text], {type:'text/plain;charset=utf-8'});
   const url = URL.createObjectURL(blob);
-  const a = document.createElement('a'); a.href=url; a.download='statement_malayalam.txt'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'statement_malayalam.txt';
+  document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
 });
 
 document.getElementById('resetBtn').addEventListener('click', ()=>{
-  VAR_KEYS.forEach(k=> state[k.key]=''); Array.from(document.querySelectorAll('.var-row input')).forEach(i=>i.value=''); renderOutput();
+  inputsArea.querySelectorAll('input').forEach(i => { i.value=''; i.dataset.malayalam=''; });
+  inputsArea.querySelectorAll('textarea').forEach(t => t.value='');
+  renderFinal();
 });
 
-buildUI();
-</script></body>
+/* ---------- Initialize ---------- */
+createInputs();
+renderFinal();
+
+</script>
+</body>
 </html>
