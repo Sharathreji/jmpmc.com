@@ -5,11 +5,10 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>For Kavya C J CRP</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://www.google.com/jsapi"></script>
   <style>
     body {
-      font-family: "Noto Sans Malayalam", system-ui, sans-serif;
-      background: #f8fafc;
+      font-family: "Manjari", "Noto Sans Malayalam", system-ui, sans-serif;
+      background-color: #f8fafc;
       color: #1e293b;
     }
     .card {
@@ -28,20 +27,23 @@
       border-radius: 10px;
       border: 1px solid #e2e8f0;
     }
-    .hint { color: #64748b; font-size: 14px; }
+    .hint {
+      color: #64748b;
+      font-size: 14px;
+    }
   </style>
 </head>
 <body>
   <div class="card">
     <h1 class="text-3xl font-semibold text-indigo-700 mb-2">For Kavya C J CRP</h1>
-    <p class="hint mb-4">Type in <strong>Manglish</strong> (Roman letters). Google will convert it automatically to Malayalam inside the blanks. Then copy or download the final Malayalam text.</p>
+    <p class="hint mb-4">Type in Manglish (Roman letters). It will automatically convert to Malayalam and insert into the template. Then copy or download the final Malayalam text.</p>
 
     <h2 class="text-lg font-semibold mb-2">Malayalam Template</h2>
     <pre id="templatePreview" class="template text-lg">
 _________________________ എന്ന ആളുകളുടെ _______________ സർവ്വേ നമ്പറിൽ പെട്ട __ ആർ ___ സ്ക്വേ .മീ സ്ഥലം പരിശോധിച്ചതിൽ ടി സ്ഥലത്തിന്റെ സമീപത്തു നെൽകൃഷി ചെയ്യുന്ന പ്രദേശം ഇല്ല. സ്ഥലത്തു ____ വർഷം പ്രായമുള്ള ___ തെങ്ങ്, സ്ഥലത്തിൻ്റെ വടക്ക് __________, തെക്ക് ____________, കിഴക്കു _____________, പടിഞ്ഞാറ് ____________________. സ്ഥലം 2008 നെൽവയൽ/തണ്ണീർത്തട സംരക്ഷണ നിയമപ്രകാരം നെൽവയൽ/തണ്ണീർത്തടം എന്നിവയുടെ നിർവചനത്തിൽ വരുന്നതല്ല എന്ന് അനുമാനിക്കാവുന്നതാണ്. ആയതിനാൽ മേൽപ്പറഞ്ഞ സ്ഥലം ഡാറ്റ ബാങ്കിൽ നിന്നും ഒഴിവാക്കാവുന്നതാണ്.
     </pre>
 
-    <h2 class="text-lg font-semibold mt-6 mb-2">Fill the blanks (type in Manglish)</h2>
+    <h2 class="text-lg font-semibold mt-6 mb-2">Fill the blanks (in Manglish)</h2>
     <div id="inputsArea" class="space-y-3"></div>
 
     <div class="flex gap-2 mt-4">
@@ -55,63 +57,116 @@ _________________________ എന്ന ആളുകളുടെ _______________ 
   </div>
 
 <script>
-/* Load Google Transliteration API */
-google.load("elements", "1", {
-  packages: "transliteration"
-});
+/* Malayalam Transliteration Engine (improved) */
+const DICT = {
+  'pm': 'പി എം', 'p m': 'പി എം',
+  'shivankutty': 'ശിവൻകുട്ടി', 'sheela': 'ഷീല',
+  'poomangalath': 'പൂമംഗലത്ത്', 'pambakkud': 'പാമ്പാക്കുട',
+  'balakrishnan': 'ബാലകൃഷ്ണൻ', 'biju': 'ബിജു',
+  'kavya': 'കാവ്യ', 'kavya cj': 'കാവ്യ സി ജെ', 'cj': 'സി ജെ',
+  'thengu': 'തെങ്ങ്', 'thenngu': 'തെങ്ങ്',
+  'neelkrishi': 'നെൽകൃഷി', 'place': 'സ്ഥലം'
+};
 
-let transliterationControl;
-google.setOnLoadCallback(onLoad);
+const CONS = {
+  'kh': 'ഖ', 'gh': 'ഘ', 'chh': 'ഛ', 'ch': 'ച', 'jh': 'ഝ',
+  'th': 'ഥ', 'dh': 'ധ', 'ph': 'ഫ', 'bh': 'ഭ', 'sh': 'ശ',
+  'zh': 'ഴ', 'rr': 'റ', 'll': 'ള', 'ng': 'ങ',
+  'k': 'ക', 'g': 'ഗ', 'c': 'ക', 'j': 'ജ', 't': 'ത',
+  'd': 'ദ', 'n': 'ന', 'p': 'പ', 'b': 'ബ', 'm': 'മ',
+  'y': 'യ', 'r': 'ര', 'l': 'ല', 'v': 'വ', 's': 'സ', 'h': 'ഹ', 'z': 'സ'
+};
+
+const VOWELS = {
+  'aa': {ind:'ആ', mat:'ാ'}, 'a': {ind:'അ', mat:''},
+  'ii': {ind:'ഈ', mat:'ീ'}, 'i': {ind:'ഇ', mat:'ി'},
+  'ee': {ind:'ഏ', mat:'േ'}, 'e': {ind:'എ', mat:'െ'},
+  'uu': {ind:'ഊ', mat:'ൂ'}, 'u': {ind:'ഉ', mat:'ു'},
+  'oo': {ind:'ഓ', mat:'ോ'}, 'o': {ind:'ഒ', mat:'ൊ'},
+  'ai': {ind:'ഐ', mat:'ൈ'}, 'au': {ind:'ഔ', mat:'ൗ'}
+};
+
+function transliterateWord(word) {
+  const lower = word.toLowerCase().trim();
+  if (DICT[lower]) return DICT[lower];
+  let result = '';
+  let i = 0;
+  while (i < lower.length) {
+    // vowel first
+    let vmatch = null;
+    for (const vlen of [2,1]) {
+      const chunk = lower.substr(i, vlen);
+      if (VOWELS[chunk]) { vmatch = chunk; break; }
+    }
+    if (vmatch) {
+      result += VOWELS[vmatch].ind;
+      i += vmatch.length;
+      continue;
+    }
+    // consonant
+    let cmatch = null;
+    for (const clen of [2,1]) {
+      const chunk = lower.substr(i, clen);
+      if (CONS[chunk]) { cmatch = chunk; break; }
+    }
+    if (cmatch) {
+      // look ahead for vowel
+      let nextv = null;
+      for (const vlen of [2,1]) {
+        const chunk = lower.substr(i + cmatch.length, vlen);
+        if (VOWELS[chunk]) { nextv = chunk; break; }
+      }
+      if (nextv) {
+        result += CONS[cmatch] + VOWELS[nextv].mat;
+        i += cmatch.length + nextv.length;
+      } else {
+        result += CONS[cmatch];
+        i += cmatch.length;
+      }
+      continue;
+    }
+    result += lower[i];
+    i++;
+  }
+  return result;
+}
+
+function transliteratePhrase(text) {
+  if (!text) return '';
+  return text.split(/(\s+)/).map(p => /^[a-zA-Z]+$/.test(p) ? transliterateWord(p) : p).join('');
+}
 
 /* Detect blanks */
-const template = document.getElementById("templatePreview").textContent;
+const template = document.getElementById('templatePreview').textContent;
 const blanks = [...template.matchAll(/_+/g)];
-const inputsArea = document.getElementById("inputsArea");
-const finalOutput = document.getElementById("finalOutput");
+const inputsArea = document.getElementById('inputsArea');
+const finalOutput = document.getElementById('finalOutput');
 
-function onLoad() {
-  const options = {
-    sourceLanguage: 'en',
-    destinationLanguage: ['ml'],
-    transliterationEnabled: true
-  };
-  transliterationControl = new google.elements.transliteration.TransliterationControl(options);
-
-  // Create input fields dynamically for each blank
-  blanks.forEach((b, i) => {
-    const div = document.createElement('div');
-    const label = document.createElement('label');
-    label.textContent = `Blank ${i + 1}`;
-    label.className = "block text-sm text-gray-600";
-    const input = document.createElement('input');
-    input.type = 'text';
-    input.placeholder = 'Type in Manglish here';
-    input.className = "w-full p-2 border rounded border-gray-300";
-    input.dataset.index = i;
-    input.addEventListener('input', updateOutput);
-    div.appendChild(label);
-    div.appendChild(input);
-    inputsArea.appendChild(div);
-  });
-
-  // Enable Google transliteration
-  const inputElements = Array.from(document.querySelectorAll('#inputsArea input'));
-  transliterationControl.makeTransliteratable(inputElements);
-
-  // Render empty output initially
-  updateOutput();
-}
+blanks.forEach((b, i) => {
+  const div = document.createElement('div');
+  const label = document.createElement('label');
+  label.textContent = `Blank ${i + 1}`;
+  label.className = "block text-sm text-gray-600";
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.placeholder = 'Type in Manglish';
+  input.className = "w-full p-2 border rounded border-gray-300";
+  input.dataset.index = i;
+  input.addEventListener('input', updateOutput);
+  div.appendChild(label);
+  div.appendChild(input);
+  inputsArea.appendChild(div);
+});
 
 function updateOutput() {
   let out = template;
   inputsArea.querySelectorAll('input').forEach(input => {
-    const val = input.value || '';
-    out = out.replace(/_+/, val);
+    const mal = transliteratePhrase(input.value);
+    out = out.replace(/_+/, mal);
   });
   finalOutput.textContent = out;
 }
 
-/* Copy / Download / Reset */
 document.getElementById('copyBtn').onclick = async () => {
   const text = finalOutput.textContent;
   if (!text) return alert('No text to copy.');
@@ -125,7 +180,7 @@ document.getElementById('downloadBtn').onclick = () => {
   const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
-  a.href = url; a.download = 'Kavya_CJ_CRP_sentence.txt';
+  a.href = url; a.download = 'Kavya_CJ_CRPsentence.txt';
   document.body.appendChild(a); a.click(); a.remove();
 };
 
