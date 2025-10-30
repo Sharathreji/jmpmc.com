@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>For Kavya C J CRP</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://www.gstatic.com/inputtools/js/element/main.js"></script>
   <style>
     body {
       font-family: "Manjari", "Noto Sans Malayalam", system-ui, sans-serif;
@@ -36,7 +37,10 @@
 <body>
   <div class="card">
     <h1 class="text-3xl font-semibold text-indigo-700 mb-2">For Kavya C J CRP</h1>
-    <p class="hint mb-4">Type in Manglish (Roman letters). It will automatically convert to Malayalam and insert into the template. Then copy or download the final Malayalam text.</p>
+    <p class="hint mb-4">
+      Type in <strong>Manglish</strong> (Roman Malayalam) — it will instantly convert like <a href="https://www.easymalayalamtyping.com/" class="text-indigo-600 underline" target="_blank">easymalayalamtyping.com</a>.  
+      The Malayalam text will be inserted into the sentence below.
+    </p>
 
     <h2 class="text-lg font-semibold mb-2">Malayalam Template</h2>
     <pre id="templatePreview" class="template text-lg">
@@ -57,135 +61,90 @@ _________________________ എന്ന ആളുകളുടെ _______________ 
   </div>
 
 <script>
-/* Malayalam Transliteration Engine (improved) */
-const DICT = {
-  'pm': 'പി എം', 'p m': 'പി എം',
-  'shivankutty': 'ശിവൻകുട്ടി', 'sheela': 'ഷീല',
-  'poomangalath': 'പൂമംഗലത്ത്', 'pambakkud': 'പാമ്പാക്കുട',
-  'balakrishnan': 'ബാലകൃഷ്ണൻ', 'biju': 'ബിജു',
-  'kavya': 'കാവ്യ', 'kavya cj': 'കാവ്യ സി ജെ', 'cj': 'സി ജെ',
-  'thengu': 'തെങ്ങ്', 'thenngu': 'തെങ്ങ്',
-  'neelkrishi': 'നെൽകൃഷി', 'place': 'സ്ഥലം'
-};
+google.load("elements", "1", { packages: "transliteration" });
 
-const CONS = {
-  'kh': 'ഖ', 'gh': 'ഘ', 'chh': 'ഛ', 'ch': 'ച', 'jh': 'ഝ',
-  'th': 'ഥ', 'dh': 'ധ', 'ph': 'ഫ', 'bh': 'ഭ', 'sh': 'ശ',
-  'zh': 'ഴ', 'rr': 'റ', 'll': 'ള', 'ng': 'ങ',
-  'k': 'ക', 'g': 'ഗ', 'c': 'ക', 'j': 'ജ', 't': 'ത',
-  'd': 'ദ', 'n': 'ന', 'p': 'പ', 'b': 'ബ', 'm': 'മ',
-  'y': 'യ', 'r': 'ര', 'l': 'ല', 'v': 'വ', 's': 'സ', 'h': 'ഹ', 'z': 'സ'
-};
+let transliterationControl;
 
-const VOWELS = {
-  'aa': {ind:'ആ', mat:'ാ'}, 'a': {ind:'അ', mat:''},
-  'ii': {ind:'ഈ', mat:'ീ'}, 'i': {ind:'ഇ', mat:'ി'},
-  'ee': {ind:'ഏ', mat:'േ'}, 'e': {ind:'എ', mat:'െ'},
-  'uu': {ind:'ഊ', mat:'ൂ'}, 'u': {ind:'ഉ', mat:'ു'},
-  'oo': {ind:'ഓ', mat:'ോ'}, 'o': {ind:'ഒ', mat:'ൊ'},
-  'ai': {ind:'ഐ', mat:'ൈ'}, 'au': {ind:'ഔ', mat:'ൗ'}
-};
+function initGoogleTransliteration() {
+  const options = {
+    sourceLanguage: google.elements.transliteration.LanguageCode.ENGLISH,
+    destinationLanguage: [google.elements.transliteration.LanguageCode.MALAYALAM],
+    shortcutKey: 'ctrl+g',
+    transliterationEnabled: true
+  };
+  transliterationControl = new google.elements.transliteration.TransliterationControl(options);
 
-function transliterateWord(word) {
-  const lower = word.toLowerCase().trim();
-  if (DICT[lower]) return DICT[lower];
-  let result = '';
-  let i = 0;
-  while (i < lower.length) {
-    // vowel first
-    let vmatch = null;
-    for (const vlen of [2,1]) {
-      const chunk = lower.substr(i, vlen);
-      if (VOWELS[chunk]) { vmatch = chunk; break; }
-    }
-    if (vmatch) {
-      result += VOWELS[vmatch].ind;
-      i += vmatch.length;
-      continue;
-    }
-    // consonant
-    let cmatch = null;
-    for (const clen of [2,1]) {
-      const chunk = lower.substr(i, clen);
-      if (CONS[chunk]) { cmatch = chunk; break; }
-    }
-    if (cmatch) {
-      // look ahead for vowel
-      let nextv = null;
-      for (const vlen of [2,1]) {
-        const chunk = lower.substr(i + cmatch.length, vlen);
-        if (VOWELS[chunk]) { nextv = chunk; break; }
-      }
-      if (nextv) {
-        result += CONS[cmatch] + VOWELS[nextv].mat;
-        i += cmatch.length + nextv.length;
-      } else {
-        result += CONS[cmatch];
-        i += cmatch.length;
-      }
-      continue;
-    }
-    result += lower[i];
-    i++;
-  }
-  return result;
+  // Apply to all dynamic inputs
+  applyTransliteration();
 }
 
-function transliteratePhrase(text) {
-  if (!text) return '';
-  return text.split(/(\s+)/).map(p => /^[a-zA-Z]+$/.test(p) ? transliterateWord(p) : p).join('');
-}
+google.setOnLoadCallback(initGoogleTransliteration);
 
-/* Detect blanks */
+/* Detect blanks and generate input boxes */
 const template = document.getElementById('templatePreview').textContent;
 const blanks = [...template.matchAll(/_+/g)];
 const inputsArea = document.getElementById('inputsArea');
 const finalOutput = document.getElementById('finalOutput');
 
-blanks.forEach((b, i) => {
-  const div = document.createElement('div');
-  const label = document.createElement('label');
-  label.textContent = `Blank ${i + 1}`;
-  label.className = "block text-sm text-gray-600";
-  const input = document.createElement('input');
-  input.type = 'text';
-  input.placeholder = 'Type in Manglish';
-  input.className = "w-full p-2 border rounded border-gray-300";
-  input.dataset.index = i;
-  input.addEventListener('input', updateOutput);
-  div.appendChild(label);
-  div.appendChild(input);
-  inputsArea.appendChild(div);
-});
+function createInputs() {
+  blanks.forEach((b, i) => {
+    const div = document.createElement('div');
+    const label = document.createElement('label');
+    label.textContent = `Blank ${i + 1}`;
+    label.className = "block text-sm text-gray-600";
+    const input = document.createElement('textarea');
+    input.rows = 1;
+    input.id = 'input_' + i;
+    input.placeholder = 'Type in Manglish (it will convert automatically)';
+    input.className = "w-full p-2 border rounded border-gray-300 resize-none";
+    input.addEventListener('input', updateOutput);
+    div.appendChild(label);
+    div.appendChild(input);
+    inputsArea.appendChild(div);
+  });
+}
+createInputs();
 
+/* Apply transliteration */
+function applyTransliteration() {
+  if (!transliterationControl) return;
+  document.querySelectorAll('#inputsArea textarea').forEach(inp => {
+    transliterationControl.makeTransliteratable([inp.id]);
+  });
+}
+
+/* Update the final Malayalam sentence */
 function updateOutput() {
   let out = template;
-  inputsArea.querySelectorAll('input').forEach(input => {
-    const mal = transliteratePhrase(input.value);
-    out = out.replace(/_+/, mal);
+  inputsArea.querySelectorAll('textarea').forEach(input => {
+    out = out.replace(/_+/, input.value.trim());
   });
   finalOutput.textContent = out;
 }
 
+/* Buttons */
 document.getElementById('copyBtn').onclick = async () => {
-  const text = finalOutput.textContent;
+  const text = finalOutput.textContent.trim();
   if (!text) return alert('No text to copy.');
   await navigator.clipboard.writeText(text);
   alert('Copied to clipboard ✅');
 };
 
 document.getElementById('downloadBtn').onclick = () => {
-  const text = finalOutput.textContent;
+  const text = finalOutput.textContent.trim();
   if (!text) return alert('No text to download.');
   const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
-  a.href = url; a.download = 'Kavya_CJ_CRPsentence.txt';
-  document.body.appendChild(a); a.click(); a.remove();
+  a.href = url; 
+  a.download = 'Malayalam_Converted.txt';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
 };
 
 document.getElementById('resetBtn').onclick = () => {
-  inputsArea.querySelectorAll('input').forEach(i => i.value = '');
+  inputsArea.querySelectorAll('textarea').forEach(i => i.value = '');
   finalOutput.textContent = '';
 };
 </script>
