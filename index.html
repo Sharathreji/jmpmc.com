@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Malayalam Template - For Kavya C J CRP</title>
+  <title>Malayalam Template - Space-trigger transliteration</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
@@ -41,8 +41,7 @@
   <div class="card">
     <h1 class="text-3xl font-semibold text-indigo-700 mb-2">For Kavya C J CRP</h1>
     <p class="text-gray-600 mb-4">
-      Type in <b>Manglish</b>. Each word will convert to Malayalam <b>after you press space</b> — just like EasyMalayalamTyping.com.<br>
-      Numbers (e.g. 2008, 10) and English terms will stay as-is.
+      Type in <b>Manglish</b>. Each word will convert to Malayalam <b>after you press space</b>. Numbers and acronyms are left unchanged.
     </p>
 
     <h2 class="text-lg font-semibold mb-2">Malayalam Template</h2>
@@ -79,47 +78,83 @@ blanks.forEach((b, i) => {
   inputsArea.appendChild(div);
 });
 
-/* Add transliteration on space */
+/* Add handler that transliterates the word before the cursor when a space is typed */
 document.querySelectorAll("textarea").forEach(t => {
-  t.addEventListener("keyup", async (e) => {
-    if (e.key === " ") {
-      const value = t.value;
-      const words = value.split(/\s+/);
-      const lastWord = words[words.length - 2]; // the word before last space
+  t.addEventListener("keydown", async (e) => {
+    // We handle space on keydown so we can inspect caret position before the space is added
+    if (e.key === " " || e.code === "Space") {
+      // prevent default temporarily so we control insertion after replacement
+      e.preventDefault();
 
-      if (!lastWord) return;
+      const textarea = e.target;
+      const cursorPos = textarea.selectionStart; // position where space would be inserted
+      const before = textarea.value.slice(0, cursorPos);
+      const after = textarea.value.slice(cursorPos);
 
-      // Skip if number or contains digits
-      if (/^[0-9]+$/.test(lastWord)) return;
-
-      // Skip if capital English or acronym like CRP, KM, etc.
-      if (/^[A-Z]+$/.test(lastWord)) return;
-
-      const malWord = await transliterateWord(lastWord);
-      if (malWord) {
-        words[words.length - 2] = malWord;
-        t.value = words.join(" ") + " ";
+      // find the last contiguous non-space sequence (the word) before cursor
+      const m = before.match(/(\S+)\s*$/);
+      if (!m) {
+        // if no word, just insert a space
+        const newVal = before + " " + after;
+        textarea.value = newVal;
+        setCaret(textarea, cursorPos + 1);
         updateOutput();
+        return;
       }
-    } else {
+
+      const lastWord = m[1];
+
+      // Skip transliteration if it contains digits (numbers) or is all-caps acronyms
+      if (/\d/.test(lastWord) || /^[A-Z0-9]+$/.test(lastWord)) {
+        // insert space after the word as-is
+        const startIndex = cursorPos - lastWord.length;
+        const newVal = textarea.value.slice(0, startIndex + lastWord.length) + " " + after;
+        textarea.value = newVal;
+        setCaret(textarea, startIndex + lastWord.length + 1);
+        updateOutput();
+        return;
+      }
+
+      // Transliterate only the single lastWord
+      const mal = await transliterateWord(lastWord);
+      const startIndex = cursorPos - lastWord.length;
+      const newVal = textarea.value.slice(0, startIndex) + mal + " " + after;
+      textarea.value = newVal;
+
+      // place caret after the inserted space
+      setCaret(textarea, startIndex + mal.length + 1);
       updateOutput();
     }
   });
+
+  // also update final output on normal input (typing, backspace etc.)
+  t.addEventListener("input", () => updateOutput());
 });
 
-/* Transliteration via Google Input Tools API */
-async function transliterateWord(word) {
-  const url = `https://inputtools.google.com/request?text=${encodeURIComponent(word)}&itc=ml-t-i0-und&num=1&ie=utf-8&oe=utf-8`;
+/* Helper to set caret position */
+function setCaret(el, pos) {
+  el.focus();
   try {
+    el.setSelectionRange(pos, pos);
+  } catch (err) {
+    // ignore if not supported
+  }
+}
+
+/* Transliteration via Google Input Tools API (single-word) */
+async function transliterateWord(word) {
+  try {
+    const url = `https://inputtools.google.com/request?text=${encodeURIComponent(word)}&itc=ml-t-i0-und&num=1&ie=utf-8&oe=utf-8`;
     const res = await fetch(url);
     const data = await res.json();
-    if (data[0] === "SUCCESS" && data[1]?.[0]?.[1]?.[0]) {
+    if (Array.isArray(data) && data[0] === "SUCCESS" && data[1] && data[1][0] && data[1][0][1] && data[1][0][1][0]) {
       return data[1][0][1][0];
     }
   } catch (err) {
     console.error("Transliteration error:", err);
   }
-  return word; // fallback
+  // fallback: return original word
+  return word;
 }
 
 /* Update the final output sentence */
