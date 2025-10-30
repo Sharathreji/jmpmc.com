@@ -3,241 +3,136 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Template — Manglish → Malayalam</title>
+  <title>For Kavya C J CRP</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://www.google.com/jsapi"></script>
   <style>
-    body{font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;}
-    .card{max-width:960px;margin:28px auto;padding:22px;background:white;border-radius:12px;box-shadow:0 10px 30px rgba(2,6,23,0.06)}
-    pre.template{white-space:pre-wrap;word-break:break-word;background:#f8fafc;padding:12px;border-radius:8px;border:1px solid #eef2f7}
-    .hint{color:#64748b;font-size:13px}
+    body {
+      font-family: "Noto Sans Malayalam", system-ui, sans-serif;
+      background: #f8fafc;
+      color: #1e293b;
+    }
+    .card {
+      max-width: 1000px;
+      margin: 30px auto;
+      background: #fff;
+      padding: 25px 30px;
+      border-radius: 16px;
+      box-shadow: 0 6px 30px rgba(0, 0, 0, 0.06);
+    }
+    .template {
+      white-space: pre-wrap;
+      word-break: break-word;
+      background: #f1f5f9;
+      padding: 14px;
+      border-radius: 10px;
+      border: 1px solid #e2e8f0;
+    }
+    .hint { color: #64748b; font-size: 14px; }
   </style>
 </head>
-<body class="bg-slate-50">
+<body>
   <div class="card">
-    <h1 class="text-2xl font-semibold">Template — Manglish → Malayalam</h1>
-    <p class="hint mt-1">Type each blank in Manglish (roman letters). The page converts each input to Malayalam and places them into the template in order. Press <strong>Copy</strong> to copy the final Malayalam sentence.</p>
+    <h1 class="text-3xl font-semibold text-indigo-700 mb-2">For Kavya C J CRP</h1>
+    <p class="hint mb-4">Type in <strong>Manglish</strong> (Roman letters). Google will convert it automatically to Malayalam inside the blanks. Then copy or download the final Malayalam text.</p>
 
-    <div class="mt-4">
-      <label class="block text-sm font-medium text-slate-700">Template preview</label>
-      <pre id="templatePreview" class="template text-lg">_________________________ എന്ന ആളുകളുടെ _______________ സർവ്വേ നമ്പറിൽപെട്ട __ ആര് ___ സ്ക്വേ .മീ   സ്ഥലം  പരിശോധിച്ചതിൽ  ടി  സ്ഥലത്തിന്റെ സമീപത്തു നെൽകൃഷി ചെയ്യുന്ന പ്രദേശം  ഇല്ല സ്ഥലത്തു ____ വർഷം  പ്രായമുള്ള  ___ തെങ്ങ്, സ്ഥലത്തിൻ്റെ വടക്ക് __________, തെക്ക് ____________,  കിഴക്കു  _____________, പടിഞ്ഞാറ്‌ ____________________.   സ്ഥലം  2008 നെൽവയൽ/ തണ്ണീർത്തട സംരക്ഷണ നിയമപ്രകാരം നെൽവയൽ/തണ്ണീർത്തടം എന്നിവയുടെ നിർവചനത്തിൽ വരുന്നതല്ല എന്ന് അനുമാനിക്കാവുന്നതാണ്. ആയതിനാൽ മേൽപ്പറഞ്ഞ സ്ഥലം ഡാറ്റ ബാങ്കിൽ നിന്നും ഒഴിവാക്കാവുന്നതാണ്.</pre>
+    <h2 class="text-lg font-semibold mb-2">Malayalam Template</h2>
+    <pre id="templatePreview" class="template text-lg">
+_________________________ എന്ന ആളുകളുടെ _______________ സർവ്വേ നമ്പറിൽ പെട്ട __ ആർ ___ സ്ക്വേ .മീ സ്ഥലം പരിശോധിച്ചതിൽ ടി സ്ഥലത്തിന്റെ സമീപത്തു നെൽകൃഷി ചെയ്യുന്ന പ്രദേശം ഇല്ല. സ്ഥലത്തു ____ വർഷം പ്രായമുള്ള ___ തെങ്ങ്, സ്ഥലത്തിൻ്റെ വടക്ക് __________, തെക്ക് ____________, കിഴക്കു _____________, പടിഞ്ഞാറ് ____________________. സ്ഥലം 2008 നെൽവയൽ/തണ്ണീർത്തട സംരക്ഷണ നിയമപ്രകാരം നെൽവയൽ/തണ്ണീർത്തടം എന്നിവയുടെ നിർവചനത്തിൽ വരുന്നതല്ല എന്ന് അനുമാനിക്കാവുന്നതാണ്. ആയതിനാൽ മേൽപ്പറഞ്ഞ സ്ഥലം ഡാറ്റ ബാങ്കിൽ നിന്നും ഒഴിവാക്കാവുന്നതാണ്.
+    </pre>
+
+    <h2 class="text-lg font-semibold mt-6 mb-2">Fill the blanks (type in Manglish)</h2>
+    <div id="inputsArea" class="space-y-3"></div>
+
+    <div class="flex gap-2 mt-4">
+      <button id="copyBtn" class="px-4 py-2 bg-indigo-600 text-white rounded">Copy</button>
+      <button id="downloadBtn" class="px-4 py-2 border border-indigo-600 text-indigo-600 rounded">Download</button>
+      <button id="resetBtn" class="px-4 py-2 bg-gray-100 text-gray-700 rounded">Reset</button>
     </div>
 
-    <div class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4">
-      <div>
-        <label class="block text-sm font-medium text-slate-700">Fill blanks (type in Manglish)</label>
-        <div id="inputsArea" class="space-y-3 mt-2"></div>
-
-        <div class="flex gap-2 mt-4">
-          <button id="copyBtn" class="px-3 py-2 bg-indigo-600 text-white rounded">Copy</button>
-          <button id="downloadBtn" class="px-3 py-2 border border-indigo-600 text-indigo-600 rounded">Download .txt</button>
-          <button id="resetBtn" class="px-3 py-2 bg-slate-100 rounded">Reset</button>
-        </div>
-
-        <p class="hint mt-3">Order: inputs will be placed into blanks from left → right / top → bottom in the template preview.</p>
-      </div>
-
-      <div>
-        <label class="block text-sm font-medium text-slate-700">Final Malayalam sentence</label>
-        <div id="finalOutput" class="rounded p-3 bg-white border border-slate-200 min-h-[220px] text-lg"></div>
-
-        <div class="mt-3 text-sm text-slate-500">If you need different placeholder ordering or named placeholders (e.g., {{name}}) I can update it — this version replaces blanks in sequence.</div>
-      </div>
-    </div>
+    <h2 class="text-lg font-semibold mt-6 mb-2">Final Malayalam Sentence</h2>
+    <div id="finalOutput" class="rounded p-4 bg-gray-50 border border-gray-200 min-h-[200px] text-lg"></div>
   </div>
 
 <script>
-/*
-  Behavior:
-  - Count blank segments (underscores or sequences of underscores) in the template preview.
-  - Create input boxes equal to the number of blanks.
-  - Each input transliterates from Manglish to Malayalam live and replaces the blanks in order.
-*/
+/* Load Google Transliteration API */
+google.load("elements", "1", {
+  packages: "transliteration"
+});
 
-/* ---------- Template (taken from your message) ---------- */
-const RAW_TEMPLATE = `_________________________ എന്ന ആളുകളുടെ _______________ സർവ്വേ നമ്പറിൽപെട്ട __ ആര് ___ സ്ക്വേ .മീ   സ്ഥലം  പരിശോധിച്ചതിൽ  ടി  സ്ഥലത്തിന്റെ സമീപത്തു നെൽകൃഷി ചെയ്യുന്ന പ്രദേശം  ഇല്ല സ്ഥലത്തു ____ വർഷം  പ്രായമുള്ള  ___ തെങ്ങ്, സ്ഥലത്തിൻ്റെ വടക്ക് __________, തെക്ക് ____________,  കിഴക്കു  _____________, പടിഞ്ഞാറ്‌ ____________________.   സ്ഥലം  2008 നെൽവയൽ/ തണ്ണീർത്തട സംരക്ഷണ നിയമപ്രകാരം നെൽവയൽ/തണ്ണീർത്തടം എന്നിവയുടെ നിർവചനത്തിൽ വരുന്നതല്ല എന്ന് അനുമാനിക്കാവുന്നതാണ്. ആയതിനാൽ മേൽപ്പറഞ്ഞ സ്ഥലം ഡാറ്റ ബാങ്കിൽ നിന്നും ഒഴിവാക്കാവുന്നതാണ്.`;
+let transliterationControl;
+google.setOnLoadCallback(onLoad);
 
-/* ---------- Simple transliteration helper ----------
-   This is a small rule-based transliterator (covers common Manglish patterns and a small dictionary).
-   It's not perfect like a full engine, but works for names/words in most cases.
-   If you want an authoritative engine later we can add a richer mapping or use a library.
-*/
-function transliterateManglishToMalayalam(input){
-  if(!input) return '';
-  // small dictionary for common tokens (extendable)
-  const DICT = {
-    'pm':'പി എം','and':'ആൻഡ്','shivan':'ശിവൻ','shivankutty':'ശിവൻകുട്ടി','kuttan':'കുട്ടൻ',
-    'sheela':'ഷീല','poomangalath':'പൂമംഗലത്ത്','pambakkud':'പാമ്പാക്കുട','neelkrishi':'നെൽകൃഷി',
-    'balakrishnan':'ബാലകൃഷ്ണൻ','biju':'ബിജു','thengu':'തെങ്ങ്','thenngu':'തെങ്ങ്'
+/* Detect blanks */
+const template = document.getElementById("templatePreview").textContent;
+const blanks = [...template.matchAll(/_+/g)];
+const inputsArea = document.getElementById("inputsArea");
+const finalOutput = document.getElementById("finalOutput");
+
+function onLoad() {
+  const options = {
+    sourceLanguage: 'en',
+    destinationLanguage: ['ml'],
+    transliterationEnabled: true
   };
-  // if whole token matches dictionary, return directly
-  const low = input.toLowerCase().trim();
-  if(DICT[low]) return DICT[low];
+  transliterationControl = new google.elements.transliteration.TransliterationControl(options);
 
-  // basic syllable map (longer patterns first)
-  const MAP = [
-    ['aa','ആ'],['ai','ഐ'],['au','ഔ'],['ee','ീ'],['ii','ീ'],['uu','ൂ'],['ng','ങ്ങ'],['nk','ങ്ക'],
-    ['kh','ഖ'],['gh','ഘ'],['ch','ച'],['sh','ശ'],['zh','ഴ'],['th','ഥ'],['dh','ധ'],['ph','ഫ'],['bh','ഭ'],
-    ['rr','ര്‍'],['rl','ര്‍ൽ'],
-    ['a','അ'],['A','അ'],['i','ഇ'],['I','ഇ'],['u','ഉ'],['e','എ'],['o','ഒ'],
-    ['k','ക'],['g','ഗ'],['j','ജ'],['t','ത'],['d','ദ'],['n','ന'],['p','പ'],['b','ബ'],['m','മ'],['y','യ'],['r','ര'],['l','ല'],['v','വ'],['s','സ'],['h','ഹ'],
-    ['0','0'],['1','1'],['2','2'],['3','3'],['4','4'],['5','5'],['6','6'],['7','7'],['8','8'],['9','9'],
-    ['/','/'],['-','-']
-  ];
-
-  // Normalize: split by hyphens or spaces and transliterate each piece
-  // We'll do a greedy longest-match replacement on the lowercase string.
-  let s = low;
-  // prioritize longer patterns
-  MAP.sort((a,b)=>b[0].length - a[0].length);
-
-  let out = '';
-  let i = 0;
-  while(i < s.length){
-    let matched = false;
-    for(const [pat,ml] of MAP){
-      if(s.substr(i, pat.length) === pat){
-        out += ml;
-        i += pat.length;
-        matched = true;
-        break;
-      }
-    }
-    if(!matched){
-      // fallback: keep the original char (useful for punctuation or unknown letters)
-      out += s[i];
-      i++;
-    }
-  }
-  // A couple of cleanups to make combined output more readable:
-  out = out.replace(/ +/g,' ');
-  return out;
-}
-
-/* ---------- Find blanks in template ----------
-   We'll treat any continuous run of underscore characters ("_") as one blank.
-   Order of blanks is left-to-right as they appear in the template.
-*/
-function findBlanks(template){
-  const blanks = [];
-  const re = /_+/g;
-  let m;
-  while((m = re.exec(template)) !== null){
-    blanks.push({start: m.index, end: m.index + m[0].length});
-  }
-  return blanks;
-}
-
-/* ---------- Build UI: inputs for each blank ---------- */
-const templatePreviewEl = document.getElementById('templatePreview');
-const inputsArea = document.getElementById('inputsArea');
-const finalOutput = document.getElementById('finalOutput');
-templatePreviewEl.textContent = RAW_TEMPLATE;
-
-let blanks = findBlanks(RAW_TEMPLATE);
-if(blanks.length === 0){
-  // fallback: if no underscores are detected, try to detect parenthetical blanks "________"
-  blanks = [];
-}
-
-function createInputs(){
-  inputsArea.innerHTML = '';
-  for(let i=0;i<blanks.length;i++){
+  // Create input fields dynamically for each blank
+  blanks.forEach((b, i) => {
     const div = document.createElement('div');
-    div.className = 'flex gap-2 items-start';
     const label = document.createElement('label');
-    label.className = 'text-sm text-slate-700 w-32';
-    label.textContent = `Blank ${i+1}`;
+    label.textContent = `Blank ${i + 1}`;
+    label.className = "block text-sm text-gray-600";
     const input = document.createElement('input');
     input.type = 'text';
+    input.placeholder = 'Type in Manglish here';
+    input.className = "w-full p-2 border rounded border-gray-300";
     input.dataset.index = i;
-    input.placeholder = 'Type in Manglish (roman letters)';
-    input.className = 'flex-1 p-2 rounded border border-slate-200';
-    input.addEventListener('input', onInputChange);
+    input.addEventListener('input', updateOutput);
     div.appendChild(label);
     div.appendChild(input);
     inputsArea.appendChild(div);
-  }
-  // If there are no blanks (edge case), create a big free input
-  if(blanks.length === 0){
-    const div = document.createElement('div');
-    const input = document.createElement('textarea');
-    input.rows = 6;
-    input.placeholder = 'Type full Manglish sentence here if no blanks detected...';
-    input.className = 'w-full p-2 rounded border border-slate-200';
-    input.addEventListener('input', onFreeInput);
-    div.appendChild(input);
-    inputsArea.appendChild(div);
-  }
-  renderFinal();
+  });
+
+  // Enable Google transliteration
+  const inputElements = Array.from(document.querySelectorAll('#inputsArea input'));
+  transliterationControl.makeTransliteratable(inputElements);
+
+  // Render empty output initially
+  updateOutput();
 }
 
-function onInputChange(e){
-  const idx = Number(e.target.dataset.index);
-  const manglish = e.target.value;
-  // transliterate and store on element for convenience
-  e.target.dataset.malayalam = transliterateManglishToMalayalam(manglish);
-  renderFinal();
+function updateOutput() {
+  let out = template;
+  inputsArea.querySelectorAll('input').forEach(input => {
+    const val = input.value || '';
+    out = out.replace(/_+/, val);
+  });
+  finalOutput.textContent = out;
 }
 
-function onFreeInput(e){
-  const mel = transliterateManglishToMalayalam(e.target.value);
-  finalOutput.textContent = mel;
-}
+/* Copy / Download / Reset */
+document.getElementById('copyBtn').onclick = async () => {
+  const text = finalOutput.textContent;
+  if (!text) return alert('No text to copy.');
+  await navigator.clipboard.writeText(text);
+  alert('Copied to clipboard ✅');
+};
 
-/* ---------- Assemble final sentence by replacing blanks one-by-one ---------- */
-function renderFinal(){
-  let out = RAW_TEMPLATE;
-  // for each blank in order, replace the first occurrence of a run of underscores with the transliterated input
-  const inputs = inputsArea.querySelectorAll('input');
-  if(inputs.length === 0){
-    finalOutput.textContent = out;
-    return;
-  }
-  let temp = out;
-  for(let i=0;i<inputs.length;i++){
-    const el = inputs[i];
-    const val = el.dataset.malayalam || '';
-    // replace first run of underscores
-    temp = temp.replace(/_+/, val || '_____');
-  }
-  // cleanup extra spaces
-  temp = temp.replace(/\s+/g,' ').trim();
-  finalOutput.textContent = temp;
-}
-
-/* ---------- Buttons: copy, download, reset ---------- */
-document.getElementById('copyBtn').addEventListener('click', async ()=>{
-  const text = finalOutput.textContent || '';
-  if(!text){ alert('Nothing to copy'); return; }
-  try{
-    await navigator.clipboard.writeText(text);
-    alert('Copied to clipboard ✅');
-  }catch(e){
-    // fallback: select text for manual copy
-    alert('Copy failed — please select the text and copy manually.');
-  }
-});
-
-document.getElementById('downloadBtn').addEventListener('click', ()=>{
-  const text = finalOutput.textContent || '';
-  if(!text){ alert('Nothing to download'); return; }
-  const blob = new Blob([text], {type:'text/plain;charset=utf-8'});
+document.getElementById('downloadBtn').onclick = () => {
+  const text = finalOutput.textContent;
+  if (!text) return alert('No text to download.');
+  const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
-  a.href = url; a.download = 'statement_malayalam.txt';
-  document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
-});
+  a.href = url; a.download = 'Kavya_CJ_CRP_sentence.txt';
+  document.body.appendChild(a); a.click(); a.remove();
+};
 
-document.getElementById('resetBtn').addEventListener('click', ()=>{
-  inputsArea.querySelectorAll('input').forEach(i => { i.value=''; i.dataset.malayalam=''; });
-  inputsArea.querySelectorAll('textarea').forEach(t => t.value='');
-  renderFinal();
-});
-
-/* ---------- Initialize ---------- */
-createInputs();
-renderFinal();
-
+document.getElementById('resetBtn').onclick = () => {
+  inputsArea.querySelectorAll('input').forEach(i => i.value = '');
+  finalOutput.textContent = '';
+};
 </script>
 </body>
 </html>
