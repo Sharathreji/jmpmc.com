@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Malayalam Template - Space-trigger transliteration</title>
+  <title>Malayalam Template - For Kavya CJ CRP</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
@@ -33,7 +33,7 @@
       padding: 10px;
       border-radius: 8px;
       resize: none;
-      font-size: 16px;
+      font-size: 1rem;
     }
   </style>
 </head>
@@ -41,7 +41,8 @@
   <div class="card">
     <h1 class="text-3xl font-semibold text-indigo-700 mb-2">For Kavya C J CRP</h1>
     <p class="text-gray-600 mb-4">
-      Type in <b>Manglish</b>. Each word will convert to Malayalam <b>after you press space</b>. Numbers and acronyms are left unchanged.
+      Type in <b>Manglish</b> (Roman Malayalam). It will automatically convert to Malayalam after a short pause or when you press space.<br>
+      Numbers will remain as they are.
     </p>
 
     <h2 class="text-lg font-semibold mb-2">Malayalam Template</h2>
@@ -50,12 +51,12 @@ _________________________ എന്ന ആളുകളുടെ _______________ 
     </pre>
 
     <h2 class="text-lg font-semibold mt-6 mb-2">Fill the blanks (in Manglish)</h2>
-    <div id="inputsArea" class="space-y-3"></div>
+    <div id="inputsArea" class="space-y-4"></div>
 
-    <div class="flex gap-2 mt-4">
-      <button id="copyBtn" class="px-4 py-2 bg-indigo-600 text-white rounded">Copy</button>
-      <button id="downloadBtn" class="px-4 py-2 border border-indigo-600 text-indigo-600 rounded">Download</button>
-      <button id="resetBtn" class="px-4 py-2 bg-gray-100 text-gray-700 rounded">Reset</button>
+    <div class="flex gap-2 mt-6">
+      <button id="copyBtn" class="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700">Copy</button>
+      <button id="downloadBtn" class="px-4 py-2 border border-indigo-600 text-indigo-600 rounded hover:bg-indigo-50">Download</button>
+      <button id="resetBtn" class="px-4 py-2 bg-gray-100 text-gray-700 rounded hover:bg-gray-200">Reset</button>
     </div>
 
     <h2 class="text-lg font-semibold mt-6 mb-2">Final Malayalam Sentence</h2>
@@ -72,92 +73,54 @@ const finalOutput = document.getElementById("finalOutput");
 blanks.forEach((b, i) => {
   const div = document.createElement("div");
   div.innerHTML = `
-    <label class="block text-sm text-gray-600 mb-1">Blank ${i + 1}</label>
-    <textarea id="input_${i}" rows="1" placeholder="Type in Manglish and press space..."></textarea>
+    <label class="block text-sm text-gray-700 mb-1">Blank ${i + 1}</label>
+    <textarea id="input_${i}" rows="1" placeholder="Type in Manglish..."></textarea>
+    <div id="preview_${i}" class="text-gray-500 text-sm mt-1"></div>
   `;
   inputsArea.appendChild(div);
 });
 
-/* Add handler that transliterates the word before the cursor when a space is typed */
-document.querySelectorAll("textarea").forEach(t => {
-  t.addEventListener("keydown", async (e) => {
-    // We handle space on keydown so we can inspect caret position before the space is added
-    if (e.key === " " || e.code === "Space") {
-      // prevent default temporarily so we control insertion after replacement
-      e.preventDefault();
-
-      const textarea = e.target;
-      const cursorPos = textarea.selectionStart; // position where space would be inserted
-      const before = textarea.value.slice(0, cursorPos);
-      const after = textarea.value.slice(cursorPos);
-
-      // find the last contiguous non-space sequence (the word) before cursor
-      const m = before.match(/(\S+)\s*$/);
-      if (!m) {
-        // if no word, just insert a space
-        const newVal = before + " " + after;
-        textarea.value = newVal;
-        setCaret(textarea, cursorPos + 1);
-        updateOutput();
-        return;
-      }
-
-      const lastWord = m[1];
-
-      // Skip transliteration if it contains digits (numbers) or is all-caps acronyms
-      if (/\d/.test(lastWord) || /^[A-Z0-9]+$/.test(lastWord)) {
-        // insert space after the word as-is
-        const startIndex = cursorPos - lastWord.length;
-        const newVal = textarea.value.slice(0, startIndex + lastWord.length) + " " + after;
-        textarea.value = newVal;
-        setCaret(textarea, startIndex + lastWord.length + 1);
-        updateOutput();
-        return;
-      }
-
-      // Transliterate only the single lastWord
-      const mal = await transliterateWord(lastWord);
-      const startIndex = cursorPos - lastWord.length;
-      const newVal = textarea.value.slice(0, startIndex) + mal + " " + after;
-      textarea.value = newVal;
-
-      // place caret after the inserted space
-      setCaret(textarea, startIndex + mal.length + 1);
-      updateOutput();
-    }
+/* Add typing listeners */
+document.querySelectorAll("textarea").forEach((t, i) => {
+  let timeout;
+  t.addEventListener("input", (e) => {
+    clearTimeout(timeout);
+    if (e.data === " ") transliterateLastWord(t, i);
+    timeout = setTimeout(() => transliterateLastWord(t, i), 3000);
   });
-
-  // also update final output on normal input (typing, backspace etc.)
-  t.addEventListener("input", () => updateOutput());
 });
 
-/* Helper to set caret position */
-function setCaret(el, pos) {
-  el.focus();
-  try {
-    el.setSelectionRange(pos, pos);
-  } catch (err) {
-    // ignore if not supported
-  }
-}
+/* Transliterate only the last word */
+async function transliterateLastWord(field, index) {
+  const text = field.value;
+  const words = text.split(/\s+/);
+  const lastWord = words[words.length - 1];
+  if (!lastWord || /^\d+$/.test(lastWord)) return updateOutput();
 
-/* Transliteration via Google Input Tools API (single-word) */
-async function transliterateWord(word) {
+  const url = `https://inputtools.google.com/request?text=${encodeURIComponent(lastWord)}&itc=ml-t-i0-und&num=1&cp=0&cs=1&ie=utf-8&oe=utf-8`;
   try {
-    const url = `https://inputtools.google.com/request?text=${encodeURIComponent(word)}&itc=ml-t-i0-und&num=1&ie=utf-8&oe=utf-8`;
     const res = await fetch(url);
     const data = await res.json();
-    if (Array.isArray(data) && data[0] === "SUCCESS" && data[1] && data[1][0] && data[1][0][1] && data[1][0][1][0]) {
-      return data[1][0][1][0];
+    if (data[0] === "SUCCESS" && data[1]?.[0]?.[1]?.[0]) {
+      words[words.length - 1] = data[1][0][1][0];
+      field.value = words.join(" ");
+      document.getElementById(`preview_${index}`).textContent = field.value;
+      updateOutput();
+      focusNext(field);
     }
   } catch (err) {
     console.error("Transliteration error:", err);
   }
-  // fallback: return original word
-  return word;
 }
 
-/* Update the final output sentence */
+/* Focus next field automatically */
+function focusNext(current) {
+  const fields = [...document.querySelectorAll("textarea")];
+  const i = fields.indexOf(current);
+  if (i >= 0 && i < fields.length - 1) fields[i + 1].focus();
+}
+
+/* Update the final Malayalam output */
 function updateOutput() {
   let out = template;
   inputsArea.querySelectorAll("textarea").forEach(input => {
@@ -186,7 +149,11 @@ document.getElementById("downloadBtn").onclick = () => {
 };
 
 document.getElementById("resetBtn").onclick = () => {
-  document.querySelectorAll("textarea").forEach(t => t.value = "");
+  document.querySelectorAll("textarea").forEach(t => {
+    t.value = "";
+    const preview = document.getElementById(`preview_${t.id.split("_")[1]}`);
+    if (preview) preview.textContent = "";
+  });
   finalOutput.textContent = "";
 };
 </script>
