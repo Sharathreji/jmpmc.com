@@ -35,7 +35,6 @@
       resize: none;
       font-size: 1rem;
     }
-    .field-preview { font-size: 0.95rem; color: #64748b; margin-top: 6px; }
   </style>
 </head>
 <body>
@@ -43,7 +42,7 @@
     <h1 class="text-3xl font-semibold text-indigo-700 mb-2">For Kavya C J CRP</h1>
     <p class="text-gray-600 mb-4">
       Type in <b>Manglish</b> (Roman Malayalam). It will automatically convert to Malayalam after a short pause or when you press space.<br>
-      <b>Numbers and any token containing digits (like 2025, 3km, 10.5) will remain exactly as typed.</b>
+      <b>Numbers and units (like 2025, 3km, 10.5)</b> will remain as they are.
     </p>
 
     <h2 class="text-lg font-semibold mb-2">Malayalam Template</h2>
@@ -65,13 +64,17 @@ _________________________ എന്ന ആളുകളുടെ _______________ 
   </div>
 
 <script>
-/* Template & custom labels requested by you */
 const template = document.getElementById("templatePreview").textContent;
-const labels = [
+const blanks = [...template.matchAll(/_+/g)];
+const inputsArea = document.getElementById("inputsArea");
+const finalOutput = document.getElementById("finalOutput");
+
+/* Custom blank labels */
+const blankLabels = [
   "Name",
   "Survey Number",
   "Aar",
-  "Sqmtr",
+  "Sq. Mtr",
   "Varsham Prayam",
   "Coconut No",
   "North",
@@ -80,135 +83,81 @@ const labels = [
   "West"
 ];
 
-const blanks = [...template.matchAll(/_+/g)];
-const inputsArea = document.getElementById("inputsArea");
-const finalOutput = document.getElementById("finalOutput");
-
-/* Create input fields dynamically with your custom labels */
+/* Create input fields dynamically */
 blanks.forEach((b, i) => {
   const div = document.createElement("div");
+  const label = blankLabels[i] || `Blank ${i + 1}`;
   div.innerHTML = `
-    <label class="block text-sm text-gray-700 mb-1">${labels[i] || `Blank ${i+1}`}</label>
-    <textarea id="input_${i}" rows="1" placeholder="Type in Manglish..." class="bg-white"></textarea>
-    <div id="preview_${i}" class="field-preview"></div>
+    <label class="block text-sm text-gray-700 mb-1">${label}</label>
+    <textarea id="input_${i}" rows="1" placeholder="Type in Manglish..."></textarea>
+    <div id="preview_${i}" class="text-gray-500 text-sm mt-1"></div>
   `;
   inputsArea.appendChild(div);
 });
 
-/* Add listeners: immediate on trailing space, and 1s debounce */
+/* Add typing listeners */
 document.querySelectorAll("textarea").forEach((t, i) => {
   let timeout;
   t.addEventListener("input", (e) => {
     clearTimeout(timeout);
-
-    // If user just pressed space (last char is space), transliterate immediately
-    if (t.value.slice(-1) === " ") {
-      transliterateLastWord(t, i);
-      return;
-    }
-
-    // Otherwise transliterate after 1 second of inactivity
-    timeout = setTimeout(() => transliterateLastWord(t, i), 1000);
-  });
-
-  // Also handle paste: transliterate last word after paste
-  t.addEventListener("paste", () => {
-    setTimeout(() => transliterateLastWord(t, i), 200);
+    if (e.data === " ") transliterateLastWord(t, i);
+    timeout = setTimeout(() => transliterateLastWord(t, i), 3000);
   });
 });
 
-/* Transliterate only the last word using Google Input Tools API.
-   Skip transliteration if the last word contains any digit (so numbers and units like 3km remain).
-*/
+/* Transliterate only the last word */
 async function transliterateLastWord(field, index) {
   const text = field.value;
-  // split on whitespace but keep empty strings trimmed
-  const words = text.trimEnd().split(/\s+/);
-  if (words.length === 0) {
-    document.getElementById(`preview_${index}`).textContent = field.value;
-    updateOutput();
-    return;
-  }
-
+  const words = text.split(/\s+/);
   const lastWord = words[words.length - 1];
-  if (!lastWord) {
+
+  // Skip transliteration for numbers or number-like words
+  if (!lastWord || /^[0-9.,+-/]+$/.test(lastWord)) {
     document.getElementById(`preview_${index}`).textContent = field.value;
     updateOutput();
     return;
   }
 
-  // If word contains any digit, skip transliteration (keeps "3km", "2025", "10.5" intact)
-  if (/\d/.test(lastWord)) {
-    // update preview and output with current raw value
-    document.getElementById(`preview_${index}`).textContent = field.value;
-    updateOutput();
-    return;
-  }
-
-  // Call Google Input Tools transliteration for the last word
   const url = `https://inputtools.google.com/request?text=${encodeURIComponent(lastWord)}&itc=ml-t-i0-und&num=1&cp=0&cs=1&ie=utf-8&oe=utf-8`;
   try {
     const res = await fetch(url);
     const data = await res.json();
-    // Google returns an array where first element is "SUCCESS"
     if (data[0] === "SUCCESS" && data[1]?.[0]?.[1]?.[0]) {
       words[words.length - 1] = data[1][0][1][0];
-      // If original had trailing space(s), preserve a single space at end
-      const hadTrailingSpace = /\s$/.test(field.value);
-      field.value = words.join(" ") + (hadTrailingSpace ? " " : "");
+      field.value = words.join(" ");
       document.getElementById(`preview_${index}`).textContent = field.value;
       updateOutput();
-      // move focus to next field for faster data entry
       focusNext(field);
     } else {
-      // fallback: just update previews
-      document.getElementById(`preview_${index}`).textContent = field.value;
       updateOutput();
     }
   } catch (err) {
     console.error("Transliteration error:", err);
-    document.getElementById(`preview_${index}`).textContent = field.value;
-    updateOutput();
   }
 }
 
-/* focus next field automatically */
+/* Focus next field automatically */
 function focusNext(current) {
   const fields = [...document.querySelectorAll("textarea")];
   const i = fields.indexOf(current);
-  if (i >= 0 && i < fields.length - 1) {
-    // small delay so the user sees the transliteration result before focus changes
-    setTimeout(() => fields[i + 1].focus(), 80);
-  }
+  if (i >= 0 && i < fields.length - 1) fields[i + 1].focus();
 }
 
-/* Build the final Malayalam sentence by replacing blanks in order */
+/* Update the final Malayalam output */
 function updateOutput() {
   let out = template;
-  const inputs = inputsArea.querySelectorAll("textarea");
-  inputs.forEach(input => {
+  inputsArea.querySelectorAll("textarea").forEach(input => {
     out = out.replace(/_+/, input.value.trim());
   });
   finalOutput.textContent = out;
 }
 
-/* Copy / Download / Reset buttons */
+/* Copy / Download / Reset */
 document.getElementById("copyBtn").onclick = async () => {
   const text = finalOutput.textContent.trim();
   if (!text) return alert("No text to copy.");
-  try {
-    await navigator.clipboard.writeText(text);
-    alert("Copied ✅");
-  } catch (e) {
-    // fallback for older browsers
-    const ta = document.createElement("textarea");
-    ta.value = text;
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand("copy");
-    ta.remove();
-    alert("Copied ✅");
-  }
+  await navigator.clipboard.writeText(text);
+  alert("Copied ✅");
 };
 
 document.getElementById("downloadBtn").onclick = () => {
@@ -220,14 +169,14 @@ document.getElementById("downloadBtn").onclick = () => {
   a.href = url;
   a.download = "Malayalam_Converted.txt";
   a.click();
-  URL.revokeObjectURL(url);
 };
 
 document.getElementById("resetBtn").onclick = () => {
   document.querySelectorAll("textarea").forEach(t => {
     t.value = "";
+    const preview = document.getElementById(`preview_${t.id.split("_")[1]}`);
+    if (preview) preview.textContent = "";
   });
-  document.querySelectorAll(".field-preview").forEach(p => p.textContent = "");
   finalOutput.textContent = "";
 };
 </script>
