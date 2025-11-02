@@ -223,12 +223,17 @@
   missBtn.onclick=()=>{
     beep(760,0.08);
     showToast('Dialing Appappii… 💖');
+
+    // Cute popup
     const dial=document.createElement('div');
-    dial.textContent='📞 Connecting…';
+    dial.textContent='📞 Dialing Appappii…';
     Object.assign(dial.style,{position:'fixed',top:'50%',left:'50%',transform:'translate(-50%,-50%)',background:'#ff4b91',color:'#fff',padding:'12px 25px',borderRadius:'25px',boxShadow:'0 0 25px #ff4b91',fontSize:'1.2em',zIndex:9999});
     document.body.appendChild(dial);
-    setTimeout(()=>dial.textContent='💖 Call connected to Appappii (simulation)',800);
-    setTimeout(()=>dial.remove(),2500);
+    setTimeout(()=>dial.textContent='💖 Connecting to Appappii...',900);
+    setTimeout(()=>dial.remove(),2200);
+
+    // Actually open the dialer
+    setTimeout(()=>{window.location.href='tel:8921530590';},1500);
   };
 
   // helper
@@ -238,8 +243,6 @@
   bubbleBtn.onclick=()=>{bubbles=!bubbles;bubbleBtn.textContent=bubbles?'💫 Floating Hearts: ON':'💫 Toggle Floating Hearts';if(bubbles){bubInt=setInterval(spawnBubbleHeart,900);}else{clearInterval(bubInt);}};
 
   function spawnBubbleHeart(){const e=document.createElement('div');e.className='bubble';e.textContent='💖';const s=18+Math.random()*12;e.style.left=10+Math.random()*80+'%';e.style.bottom='-10px';e.style.fontSize=s+'px';document.body.appendChild(e);const d=2800+Math.random()*1200;e.animate([{transform:'translateY(0)',opacity:1},{transform:`translateY(-${200+Math.random()*180}px)`,opacity:0}],{duration:d,easing:'ease-out'});setTimeout(()=>e.remove(),d+60);}
-
-  // (other card interactions remain unchanged from your original)
 </script>
 </body>
 </html>
