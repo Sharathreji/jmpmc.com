@@ -1,66 +1,571 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kavya Control Centre</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Kavya Control Centre</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
+  :root{
+    --bg:#06070a;
+    --panel: rgba(255,255,255,0.04);
+    --accent:#58a6ff;
+    --pink:#ff4b91;
+    --muted:#9aa6b2;
+    --glass: rgba(255,255,255,0.03);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:'Poppins',sans-serif;
+    background: radial-gradient(circle at 10% 10%, #07111a 0%, #020305 60%);
+    color:#e6edf3;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    padding:20px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:14px;
+    min-height:100vh;
+  }
+  header{ text-align:center; }
+  header h1{
+    margin:8px 0 0 0;
+    color:var(--accent);
+    font-weight:700;
+    letter-spacing:0.6px;
+    text-shadow:0 0 18px rgba(88,166,255,0.12);
+  }
+  header p.sub{
+    margin:6px 0 0 0;
+    color:var(--muted);
+    font-size:0.95rem;
+    font-family:monospace;
+    animation:flicker 3s infinite;
+  }
+  @keyframes flicker{
+    0%,18%,22%,25%,53%,57%,100%{opacity:1}
+    20%,24%,55%{opacity:0.28}
+  }
 
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: radial-gradient(circle at center, #0a0f14 0%, #000000 100%);
-      color: #e6edf3;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      min-height: 100vh;
-      overflow-x: hidden;
+  .center-heart{
+    margin-top:6px;
+    display:flex;
+    align-items:center;
+    gap:18px;
+    flex-direction:row;
+    flex-wrap:wrap;
+    justify-content:center;
+  }
+
+  /* Heart */
+  .heart-wrap{display:flex;flex-direction:column;align-items:center;gap:8px}
+  .heart {
+    width:120px;height:120px;
+    position:relative;
+    transform:rotate(-45deg);
+    background:var(--pink);
+    border-radius:8px;
+    box-shadow:0 0 40px rgba(255,75,145,0.12);
+    animation:beat 1200ms ease-in-out infinite;
+  }
+  .heart::before,.heart::after{
+    content:"";position:absolute;width:120px;height:120px;border-radius:50%;background:var(--pink);
+  }
+  .heart::before{ top:-60px; left:0 }
+  .heart::after{ left:60px; top:0 }
+  @keyframes beat{
+    0%,100%{transform:rotate(-45deg) scale(1)}
+    50%{transform:rotate(-45deg) scale(1.12); box-shadow:0 0 80px rgba(255,75,145,0.22)}
+  }
+  .heart.paused{ animation-play-state:paused; filter:grayscale(0.1) brightness(0.9) }
+
+  /* Dashboard grid */
+  .dashboard{
+    width:100%;
+    max-width:1000px;
+    display:grid;
+    grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+    gap:16px;
+    margin-top:14px;
+  }
+  .card{
+    background:var(--panel);
+    border-radius:14px;
+    padding:14px;
+    text-align:center;
+    border:1px solid rgba(255,255,255,0.06);
+    transition:transform .22s ease, box-shadow .22s ease;
+    position:relative;
+    overflow:hidden;
+  }
+  .card:hover{ transform:translateY(-6px); box-shadow:0 10px 30px rgba(0,0,0,0.6) }
+  .card h3{ margin:0; font-size:1rem; color:var(--muted); font-weight:500 }
+  .value{ margin-top:10px; font-size:1.6rem; color:var(--accent); text-shadow:0 0 12px rgba(88,166,255,0.12) }
+  .small{font-size:0.86rem;color:var(--muted);margin-top:8px}
+
+  /* floating effects */
+  .float-emoji{
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%);
+    top:-8px;
+    pointer-events:none;
+    font-size:22px;
+    opacity:0;
+    animation:popfade 900ms forwards;
+  }
+  @keyframes popfade{
+    0%{ transform:translate(-50%,-8px) scale(.6); opacity:0 }
+    20%{ opacity:1; transform:translate(-50%,8px) scale(1.05) }
+    100%{ transform:translate(-50%,-60px) scale(.9); opacity:0 }
+  }
+
+  /* control line */
+  .controls{
+    width:100%;
+    max-width:1000px;
+    display:flex;
+    gap:12px;
+    align-items:center;
+    justify-content:space-between;
+    margin-top:6px;
+  }
+  .toggle-btn{
+    background:var(--glass);
+    border:1px solid rgba(255,255,255,0.04);
+    color:var(--muted);
+    padding:10px 14px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:600;
+  }
+  .muted-note{ color:var(--muted); font-size:0.9rem }
+
+  footer{ color:var(--muted); margin-top:18px; font-size:0.9rem; text-align:center }
+
+  /* bubble hearts */
+  .bubble{
+    position:fixed;
+    pointer-events:none;
+    user-select:none;
+    will-change: transform, opacity;
+    font-size:22px;
+    opacity:0.95;
+  }
+
+  /* small tooltips/messages */
+  .toast{
+    position:fixed;
+    left:50%;
+    transform:translateX(-50%);
+    bottom:24px;
+    background:rgba(12,14,17,0.85);
+    color:#e6edf3;
+    padding:10px 14px;
+    border-radius:10px;
+    box-shadow:0 8px 30px rgba(0,0,0,0.6);
+    border:1px solid rgba(255,255,255,0.04);
+    font-weight:600;
+    display:none;
+  }
+
+  /* responsive */
+  @media (max-width:520px){
+    .heart{ width:96px; height:96px }
+    .heart::before, .heart::after{ width:96px;height:96px; }
+    .value{ font-size:1.3rem }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Kavya Control Centre</h1>
+  <p class="sub">System Online • Monitoring <strong>Ponnavee</strong> • Proposed on Jan 11, 2025 💍</p>
+</header>
+
+<div class="center-heart" role="region" aria-label="Heart and controls">
+  <div class="heart-wrap" style="align-items:center">
+    <div id="heart" class="heart" title="Ponnavee heartbeat"></div>
+    <div style="display:flex;gap:10px;align-items:center">
+      <button id="heartbeatToggle" class="toggle-btn" aria-pressed="false">🔊 Play Heartbeat</button>
+      <button id="playAll" class="toggle-btn">✨ Play All Effects</button>
+    </div>
+  </div>
+</div>
+
+<section class="dashboard" aria-live="polite">
+
+  <div class="card" id="cpuCard" role="button" tabindex="0" aria-pressed="false">
+    <h3>Love CPU Usage</h3>
+    <div class="value" id="cpuValue">100% ❤️</div>
+    <div class="small">Click to overclock for Ponnavee</div>
+  </div>
+
+  <div class="card" id="smileCard" role="button" tabindex="0">
+    <h3>Smile Index</h3>
+    <div class="value" id="smileValue">99.9% 😊</div>
+    <div class="small">Pop a smile — watch it float!</div>
+  </div>
+
+  <div class="card" id="batteryCard" role="button" tabindex="0">
+    <h3>Mood Battery</h3>
+    <div class="value" id="batteryValue">Charging 🔋</div>
+    <div class="small">Tap to cycle battery states</div>
+  </div>
+
+  <div class="card" id="callsCard" role="button" tabindex="0">
+    <h3>Calls Missed (Sharath's fault)</h3>
+    <div class="value" id="callsValue">2 ☎️</div>
+    <div class="small">Ring Ponnavee (play ringtone)</div>
+  </div>
+
+  <div class="card" id="apologyCard" role="button" tabindex="0">
+    <h3>Pending Apologies</h3>
+    <div class="value" id="apologyValue">1 😅</div>
+    <div class="small">Send an apology packet</div>
+  </div>
+
+  <div class="card" id="memoryCard" role="button" tabindex="0">
+    <h3>Memory of Sharath</h3>
+    <div class="value" id="memoryValue">∞ 💫</div>
+    <div class="small">Release memory hearts</div>
+  </div>
+
+  <div class="card" id="voiceCard" role="button" tabindex="0">
+    <h3>Voice Sweetness Level</h3>
+    <div class="value" id="voiceValue">Over 9000 🔊💖</div>
+    <div class="small">Toggle Angelic Mode</div>
+  </div>
+
+  <div class="card" id="uptimeCard" role="button" tabindex="0">
+    <h3>System Uptime</h3>
+    <div class="value" id="uptimeValue">Calculating...</div>
+    <div class="small">Click to celebrate Proposal Day</div>
+  </div>
+
+</section>
+
+<div class="controls" style="max-width:1000px">
+  <div class="muted-note">Tip: For sound to play on mobile, tap any button once to unlock audio (browser autoplay policy).</div>
+  <div>
+    <button id="toggleBubbles" class="toggle-btn" aria-pressed="false">💫 Toggle Floating Hearts</button>
+  </div>
+</div>
+
+<div id="toast" class="toast" role="status" aria-live="assertive"></div>
+
+<footer>© 2025 Sharath Reji | Built with ❤️ for Ponnavee</footer>
+
+<!-- Audio elements: your WAV file must be in same folder as this HTML -->
+<audio id="heartbeatAudio" loop preload="auto">
+  <source src="mixkit-alarm-digital-clock-beep-989.wav" type="audio/wav">
+  <!-- fallback: if file missing, no sound -->
+</audio>
+
+<!-- We will use WebAudio for tiny beeps when needed (no extra files required) -->
+<script>
+  // --- Utilities ---
+  const toast = document.getElementById('toast');
+  const showToast = (txt, d=2200) => {
+    toast.textContent = txt;
+    toast.style.display = 'block';
+    clearTimeout(toast._t);
+    toast._t = setTimeout(()=> toast.style.display = 'none', d);
+  };
+
+  // --- Uptime since Jan 11 2025 (IST) ---
+  // Use the IST offset in the ISO string so the counter matches India timezone
+  const startISO = '2025-01-11T00:00:00+05:30';
+  const startTime = new Date(startISO);
+  const uptimeEl = document.getElementById('uptimeValue');
+
+  function updateUptime(){
+    const now = new Date();
+    let diff = Math.max(0, Math.floor((now - startTime) / 1000));
+    const days = Math.floor(diff / 86400); diff %= 86400;
+    const hours = Math.floor(diff / 3600); diff %= 3600;
+    const mins = Math.floor(diff / 60);
+    const secs = diff % 60;
+    uptimeEl.textContent = `${days}d ${hours}h ${mins}m ${secs}s`;
+  }
+  updateUptime();
+  setInterval(updateUptime, 1000);
+
+  // --- Audio handling ---
+  const hbAudio = document.getElementById('heartbeatAudio');
+  const heartbeatToggle = document.getElementById('heartbeatToggle');
+  const heartEl = document.getElementById('heart');
+
+  let heartbeatPlaying = false;
+  heartbeatToggle.addEventListener('click', async () => {
+    // try to play - browsers require a user gesture (we are in a click handler so ok)
+    try {
+      if (!heartbeatPlaying) {
+        await hbAudio.play();
+        heartbeatPlaying = true;
+        heartbeatToggle.textContent = '🔇 Pause Heartbeat';
+        heartEl.classList.remove('paused');
+        showToast('Heartbeat playing ❤️');
+      } else {
+        hbAudio.pause();
+        heartbeatPlaying = false;
+        heartbeatToggle.textContent = '🔊 Play Heartbeat';
+        heartEl.classList.add('paused');
+        showToast('Heartbeat paused');
+      }
+    } catch (err) {
+      console.warn('Audio play failed:', err);
+      showToast('Sound blocked by browser — tap any card to enable audio.');
     }
+  });
 
-    h1 {
-      color: #58a6ff;
-      font-size: 2.5em;
-      text-shadow: 0 0 20px #58a6ff;
-      margin-top: 40px;
+  // Provide a master "play all" for quick demo
+  document.getElementById('playAll').addEventListener('click', async () => {
+    try {
+      await hbAudio.play();
+      heartbeatPlaying = true;
+      heartbeatToggle.textContent = '🔇 Pause Heartbeat';
+      heartEl.classList.remove('paused');
+      // little audio-confirm beep via WebAudio
+      beep(880, 0.08);
+      showToast('All systems activated ✨');
+    } catch (e) {
+      showToast('Tap a card to enable sound (browser policy).');
     }
+  });
 
-    p.status {
-      color: #3fb950;
-      font-family: monospace;
-      animation: flicker 2s infinite;
-      margin-bottom: 30px;
+  // Small WebAudio beep function (for tiny cues)
+  let audioCtx = null;
+  function getAudioCtx(){
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    return audioCtx;
+  }
+  function beep(freq = 660, duration = 0.12, type='sine'){
+    try {
+      const ctx = getAudioCtx();
+      const o = ctx.createOscillator();
+      const g = ctx.createGain();
+      o.type = type;
+      o.frequency.value = freq;
+      g.gain.value = 0.0001;
+      o.connect(g); g.connect(ctx.destination);
+      const now = ctx.currentTime;
+      g.gain.linearRampToValueAtTime(0.12, now + 0.001);
+      o.start(now);
+      g.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+      o.stop(now + duration + 0.02);
+    } catch(e){
+      // silent fallback
+      console.warn('beep failed', e);
     }
+  }
 
-    @keyframes flicker {
-      0%, 18%, 22%, 25%, 53%, 57%, 100% { opacity: 1; }
-      20%, 24%, 55% { opacity: 0.3; }
+  // Floating heart bubble generator
+  const bubbleEnabledBtn = document.getElementById('toggleBubbles');
+  let bubblesEnabled = false;
+  bubbleEnabledBtn.addEventListener('click', () => {
+    bubblesEnabled = !bubblesEnabled;
+    bubbleEnabledBtn.setAttribute('aria-pressed', String(bubblesEnabled));
+    bubbleEnabledBtn.textContent = bubblesEnabled ? '💫 Floating Hearts: ON' : '💫 Toggle Floating Hearts';
+    if (bubblesEnabled) startBubbleLoop(); else stopBubbleLoop();
+  });
+
+  let bubbleInterval = null;
+  function startBubbleLoop(){
+    if (bubbleInterval) return;
+    bubbleInterval = setInterval(()=> {
+      spawnBubbleHeart();
+    }, 900);
+  }
+  function stopBubbleLoop(){
+    clearInterval(bubbleInterval);
+    bubbleInterval = null;
+  }
+  function spawnBubbleHeart(){
+    const el = document.createElement('div');
+    el.className = 'bubble';
+    el.textContent = '💖';
+    const size = Math.random()*12 + 18;
+    el.style.left = (10 + Math.random()*80) + '%';
+    el.style.bottom = '-10px';
+    el.style.fontSize = size + 'px';
+    document.body.appendChild(el);
+    const dur = 2800 + Math.random()*1200;
+    el.animate([
+      { transform: 'translateY(0) scale(1)', opacity: 1 },
+      { transform: `translateY(-${220 + Math.random()*180}px) scale(${1 + Math.random()*0.5})`, opacity: 0 }
+    ], { duration: dur, easing:'ease-out' });
+    setTimeout(()=> el.remove(), dur + 60);
+  }
+
+  // Helper to create a temporary floating emoji on a card
+  function floatEmojiOn(cardEl, emoji='✨') {
+    const f = document.createElement('div');
+    f.className = 'float-emoji';
+    f.textContent = emoji;
+    cardEl.appendChild(f);
+    setTimeout(()=> { try{ cardEl.removeChild(f) }catch(e){} }, 1000);
+  }
+
+  // --- Card behaviours ---
+  // CPU Card: Overclock animation
+  const cpuCard = document.getElementById('cpuCard');
+  const cpuValue = document.getElementById('cpuValue');
+  cpuCard.addEventListener('click', async () => {
+    cpuCard.style.transform = 'translateY(-2px) scale(1.01)';
+    floatEmojiOn(cpuCard, '🔥');
+    // animate percent up briefly
+    let percent = 100;
+    const start = percent;
+    const end = 120;
+    const steps = 20;
+    for (let i=0;i<=steps;i++){
+      percent = Math.round(start + (end-start)*(i/steps));
+      cpuValue.textContent = percent + '% ❤️';
+      await wait(12);
     }
+    showToast('System Overheating — too much Ponnavee detected! 🔥');
+    // play beep
+    beep(420, 0.12);
+    setTimeout(()=> {
+      // cool down back to 100%
+      cpuValue.textContent = '100% ❤️';
+      cpuCard.style.transform = '';
+    }, 1600);
+  });
 
-    .heart {
-      position: relative;
-      width: 120px;
-      height: 120px;
-      background: #ff4b91;
-      transform: rotate(-45deg);
-      animation: pulse 1.5s infinite;
-      box-shadow: 0 0 30px #ff4b91;
-    }
+  // Smile Card: pop smile floating emoji
+  const smileCard = document.getElementById('smileCard');
+  smileCard.addEventListener('click', () => {
+    floatEmojiOn(smileCard, '😊');
+    // small sparkle animation
+    showToast('Smile injected ✨');
+    beep(880, 0.06);
+  });
 
-    .heart::before,
-    .heart::after {
-      content: '';
-      position: absolute;
-      width: 120px;
-      height: 120px;
-      background: #ff4b91;
-      border-radius: 50%;
-    }
+  // Battery Card: cycle states
+  const batteryCard = document.getElementById('batteryCard');
+  const batteryValue = document.getElementById('batteryValue');
+  const batteryStates = ['Charging 🔋✨', 'Full 🔋✅', 'Low — Needs Hug 🥺', 'Charging 🔋✨'];
+  let batteryIndex = 0;
+  batteryCard.addEventListener('click', () => {
+    batteryIndex = (batteryIndex + 1) % batteryStates.length;
+    batteryValue.textContent = batteryStates[batteryIndex];
+    floatEmojiOn(batteryCard, batteryIndex===2 ? '🤗' : '⚡');
+    beep(660, 0.08);
+    showToast(batteryStates[batteryIndex]);
+  });
 
-    .heart::before { top: -60px; left: 0; }
-    .heart::after { left: 60px; top: 0; }
+  // Calls Card: play ringtone (uses the same WAV as heartbeat), animate dial
+  const callsCard = document.getElementById('callsCard');
+  const callsValue = document.getElementById('callsValue');
+  callsCard.addEventListener('click', async () => {
+    showToast('Dialing Ponnavee AI… ☎️');
+    // Play short ring sequence using WebAudio + also try the WAV if available
+    beep(880, 0.09); await wait(140);
+    beep(720, 0.09); await wait(140);
+    // try to play short sample of the wav
+    try {
+      hbAudio.currentTime = 0;
+      await hbAudio.play();
+      setTimeout(()=> hbAudio.pause(), 900);
+    } catch(e){ /* ignore */ }
+  });
+
+  // Apology Card: show apology message
+  const apologyCard = document.getElementById('apologyCard');
+  apologyCard.addEventListener('click', () => {
+    apologyValue.textContent = 'Apology packet sent ✅';
+    floatEmojiOn(apologyCard, '✉️');
+    showToast('Apology packet sent — awaiting forgiveness 💌');
+    beep(520, 0.08);
+    // increment pending apologies down to zero visually
+    setTimeout(()=> { apologyValue.textContent = '0 ❤️‍🩹' }, 1400);
+  });
+  const apologyValue = document.getElementById('apologyValue');
+
+  // Memory Card: release floating hearts upward
+  const memoryCard = document.getElementById('memoryCard');
+  memoryCard.addEventListener('click', () => {
+    for (let i=0;i<6;i++){ setTimeout(spawnBubbleHeart, i*160); }
+    showToast('Memories released 💫');
+    beep(720, 0.06);
+  });
+
+  // Voice Card: toggle Angelic Mode with a sparkle and pitch-shift beep
+  const voiceCard = document.getElementById('voiceCard');
+  const voiceValue = document.getElementById('voiceValue');
+  let angelic = false;
+  voiceCard.addEventListener('click', () => {
+    angelic = !angelic;
+    voiceValue.textContent = angelic ? 'Angelic Mode ON 😇' : 'Over 9000 🔊💖';
+    floatEmojiOn(voiceCard, angelic ? '😇' : '🔊');
+    // pitch ring
+    beep(1100, 0.06, 'sine');
+    showToast(angelic ? 'Angelic Mode: Activated' : 'Angelic Mode: Deactivated');
+  });
+
+  // Uptime Card: celebrate anniversary on click
+  const uptimeCard = document.getElementById('uptimeCard');
+  uptimeCard.addEventListener('click', () => {
+    showToast('Running since Proposal Day 💍 — Jan 11, 2025');
+    // burst hearts
+    for (let i=0;i<12;i++){ setTimeout(spawnBubbleHeart, i*90) }
+    // play celebratory beeps
+    (async function(){
+      beep(880,0.06); await wait(120);
+      beep(1040,0.06); await wait(120);
+      beep(1240,0.06);
+    })();
+  });
+
+  // small helper
+  function wait(ms){ return new Promise(res=>setTimeout(res, ms)); }
+
+  // Accessibility: allow Enter/Space to activate cards
+  document.querySelectorAll('.card').forEach(c=>{
+    c.addEventListener('keydown', (e)=>{
+      if (e.key === 'Enter' || e.key === ' ') c.click();
+    });
+  });
+
+  // Try to resume audio context on first user gesture (unlock) for WebAudio
+  ['click','touchstart','keydown'].forEach(evt=>{
+    window.addEventListener(evt, function unlockAudio(){
+      try {
+        if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+      } catch(e){}
+      // try to play a muted short sound to satisfy autoplay on some browsers
+      window.removeEventListener(evt, unlockAudio);
+    }, { once: true });
+  });
+
+  // Keep heart pulsing when audio plays; paused otherwise
+  hbAudio.addEventListener('play', ()=> heartEl.classList.remove('paused'));
+  hbAudio.addEventListener('pause', ()=> heartEl.classList.add('paused'));
+
+  // ensure heart is paused initially if audio not playing
+  if (hbAudio.paused) heartEl.classList.add('paused');
+
+  // small init toast
+  showToast('Welcome — tap buttons to unlock sound and play effects 🎛️', 2800);
+
+  // allow quick toggle of bubbles by keyboard 'b'
+  window.addEventListener('keydown', (e)=> {
+    if (e.key.toLowerCase() === 'b') bubbleEnabledBtn.click();
+  });
+
+  // clean up on unload
+  window.addEventListener('beforeunload', ()=> {
+    try{ hbAudio.pause(); }catch(e){}
+  });
+
+</script>
+</body>
+</html>    .heart::after { left: 60px; top: 0; }
 
     @keyframes pulse {
       0%, 100% { transform: rotate(-45deg) scale(1); box-shadow: 0 0 20px #ff4b91; }
